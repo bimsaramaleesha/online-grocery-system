@@ -1,1 +1,21 @@
-/* supplier module styles. Only the owner of the supplier module edits this file. Prefix your classes, e.g. .sup-card */
+/* Member 3: Supplier & Vendor Management Styles */
+.supplier-card {
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+}
+
+.supplier-card:hover {
+    transform: translateY(-2px);
+}
+
+.badge-farmer {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    font-weight: 600;
+}
+
+.badge-wholesale {
+    background-color: #cfe2ff;
+    color: #084298;
+    font-weight: 600;
+}
