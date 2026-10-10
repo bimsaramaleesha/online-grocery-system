@@ -1,47 +1,39 @@
 # Online Grocery Order Management System
 
-A full-functional online grocery management system built with **Java** and **Spring Boot** as a campus group project (SE1020).
+SE1020 group project. A full-functional online grocery management system built with **Java, Spring Boot, Thymeleaf, HTML, CSS and JavaScript**. Data is stored in plain text files (no database).
 
-Customers can browse groceries, add items to a cart, apply promo codes and place orders. Staff can manage inventory, suppliers and customer complaints.
+Customers can browse groceries, add items to a cart, apply promo codes, place orders and leave reviews. Staff can manage inventory, suppliers, deliveries and customer complaints.
 
 > **Team members:** read [CONTRIBUTING.md](CONTRIBUTING.md) before you write any code.
 
 ---
 
+## Features (by module)
+
+| # | Module | What it does | URL prefix | Owner |
+|---|--------|--------------|------------|-------|
+| 1 | User & Authentication | Registration, login, user accounts | `/users` | @MrHasit |
+| 2 | Grocery Inventory & Items | Add, list, edit and delete grocery items and stock | `/items` | @bimsaramaleesha |
+| 3 | Supplier & Vendor Logistics | Suppliers and delivery tracking | `/suppliers` | @Thilanjana01 |
+| 4 | Cart & Order Processing | Shopping cart and orders | `/cart`, `/orders` | @Piumanjali K. K. |
+| 5 | Discounts & Promo Codes | Create and apply promo codes | `/promos` | @Yashindi J.P.M |
+| 6 | Reviews & Customer Complaints | Product reviews and complaints | `/reviews`, `/complaints` | @Pahan K. H. S. |
+
+The full per-module conventions (packages, data files, ID prefixes) are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Tech stack
 
 | Part | Choice |
 |------|--------|
-| Language | Java 17 (or newer) |
-| Framework | Spring Boot (Maven) |
-| Web pages | Thymeleaf templates + HTML/CSS/JS |
-| Data storage | Text files via the shared `FileHandler` (see `sample-data/`) |
-| Version control | Git + GitHub (Pull Requests, CODEOWNERS) |
-
-## Modules and owners
-
-Each member owns one module. Do not edit another member's module without talking to them first.
-
-| # | Module | Owner (GitHub) |
-|---|--------|----------------|
-| 1 | User & Authentication | @MrHasit |
-| 2 | Grocery Inventory & Items | @bimsaramaleesha |
-| 3 | Supplier & Vendor Logistics | @Thilanjana01 |
-| 4 | Cart & Order Processing | @Piumanjali K. K. |
-| 5 | Discounts & Promo Codes | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | @Pahan K. H. S. |
+| Language | Java 17 or newer |
+| Framework | Spring Boot (Maven, with the Maven Wrapper) |
+| Web pages | Thymeleaf templates + HTML / CSS / JavaScript |
+| Data storage | Plain text files through the shared `FileHandler` |
+| Collaboration | Git + GitHub (pull requests, CODEOWNERS, build check) |
 
 ## Getting started
 
-### 1. Requirements
-
-- JDK 17 or newer (`java -version` to check)
-- Git
-- IntelliJ IDEA (recommended)
-
-You do **not** need to install Maven separately. The project includes the Maven Wrapper.
-
-### 2. Clone the repository
+**Requirements:** JDK 17 or newer, Git, and IntelliJ IDEA (recommended). You do not need to install Maven separately.
 
 ```bash
 git clone https://github.com/bimsaramaleesha/online-grocery-system.git
@@ -49,56 +41,44 @@ cd online-grocery-system
 git checkout develop
 ```
 
-### 3. Run the application
-
-**Windows:**
-```bash
-mvnw.cmd spring-boot:run
-```
-
-**macOS / Linux:**
-```bash
-./mvnw spring-boot:run
-```
-
-Or open the project in IntelliJ and run the `GroceryApplication` class.
-
-Then open <http://localhost:8080> in your browser.
-
-### 4. Run the build check locally
-
-Run this before opening a Pull Request. It is the same check GitHub runs.
+Run it from IntelliJ (open `GroceryApplication` and press the green play button), or from a terminal:
 
 ```bash
-./mvnw clean verify        # Windows: mvnw.cmd clean verify
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
 ```
+
+Then open <http://localhost:8080>. You should see the home page.
+
+First-time Git and IntelliJ setup is explained step by step in [CONTRIBUTING.md](CONTRIBUTING.md#2-first-time-setup).
 
 ## Project structure
 
 ```
-online-grocery-system/
-├── docs/                 Project documents and diagrams
-├── sample-data/          Sample data files used by FileHandler
-├── src/main/java/com/grocery/
-│   ├── GroceryApplication.java
-│   ├── common/           Shared helpers (FileHandler, IdGenerator, GlobalExceptionHandler)
-│   └── <module>/         One package per module (model, repository, service, controller)
-├── src/main/resources/
-│   ├── templates/        Thymeleaf pages (layout.html + one folder per module)
-│   └── static/           CSS and JavaScript (one file per module)
-├── CONTRIBUTING.md       How we work together (branches, commits, PRs)
-└── pom.xml
+src/main/java/com/grocery/
+    common/        shared helpers (FileHandler, IdGenerator, GlobalExceptionHandler)
+    user/ inventory/ supplier/ order/ promo/ feedback/
+        controller/   handles web requests
+        model/        the classes (User, GroceryItem ...)
+        service/      business logic
+        repository/   reads and writes the .txt file using FileHandler
+src/main/resources/
+    templates/     HTML pages (Thymeleaf), one folder per module
+    static/css     one CSS file per module + common.css
+    static/js      one JS file per module + common.js
+data/              live text files (created automatically, NOT in Git)
+sample-data/       demo data
+docs/              class diagrams and report
 ```
 
 ## Branches
 
 | Branch | Purpose |
 |--------|---------|
-| `main` | Stable, working versions only. Updated at milestones and for the final submission. |
-| `develop` | Where all finished work comes together. Every PR targets this branch. |
-| `feature/*` | Short-lived branches where each member does their work. |
+| `main` | Stable, demo-ready code. Only the team leader merges here. |
+| `develop` | Where everyone's finished work comes together. Every pull request targets this branch. |
+| `feature/<module>-<task>` | Short-lived working branches, e.g. `feature/inventory-add-item`. |
 
-Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md).
+Full workflow and rules: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

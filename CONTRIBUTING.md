@@ -1,191 +1,104 @@
 # Contributing Guide
 
-How our 6-person team works together on this repo. Follow these steps every time, and nobody's work gets overwritten.
+How our 6-person team works together on this repo. Follow these steps every time and nobody's work gets overwritten.
 
-## The golden rules
+## 1. Team and modules
 
-1. **Never commit directly to `main` or `develop`.** They are protected. All work goes through a Pull Request (PR).
-2. **One module per person.** Work inside your own module's package, template folder, CSS and JS file.
-3. **Pull before you start.** Always begin from the latest `develop`.
-4. **Small and often.** Small commits and small PRs are easy to review. A giant PR after two weeks is where conflicts happen.
-5. **Ask before touching shared files** (`common/`, `layout.html`, `pom.xml`). Tell the team leader first.
+| # | Module | Java package | Templates folder | CSS / JS | Data file(s) | ID prefix | URL prefix | Owner (GitHub) |
+|---|--------|--------------|------------------|----------|--------------|-----------|------------|----------------|
+| 1 | User & Authentication | `user` | `templates/user` | `user.css` / `user.js` | `users.txt` | `U` | `/users` | @MrHasit |
+| 2 | Grocery Inventory & Items | `inventory` | `templates/inventory` | `inventory.css` / `inventory.js` | `items.txt` | `ITM` | `/items` | @bimsaramaleesha |
+| 3 | Supplier & Vendor Logistics | `supplier` | `templates/supplier` | `supplier.css` / `supplier.js` | `suppliers.txt`, `deliveries.txt` | `SUP` | `/suppliers` | @Thilanjana01 |
+| 4 | Cart & Order Processing | `order` | `templates/order` | `order.css` / `order.js` | `carts.txt`, `orders.txt` | `CRT`, `ORD` | `/cart`, `/orders` | @Piumanjali K. K. |
+| 5 | Discounts & Promo Codes | `promo` | `templates/promo` | `promo.css` / `promo.js` | `promos.txt` | `PRM` | `/promos` | @Yashindi J.P.M |
+| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @Pahan K. H. S. |
 
-## Branches
+**Review buddies** (you review each other's pull requests): 1 and 2, 3 and 4, 5 and 6.
 
-| Branch | Purpose |
-|--------|---------|
-| `main` | Stable versions only. The leader updates it at milestones. |
-| `develop` | Integration branch. All PRs go here. |
-| `feature/<module>-<short-description>` | Your working branches. |
+## 2. First-time setup
 
-**Branch name examples:**
+1. Install **JDK 17 or newer** and **IntelliJ IDEA**.
+2. Accept the repository invitation sent to your email (GitHub).
+3. Tell Git who you are. Use the **same email as your GitHub account**, otherwise your commits will not count for you:
+   ```
+   git config --global user.name "Your Name"
+   git config --global user.email "your-github-email@example.com"
+   ```
+4. In IntelliJ: **File > New > Project from Version Control**, paste the repository URL, choose a folder **outside OneDrive** (for example `C:\Projects`), and click Clone.
+5. Wait for Maven to finish loading (progress bar at the bottom). If asked, set the project JDK to 17 or newer.
+6. Run `GroceryApplication` (green play button) and open http://localhost:8080. You should see the home page.
+7. Switch to the `develop` branch before you start any work (see section 3).
+
+## 3. Branches and daily workflow
 
 ```
-feature/auth-login-page
-feature/inventory-add-item
-feature/orders-cart-total
-fix/promo-expiry-date
+main      stable, demo-ready code. Only the leader merges here.
+develop   everyone's work comes together here.
+feature/<module>-<task>   your own working branch, e.g. feature/inventory-add-item
 ```
 
-Use lowercase and hyphens, no spaces. Delete your branch after it is merged.
+**Nobody pushes directly to `main` or `develop`. Everything goes through a pull request (PR).**
 
-## Daily workflow (step by step)
+Every task:
 
-### Step 1: Get the latest code
-
-```bash
+```
 git checkout develop
-git pull origin develop
-```
+git pull
+git checkout -b feature/inventory-add-item     # new branch for this task
 
-### Step 2: Create your feature branch
+# ... write code, then commit small and often ...
+git add src/main/java/com/grocery/inventory src/main/resources/templates/inventory
+git commit -m "feat(inventory): add item form"
 
-```bash
-git checkout -b feature/inventory-add-item
-```
-
-### Step 3: Do your work and commit
-
-```bash
-git add .
-git commit -m "feat(inventory): add item form and controller"
-```
-
-Commit often, at least every time one small thing works.
-
-### Step 4: Stay up to date with `develop`
-
-If others have merged work while you were coding, bring their changes into your branch **before** opening your PR:
-
-```bash
-git fetch origin
-git merge origin/develop
-```
-
-If Git reports a conflict, see [Fixing merge conflicts](#fixing-merge-conflicts) below.
-
-### Step 5: Check that it builds
-
-```bash
-./mvnw clean verify        # Windows: mvnw.cmd clean verify
-```
-
-If it fails on your machine, it will fail on GitHub too. Fix it first.
-
-### Step 6: Push your branch
-
-```bash
+git pull origin develop      # bring in teammates' latest work, run the app again
 git push -u origin feature/inventory-add-item
 ```
 
-### Step 7: Open a Pull Request
+Then on GitHub click **Compare & pull request**, set the base branch to **develop**, fill in the template, and ask your review buddy to review.
+When it is approved, click **Create a merge commit** (never "Squash and merge", it hides your individual commits).
+After merging, go back to `develop`, `git pull`, and start the next task from a new branch. You can delete the old branch.
 
-1. Go to the repo on GitHub and click **Compare & pull request**.
-2. Set **base: `develop`** and **compare: your branch**. Double-check this. It must not be `main`.
-3. Fill in the PR template (what you did, how to test it, screenshots for UI changes).
-4. Wait for the build check to turn green and for a reviewer to approve.
-
-### Step 8: After the merge
-
-```bash
-git checkout develop
-git pull origin develop
-git branch -d feature/inventory-add-item
-```
-
-Then start the next task from Step 2.
-
-## Commit message format
+### Commit messages
 
 ```
-<type>(<module>): <short description in present tense>
+feat(inventory): add create item form
+fix(user): handle duplicate username
+docs(report): add class diagram
 ```
 
-| Type | Use for |
-|------|---------|
-| `feat` | A new feature |
-| `fix` | A bug fix |
-| `docs` | Documentation only |
-| `style` | Formatting or CSS, no logic change |
-| `refactor` | Restructuring code without changing behaviour |
-| `chore` | Build, config, housekeeping |
+Prefixes: `feat`, `fix`, `refactor`, `style`, `docs`, `test`. Commit **often** (several times a week). Commit history is part of your marks.
 
-**Good:**
-- `feat(auth): add login form validation`
-- `fix(cart): correct total when quantity is zero`
+### Reviewing a pull request
 
-**Bad:**
-- `update`
-- `fixed stuff`
-- `final version 2`
+Open the PR, check "Files changed", leave a comment on anything unclear, then **Review changes > Approve**.
+Pull the branch and run it if you can. Nobody approves their own PR.
 
-## Pull Request rules
+### Merging into `main` (team leader only)
 
-- **Every PR needs at least 1 approval** from a teammate before merging.
-- Files with a code owner (see `.github/CODEOWNERS`) need that owner's approval. This protects each person's module and the shared code.
-- **Reviewers:** read the code, run it if you can, and leave clear comments. Be kind and specific.
-- **Authors:** reply to every comment, push fixes to the same branch (the PR updates itself), and don't merge your own PR without approval.
-- Prefer **Squash and merge** so `develop` stays tidy (one commit per PR).
+At each milestone and for the final submission: make sure `develop` builds and every module works, open a PR with base `main` and compare `develop`, then merge it with **Create a merge commit**.
 
-## Code standards
+## 4. Rules
 
-- **Packages:** `com.grocery.<module>`, lowercase. Sub-structure: `model`, `repository`, `service`, `controller`.
-- **Classes:** `PascalCase` (`InventoryService`). **Methods and variables:** `camelCase` (`addItem`).
-- **Constants:** `UPPER_SNAKE_CASE`.
-- **Templates:** `src/main/resources/templates/<module>/...`, using the shared `layout.html`.
-- **Shared helpers:** use `FileHandler` and `IdGenerator` from `common/`. Don't write your own copies.
-- **No hard-coded file paths** or passwords in code.
-- Keep methods short, with one job each, and add a short comment where the logic isn't obvious.
-- Delete unused code and `System.out.println` debug lines before committing.
+1. **Stay in your lane.** Only edit your own Java package, templates folder, CSS file and JS file.
+2. **Shared files belong to the leader:** everything in `common/`, `templates/fragments/`, `common.css`, `common.js`, `pom.xml`, `application.properties`, `.github/`. Need a change? Message the leader or open an Issue.
+3. **Use `FileHandler` for every file read/write.** Do not write your own file code.
+4. **One line = one record, fields separated by `|`**, for example `ITM001|Milk|250.00|40`. Use `FileHandler.clean(text)` on text typed by users, and `split("\\|")` to read a line.
+5. **IDs:** use `IdGenerator.nextId("ITM", existingIds)`. Prefixes are in the table in section 1.
+6. **Talk to other modules by ID only.** If you need an item's price, store the item ID and ask the inventory module's service. Do not copy or edit another module's classes.
+7. **Start new pages from** `templates/fragments/page-template.html`. Prefix your CSS classes with your module (`.inv-card`, `.cart-table`).
+8. **Never reformat or "optimize imports" on files you do not own.**
+9. **Never commit the `data/` folder.** It is in `.gitignore`, and your test data stays on your own computer.
+10. **Do not push anything that does not start.** Run the app before every pull request.
+11. **Every member must understand all the code they submit.** The viva asks about it.
 
-## Things you must NOT commit
+## 5. Something went wrong?
 
-- `target/` folders, `.idea/` folders, `*.iml` files (already in `.gitignore`)
-- Passwords, API keys or personal data
-- Large binary files
+| Problem | Fix |
+|---------|-----|
+| `git push` rejected | Run `git pull origin develop`, solve any conflict, run the app, push again |
+| Merge conflict | Open the file, keep the correct lines, delete the `<<<<<<<`, `=======`, `>>>>>>>` markers, then `git add` and `git commit`. Ask the leader if unsure |
+| Committed to the wrong branch | Do not push. Message the leader |
+| App will not start | Read the **first** red error in the console and send it to the group |
+| Port 8080 already in use | Stop the other running app (red square in IntelliJ) |
 
-## Fixing merge conflicts
-
-A conflict means two people changed the same lines. It's normal. Don't panic.
-
-1. Run `git merge origin/develop` and Git lists the conflicted files.
-2. Open each one. You'll see:
-   ```
-   <<<<<<< HEAD
-   your version
-   =======
-   their version
-   >>>>>>> origin/develop
-   ```
-3. Decide what the final code should be (often it's both), delete the `<<<<<<<`, `=======` and `>>>>>>>` lines, and save.
-4. Then:
-   ```bash
-   git add .
-   git commit -m "chore: resolve merge conflicts with develop"
-   ```
-5. If you are unsure, ask the owner of that file or the team leader **before** choosing.
-
-IntelliJ also has a built-in conflict tool (right-click the file, then *Git*, then *Resolve Conflicts*).
-
-## Handy Git commands
-
-| Task | Command |
-|------|---------|
-| See what changed | `git status` |
-| See which branch you're on | `git branch` |
-| Undo changes in a file (not yet committed) | `git restore <file>` |
-| See recent history | `git log --oneline -10` |
-| Switch branch | `git checkout <branch>` |
-
-## Merging into `main` (team leader only)
-
-At each milestone and for the final submission:
-
-1. Make sure `develop` builds and runs with all modules working.
-2. Open a PR with **base: `main`** and **compare: `develop`**.
-3. Merge with a normal **merge commit** (not squash).
-4. Optionally tag the version, e.g. `v0.1-milestone1`.
-
-## Need help?
-
-Ask in the team chat first. Include the exact error message and the command you ran. If you're stuck for more than 30 minutes, ask. That's what the team is for.
+If you are stuck for more than 30 minutes, ask in the team chat. Include the exact error message and what you ran.
