@@ -1,95 +1,61 @@
 # Online Grocery Order Management System
 
-SE1020 group project. A web application built with **Java, Spring Boot, Thymeleaf, HTML, CSS and JavaScript**.
-Data is stored in plain text files (no database).
+SE1020 group project. A full-functional online grocery management system built with **Java, Spring Boot, Thymeleaf, HTML, CSS and JavaScript**. Data is stored in plain text files (no database).
 
-## 1. Team and modules
+Customers can browse groceries, add items to a cart, apply promo codes, place orders and leave reviews. Staff can manage inventory, suppliers, deliveries and customer complaints.
 
-| # | Module | Java package | Templates folder | CSS / JS | Data file(s) | ID prefix | URL prefix | Owner (GitHub) |
-|---|--------|--------------|------------------|----------|--------------|-----------|------------|----------------|
-| 1 | User & Authentication | `user` | `templates/user` | `user.css` / `user.js` | `users.txt` | `U` | `/users` | @MrHasit |
-| 2 | Grocery Inventory & Items | `inventory` | `templates/inventory` | `inventory.css` / `inventory.js` | `items.txt` | `ITM` | `/items` | @bimsaramaleesha |
-| 3 | Supplier & Vendor Logistics | `supplier` | `templates/supplier` | `supplier.css` / `supplier.js` | `suppliers.txt`, `deliveries.txt` | `SUP` | `/suppliers` | @Thilanjana01 |
-| 4 | Cart & Order Processing | `order` | `templates/order` | `order.css` / `order.js` | `carts.txt`, `orders.txt` | `CRT`, `ORD` | `/cart`, `/orders` | @Piumanjali K. K. |
-| 5 | Discounts & Promo Codes | `promo` | `templates/promo` | `promo.css` / `promo.js` | `promos.txt` | `PRM` | `/promos` | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @Pahan K. H. S. |
+> **Team members:** read [CONTRIBUTING.md](CONTRIBUTING.md) before you write any code.
 
-**Review buddies** (you review each other's pull requests): 1 and 2, 3 and 4, 5 and 6.
+---
 
-## 2. First-time setup
+## Features (by module)
 
-1. Install **JDK 17 or newer** and **IntelliJ IDEA**.
-2. Accept the repository invitation sent to your email (GitHub).
-3. Tell Git who you are. Use the **same email as your GitHub account**, otherwise your commits will not count for you:
-   ```
-   git config --global user.name "Your Name"
-   git config --global user.email "your-github-email@example.com"
-   ```
-4. In IntelliJ: **File > New > Project from Version Control**, paste the repository URL, choose a folder **outside OneDrive** (for example `C:\Projects`), and click Clone.
-5. Wait for Maven to finish loading (progress bar at the bottom). If asked, set the project JDK to 17 or newer.
-6. Run `GroceryApplication` (green play button) and open http://localhost:8080. You should see the home page.
-7. Switch to the `develop` branch before you start any work (see section 3).
+| # | Module | What it does | URL prefix | Owner |
+|---|--------|--------------|------------|-------|
+| 1 | User & Authentication | Registration, login, user accounts | `/users` | @MrHasit |
+| 2 | Grocery Inventory & Items | Add, list, edit and delete grocery items and stock | `/items` | @bimsaramaleesha |
+| 3 | Supplier & Vendor Logistics | Suppliers and delivery tracking | `/suppliers` | @Thilanjana01 |
+| 4 | Cart & Order Processing | Shopping cart and orders | `/cart`, `/orders` | @Piumanjali K. K. |
+| 5 | Discounts & Promo Codes | Create and apply promo codes | `/promos` | @Yashindi J.P.M |
+| 6 | Reviews & Customer Complaints | Product reviews and complaints | `/reviews`, `/complaints` | @Pahan K. H. S. |
 
-## 3. Branches and daily workflow
+The full per-module conventions (packages, data files, ID prefixes) are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```
-main      stable, demo-ready code. Only the leader merges here.
-develop   everyone's work comes together here.
-feature/<module>-<task>   your own working branch, e.g. feature/inventory-add-item
-```
+## Tech stack
 
-**Nobody pushes directly to `main` or `develop`. Everything goes through a pull request (PR).**
+| Part | Choice |
+|------|--------|
+| Language | Java 17 or newer |
+| Framework | Spring Boot (Maven, with the Maven Wrapper) |
+| Web pages | Thymeleaf templates + HTML / CSS / JavaScript |
+| Data storage | Plain text files through the shared `FileHandler` |
+| Collaboration | Git + GitHub (pull requests, CODEOWNERS, build check) |
 
-Every task:
+## Getting started
 
-```
+**Requirements:** JDK 17 or newer, Git, and IntelliJ IDEA (recommended). You do not need to install Maven separately.
+
+```bash
+git clone https://github.com/bimsaramaleesha/online-grocery-system.git
+cd online-grocery-system
 git checkout develop
-git pull
-git checkout -b feature/inventory-add-item     # new branch for this task
-
-# ... write code, then commit small and often ...
-git add src/main/java/com/grocery/inventory src/main/resources/templates/inventory
-git commit -m "feat(inventory): add item form"
-
-git pull origin develop      # bring in teammates' latest work, run the app again
-git push -u origin feature/inventory-add-item
 ```
 
-Then on GitHub click **Compare & pull request**, base branch **develop**, fill in the template, and ask your review buddy to review.
-When it is approved, click **Create a merge commit** (never "Squash and merge", it hides your individual commits).
-After merging, go back to `develop`, `git pull`, and start the next task from a new branch.
+Run it from IntelliJ (open `GroceryApplication` and press the green play button), or from a terminal:
 
-### Commit messages
+```bash
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
 ```
-feat(inventory): add create item form
-fix(user): handle duplicate username
-docs(report): add class diagram
-```
-Prefixes: `feat`, `fix`, `refactor`, `style`, `docs`, `test`. Commit **often** (several times a week). Commit history is part of your marks.
 
-### Reviewing a pull request
-Open the PR, check "Files changed", leave a comment on anything unclear, then **Review changes > Approve**.
-Pull the branch and run it if you can. Nobody approves their own PR.
+Then open <http://localhost:8080>. You should see the home page.
 
-## 4. Rules
+First-time Git and IntelliJ setup is explained step by step in [CONTRIBUTING.md](CONTRIBUTING.md#2-first-time-setup).
 
-1. **Stay in your lane.** Only edit your own Java package, templates folder, CSS file and JS file.
-2. **Shared files belong to the leader:** everything in `common/`, `templates/fragments/`, `common.css`, `common.js`, `pom.xml`, `application.properties`, `.github/`. Need a change? Message the leader or open an Issue.
-3. **Use `FileHandler` for every file read/write.** Do not write your own file code.
-4. **One line = one record, fields separated by `|`**, for example `ITM001|Milk|250.00|40`. Use `FileHandler.clean(text)` on text typed by users, and `split("\\|")` to read a line.
-5. **IDs:** use `IdGenerator.nextId("ITM", existingIds)`. Prefixes are in the table above.
-6. **Talk to other modules by ID only.** If you need an item's price, store the item ID and ask the inventory module's service. Do not copy or edit another module's classes.
-7. **Start new pages from** `templates/fragments/page-template.html`. Prefix your CSS classes with your module (`.inv-card`, `.cart-table`).
-8. **Never reformat or "optimize imports" on files you do not own.**
-9. **Never commit the `data/` folder.** It is in `.gitignore`, and your test data stays on your own computer.
-10. **Do not push anything that does not start.** Run the app before every pull request.
-11. **Every member must understand all the code they submit.** The viva asks about it.
-
-## 5. Project structure
+## Project structure
 
 ```
 src/main/java/com/grocery/
-    common/        shared helpers (leader only)
+    common/        shared helpers (FileHandler, IdGenerator, GlobalExceptionHandler)
     user/ inventory/ supplier/ order/ promo/ feedback/
         controller/   handles web requests
         model/        the classes (User, GroceryItem ...)
@@ -104,12 +70,16 @@ sample-data/       demo data
 docs/              class diagrams and report
 ```
 
-## 6. Something went wrong?
+## Branches
 
-| Problem | Fix |
-|---------|-----|
-| `git push` rejected | Run `git pull origin develop`, solve any conflict, run the app, push again |
-| Merge conflict | Open the file, keep the correct lines, delete the `<<<<<<<`, `=======`, `>>>>>>>` markers, then `git add` and `git commit`. Ask the leader if unsure |
-| Committed to the wrong branch | Do not push. Message the leader |
-| App will not start | Read the **first** red error in the console and send it to the group |
-| Port 8080 already in use | Stop the other running app (red square in IntelliJ) |
+| Branch | Purpose |
+|--------|---------|
+| `main` | Stable, demo-ready code. Only the team leader merges here. |
+| `develop` | Where everyone's finished work comes together. Every pull request targets this branch. |
+| `feature/<module>-<task>` | Short-lived working branches, e.g. `feature/inventory-add-item`. |
+
+Full workflow and rules: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+Released under the [MIT License](LICENSE).
