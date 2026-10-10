@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- LEADER ONLY. Shared head, navbar and footer used by every page. -->
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' | Online Grocery'">Online Grocery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Online Grocery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/items}">Items</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/suppliers}">Suppliers</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/cart}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/orders}">Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/promos}">Promos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/reviews}">Reviews</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/users}">Users</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<footer th:fragment="footer" class="footer text-center text-muted py-3 mt-5">
+    <small>Online Grocery Order Management System &middot; SE1020</small>
+</footer>
+
+<th:block th:fragment="scripts">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/common.js}"></script>
+</th:block>
+</body>
+</html>
