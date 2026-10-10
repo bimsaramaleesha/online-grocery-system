@@ -1,0 +1,24 @@
+# GitHub automatically asks these people to review changes to these paths.
+# Leader owns the shared files:
+/pom.xml                                          @bimsaramaleesha
+/.github/                                         @bimsaramaleesha
+/src/main/java/com/grocery/common/                @bimsaramaleesha
+/src/main/resources/application.properties        @bimsaramaleesha
+/src/main/resources/templates/fragments/          @bimsaramaleesha
+/src/main/resources/static/css/common.css         @bimsaramaleesha
+/src/main/resources/static/js/common.js           @bimsaramaleesha
+
+# Each member owns their module. Leader: replace the usernames, remove the leading "# ",
+# and make sure every person has accepted the repository invitation first.
+# /src/main/java/com/grocery/user/                @member1-username
+# /src/main/resources/templates/user/             @member1-username
+# /src/main/java/com/grocery/inventory/           @member2-username
+# /src/main/resources/templates/inventory/        @member2-username
+# /src/main/java/com/grocery/supplier/            @member3-username
+# /src/main/resources/templates/supplier/         @member3-username
+# /src/main/java/com/grocery/order/               @member4-username
+# /src/main/resources/templates/order/            @member4-username
+# /src/main/java/com/grocery/promo/               @member5-username
+# /src/main/resources/templates/promo/            @member5-username
+# /src/main/java/com/grocery/feedback/            @member6-username
+# /src/main/resources/templates/feedback/         @member6-username
