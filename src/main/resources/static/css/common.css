@@ -1,0 +1,8 @@
+/* LEADER ONLY. Shared styles used by every page. */
+body {
+    background-color: #f7f9f7;
+}
+
+.footer {
+    border-top: 1px solid #dee2e6;
+}

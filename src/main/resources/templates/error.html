@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-5 text-center">
+    <h1 class="h2">Oops, something went wrong</h1>
+    <p class="text-muted" th:if="${message != null and !#strings.isEmpty(message)}" th:text="${message}"></p>
+    <p class="text-muted" th:if="${message == null or #strings.isEmpty(message)}">
+        This page could not be shown. It may not be built yet.
+    </p>
+    <a class="btn btn-success" th:href="@{/}">Back to home</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

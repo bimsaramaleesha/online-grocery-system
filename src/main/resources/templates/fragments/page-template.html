@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+  COPY THIS FILE into your own templates folder (e.g. templates/inventory/item-list.html)
+  and change the title and the content. Do not edit this template itself.
+  Optional: add your own stylesheet inside the head, e.g.
+     <link rel="stylesheet" th:href="@{/css/inventory.css}">
+-->
+<head th:replace="~{fragments/layout :: head('Page title')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <h1 class="h3 mb-3">Page heading</h1>
+    <!-- YOUR CONTENT HERE -->
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
