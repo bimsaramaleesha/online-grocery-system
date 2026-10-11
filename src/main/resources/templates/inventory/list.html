@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+  Thymeleaf basics used here:
+    th:text="${...}"   put a value into the tag
+    th:each="x : ${list}"  repeat the tag for every item
+    th:if="${...}"     show the tag only when the condition is true
+    th:href / th:action  build URLs  (@{/inventory/new})
+  NOTE: this page is standalone. When you are ready, wrap it with your
+  layout.html fragment the same way the other modules do.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventory - Online Grocery</title>
+    <link rel="stylesheet" th:href="@{/css/inventory.css}">
+</head>
+<body>
+<main class="container">
+    <h1>Grocery Inventory</h1>
+
+    <!-- messages sent by the controller after add / edit / delete -->
+    <p class="alert success" th:if="${message}" th:text="${message}"></p>
+    <p class="alert error" th:if="${error}" th:text="${error}"></p>
+
+    <div class="toolbar">
+        <form th:action="@{/inventory}" method="get" class="search">
+            <input type="text" name="q" th:value="${q}" placeholder="Search name, category or ID">
+            <button type="submit" class="btn">Search</button>
+            <a th:href="@{/inventory}" class="btn btn-light">Clear</a>
+        </form>
+        <a th:href="@{/inventory/new}" class="btn btn-primary">+ Add Item</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Category</th><th>Type</th>
+            <th>Price</th><th>Selling Price</th><th>Qty</th><th>Details</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.id}">ITM-001</td>
+            <td th:text="${item.name}">Name</td>
+            <td th:text="${item.category}">Category</td>
+            <td><span class="badge" th:text="${item.typeLabel}">Type</span></td>
+            <td th:text="${#numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+            <td th:text="${#numbers.formatDecimal(item.sellingPrice, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+            <td>
+                <span th:text="${item.quantity}">0</span>
+                <span class="low" th:if="${item.lowStock}">LOW</span>
+            </td>
+            <td th:text="${item.details}">details</td>
+            <td class="actions">
+                <a th:href="@{/inventory/{id}/edit(id=${item.id})}" class="btn btn-small">Edit</a>
+                <form th:action="@{/inventory/{id}/delete(id=${item.id})}" method="post"
+                      class="delete-form" th:attr="data-name=${item.name}">
+                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(items)}">
+            <td colspan="9" class="empty">No items found.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<script th:src="@{/js/inventory.js}"></script>
+</body>
+</html>
