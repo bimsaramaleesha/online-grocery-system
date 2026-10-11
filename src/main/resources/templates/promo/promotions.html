@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Promotions')}"></head>
+
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<link rel="stylesheet" th:href="@{/css/promo.css}">
+
+<main class="container my-4">
+
+    <h1 class="h3 mb-3">Promotions &amp; Promo Codes</h1>
+
+    <p class="text-muted">
+        Manage grocery discounts and promotional offers.
+    </p>
+
+    <section class="promo-card">
+        <h2 class="h5">Available Promotions</h2>
+
+        <p>
+            View active discounts and coupon codes for grocery orders.
+        </p>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Promotion</th>
+                    <th>Coupon Code</th>
+                    <th>Discount</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td colspan="4" class="text-center">
+                        No promotions available yet.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="promo-card">
+        <h2 class="h5">Create a Promotion</h2>
+
+        <form id="promoForm">
+
+            <label for="promoName">Promotion Name</label>
+            <input
+                    id="promoName"
+                    name="promoName"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter promotion name"
+                    required>
+
+            <label for="couponCode">Coupon Code</label>
+            <input
+                    id="couponCode"
+                    name="couponCode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter coupon code"
+                    required>
+
+            <label for="discount">Discount (%)</label>
+            <input
+                    id="discount"
+                    name="discount"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    max="100"
+                    placeholder="Enter discount percentage"
+                    required>
+
+            <button type="submit" class="btn btn-success mt-3">
+                Add Promotion
+            </button>
+
+        </form>
+    </section>
+
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>
