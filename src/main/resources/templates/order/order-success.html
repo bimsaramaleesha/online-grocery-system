@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Harvest Order Confirmed')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-5">
+    <!-- Market Progress Steps -->
+    <div class="farm-steps">
+        <div class="farm-step-item">🧺 1. Harvest Basket</div>
+        <div class="farm-step-item">🚜 2. Farm Checkout</div>
+        <div class="farm-step-item active">🌾 3. Confirmed!</div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 text-center">
+            <div class="farm-card p-4 p-md-5">
+                <!-- Celebratory Fresh Icon -->
+                <div class="mb-3">
+                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                         style="width: 86px; height: 86px; background-color: var(--farm-leaf-soft); border: 2px solid var(--farm-leaf-border); font-size: 42px;">
+                        🌾
+                    </div>
+                </div>
+
+                <span class="farm-tag farm-tag-lime mb-2">Harvest In Packing</span>
+                <h2 class="farm-heading mb-2">Order Confirmed!</h2>
+                <p class="farm-subheading mb-4">
+                    Thank you for supporting local farmers! Your fresh produce is being carefully packed for direct delivery.
+                </p>
+
+                <!-- Receipt Summary Box -->
+                <div class="p-4 rounded-3 text-start mb-4" style="background: var(--farm-cream-card); border: 1.5px solid var(--farm-border);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted small fw-bold text-uppercase">Farm Order Number</span>
+                        <span class="badge px-3 py-2 fs-6 fw-bold text-white" style="background-color: var(--farm-leaf);" th:text="${order.orderId}">ORD001</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Order Date:</span>
+                        <span class="fw-semibold" th:text="${order.orderDate}">2026-10-10 14:30</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Payment Mode:</span>
+                        <span class="fw-semibold" th:text="${order.paymentMethod}">Cash on Delivery</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Amount Due / Paid:</span>
+                        <span class="fw-bold fs-5" style="color: var(--farm-leaf);">
+                            Rs. <span th:text="${#numbers.formatDecimal(order.netAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                        </span>
+                    </div>
+
+                    <div class="farm-receipt-divider"></div>
+
+                    <div>
+                        <span class="text-muted small d-block mb-1">Delivering to:</span>
+                        <div class="fw-semibold text-dark small" th:text="${order.shippingAddress}">123 Farm Road</div>
+                    </div>
+                </div>
+
+                <!-- Action Navigation Buttons -->
+                <div class="d-grid gap-3">
+                    <a th:href="@{'/orders/' + ${order.orderId}}" class="btn btn-farm-primary py-3">
+                        📄 View Detailed Farm Receipt & Tracking
+                    </a>
+                    <a th:href="@{/orders}" class="btn btn-farm-outline py-2">
+                        📦 View All My Past Orders
+                    </a>
+                    <a th:href="@{/cart}" class="text-decoration-none small fw-semibold" style="color: var(--farm-leaf);">
+                        &larr; Back to Farm Market
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
