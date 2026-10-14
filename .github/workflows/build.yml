@@ -1,0 +1,20 @@
+name: Build
+
+# Runs automatically on every pull request. If the project does not compile
+# or a test fails, the pull request shows a red X and should not be merged.
+on:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - name: Compile and test
+        run: mvn -B verify
