@@ -16,9 +16,9 @@
 /src/main/resources/templates/inventory/        @bimsaramaleesha
 /src/main/java/com/grocery/supplier/            @Thilanjana01
 /src/main/resources/templates/supplier/         @Thilanjana01
-# /src/main/java/com/grocery/order/               @member4-username
-# /src/main/resources/templates/order/            @member4-username
-# /src/main/java/com/grocery/promo/               @member5-username
-# /src/main/resources/templates/promo/            @member5-username
-# /src/main/java/com/grocery/feedback/            @member6-username
-# /src/main/resources/templates/feedback/         @member6-username
+/src/main/java/com/grocery/order/               @it26100058
+/src/main/resources/templates/order/            @it26100058
+/src/main/java/com/grocery/promo/               @manujiyashindi-glit
+/src/main/resources/templates/promo/            @manujiyashindi-glit
+/src/main/java/com/grocery/feedback/            @sahiru05
+/src/main/resources/templates/feedback/         @sahiru05
