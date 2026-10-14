@@ -1,40 +1,25 @@
-/* Inventory module styles. Each member keeps their own CSS file (e.g. promo.css). */
-* { box-sizing: border-box; }
-body { font-family: Arial, Helvetica, sans-serif; background: #f4f6f8; color: #222; margin: 0; }
-.container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
-.container.narrow { max-width: 640px; }
-h1 { margin-bottom: 16px; }
+/* Inventory module styles.
+   Bootstrap (loaded by the layout) does the basics; this file only adds the
+   extras. Every class starts with "inv-" so it can never clash with another
+   module's CSS. */
 
-.toolbar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-.search { display: flex; gap: 6px; flex-wrap: wrap; }
-.search input { padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px; min-width: 240px; }
+.inv-narrow { max-width: 680px; }
 
-.btn { display: inline-block; padding: 8px 14px; border: 1px solid #888; border-radius: 6px;
-       background: #fff; color: #222; text-decoration: none; cursor: pointer; font-size: 14px; }
-.btn-primary { background: #2e7d32; border-color: #2e7d32; color: #fff; }
-.btn-danger { background: #c62828; border-color: #c62828; color: #fff; }
-.btn-light { background: #eee; }
-.btn-small { padding: 4px 10px; font-size: 13px; }
+/* summary cards */
+.inv-stat { border: 1px solid #dee2e6; border-left: 5px solid #198754; color: #212529; transition: box-shadow .15s, transform .15s; }
+.inv-stat:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, .1); transform: translateY(-2px); color: #212529; }
+.inv-stat-low     { border-left-color: #fd7e14; }
+.inv-stat-soon    { border-left-color: #ffc107; }
+.inv-stat-expired { border-left-color: #dc3545; }
+.inv-stat-active  { box-shadow: 0 0 0 2px #198754 inset; }
+.inv-stat-label  { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #6c757d; }
+.inv-stat-number { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.inv-stat-note   { font-size: .8rem; }
 
-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; }
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e3e3e3; font-size: 14px; }
-th { background: #2e7d32; color: #fff; }
-tr:hover td { background: #f1f8f1; }
-.empty { text-align: center; color: #777; padding: 24px; }
-.actions { white-space: nowrap; }
-.actions form { display: inline; }
+/* item type badges */
+.inv-type { font-weight: 500; }
+.inv-type-perishable { background: #e8f5e9; color: #1b5e20; }
+.inv-type-shelf      { background: #e7f1ff; color: #0a4a9e; }
 
-.badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 12px; }
-.low { background: #ffe0b2; color: #e65100; padding: 1px 6px; border-radius: 8px; font-size: 11px; margin-left: 4px; }
-
-.alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 14px; }
-.alert.success { background: #e8f5e9; color: #1b5e20; }
-.alert.error { background: #ffebee; color: #b71c1c; }
-
-.card { background: #fff; padding: 20px; border-radius: 8px; }
-.field { margin-bottom: 14px; flex: 1; }
-.field label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 14px; }
-.field input, .field select { width: 100%; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px; font-size: 14px; }
-.row { display: flex; gap: 12px; }
-.type-fields { display: none; }
-.form-actions { display: flex; gap: 8px; margin-top: 8px; }
+/* add/edit form: the type-specific blocks start hidden, inventory.js shows one */
+.inv-type-fields { display: none; }

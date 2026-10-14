@@ -1,5 +1,6 @@
 package com.grocery.inventory.service;
 
+import com.grocery.inventory.dto.InventorySummary;
 import com.grocery.inventory.dto.ItemForm;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.model.ItemFactory;
@@ -24,6 +25,14 @@ public class InventoryService {
 
     /** READ (list + search by name, category or id). */
     public List<Item> search(String keyword) {
+        return search(keyword, null);
+    }
+
+    /**
+     * READ with an optional status filter: "low" (low stock), "soon" (expiring soon),
+     * "expired". Any other value (or null) means no filter.
+     */
+    public List<Item> search(String keyword, String filter) {
         List<Item> all = repository.findAll();
         if (keyword != null && !keyword.isBlank()) {
             String k = keyword.trim().toLowerCase();
@@ -33,7 +42,29 @@ public class InventoryService {
                             || i.getId().toLowerCase().contains(k))
                     .toList();
         }
+        if ("low".equals(filter)) {
+            all = all.stream().filter(Item::isLowStock).toList();
+        } else if ("soon".equals(filter)) {
+            all = all.stream().filter(Item::isExpiringSoon).toList();
+        } else if ("expired".equals(filter)) {
+            all = all.stream().filter(Item::isExpired).toList();
+        }
         return all.stream().sorted(Comparator.comparing(Item::getId)).toList();
+    }
+
+    /** Numbers for the cards at the top of the page (always over ALL items). */
+    public InventorySummary summary() {
+        List<Item> all = repository.findAll();
+        double value = 0;
+        for (Item i : all) {
+            value += i.getPrice() * i.getQuantity();
+        }
+        return new InventorySummary(
+                all.size(),
+                (int) all.stream().filter(Item::isLowStock).count(),
+                (int) all.stream().filter(Item::isExpiringSoon).count(),
+                (int) all.stream().filter(Item::isExpired).count(),
+                Math.round(value * 100.0) / 100.0);
     }
 
     /** READ one. */

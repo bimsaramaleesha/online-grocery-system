@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * Receives browser requests and decides which page to show.
  * Every method = one URL.   GET = "show me a page",  POST = "I'm sending data".
  *
- *   GET  /inventory              list (+ ?q=search)
+ *   GET  /inventory              list (+ ?q=search, ?filter=low|soon|expired)
  *   GET  /inventory/new          empty add form
  *   POST /inventory/new          save the new item
  *   GET  /inventory/{id}/edit    edit form filled with the item
@@ -31,9 +31,12 @@ public class InventoryController {
 
     // ---------- READ ----------
     @GetMapping
-    public String list(@RequestParam(required = false) String q, Model model) {
-        model.addAttribute("items", service.search(q));   // the page reads it as ${items}
+    public String list(@RequestParam(required = false) String q,
+                       @RequestParam(required = false) String filter, Model model) {
+        model.addAttribute("items", service.search(q, filter));   // the page reads it as ${items}
+        model.addAttribute("summary", service.summary());
         model.addAttribute("q", q);
+        model.addAttribute("filter", filter);
         return "inventory/list";                          // templates/inventory/list.html
     }
 

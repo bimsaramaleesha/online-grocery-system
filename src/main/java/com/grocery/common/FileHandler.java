@@ -3,16 +3,15 @@ package com.grocery.common;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 /**
- * REFERENCE VERSION. If your repo already has com.grocery.common.FileHandler,
- * keep yours and only adjust the two calls in FileItemRepository
- * (readLines / writeLines) to match your method names.
+ * Shared helper that every module uses to read and write its .txt data file.
+ * Any I/O problem is wrapped in DataFileException, which GlobalExceptionHandler
+ * turns into a friendly error page.
  */
 @Component
 public class FileHandler {
@@ -26,7 +25,7 @@ public class FileHandler {
             }
             return Files.readAllLines(path, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new UncheckedIOException("Could not read " + fileName, e);
+            throw new DataFileException("Could not read " + fileName, e);
         }
     }
 
@@ -39,7 +38,7 @@ public class FileHandler {
             }
             Files.write(path, lines, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new UncheckedIOException("Could not write " + fileName, e);
+            throw new DataFileException("Could not write " + fileName, e);
         }
     }
 }

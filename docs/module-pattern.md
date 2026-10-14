@@ -47,3 +47,13 @@ and the answer travels back the same way.
 2. Need something from another module? Ask its owner; don't edit their files.
 3. Name your files the same way: `XxxRepository`, `FileXxxRepository`, `XxxService`, `XxxController`, `xxx.css`, `xxx.js`.
 4. Minimum for marks: 3 CRUD operations, 3 pages, inheritance + polymorphism, file handling.
+
+## Pages and layout (read before writing your templates)
+- Every page uses the shared layout. For a page with your own stylesheet, start it with
+  `<head th:replace="~{fragments/layout :: headWithCss('Your title', '/css/yourmodule.css')}"></head>`
+  (a `<link>` placed inside a `th:replace` head is discarded, so use this fragment).
+- Add your own script after the shared one: `<script th:src="@{/js/yourmodule.js}"></script>`.
+- Bootstrap is already loaded, so use its classes. In your own CSS start every class with a
+  module prefix (`inv-`, `sup-`, `ord-` ...) so modules never overwrite each other's styles.
+- IDs are made with `IdGenerator.nextId("PREFIX", existingIds)` (ITM001, SUP001 ...). Never build IDs by hand.
+- `data/*.txt` is not in Git. Copy `sample-data/items.txt` to `data/items.txt` to get demo data.

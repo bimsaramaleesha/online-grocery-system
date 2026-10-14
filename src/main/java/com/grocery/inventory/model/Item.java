@@ -70,6 +70,11 @@ public abstract class Item {
         return quantity <= LOW_STOCK_LIMIT;
     }
 
+    /** Only perishable items can expire; the others keep these defaults. */
+    public boolean isExpired() { return false; }
+
+    public boolean isExpiringSoon() { return false; }
+
     /**
      * Turns the item into ONE line of text for items.txt.
      * Format: TYPE|id|name|category|price|quantity|<extra fields of the child>

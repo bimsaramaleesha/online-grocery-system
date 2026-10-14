@@ -1,8 +1,12 @@
 package com.grocery.inventory.repository;
 
 import com.grocery.common.FileHandler;
+import com.grocery.common.IdGenerator;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.model.ItemFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -18,26 +22,31 @@ import java.util.Optional;
 @Repository
 public class FileItemRepository implements ItemRepository {
 
-    private static final String FILE_NAME = "data/items.txt";
+    private static final Logger log = LoggerFactory.getLogger(FileItemRepository.class);
 
     private final FileHandler fileHandler;
+    private final String fileName;
 
-    // Spring passes the FileHandler in automatically (constructor injection)
-    public FileItemRepository(FileHandler fileHandler) {
+    // Spring passes the FileHandler in automatically (constructor injection).
+    // The file name has a default, so nobody needs to configure anything;
+    // tests pass a temporary file so they never touch the real data/items.txt.
+    public FileItemRepository(FileHandler fileHandler,
+                              @Value("${grocery.data.items-file:data/items.txt}") String fileName) {
         this.fileHandler = fileHandler;
+        this.fileName = fileName;
     }
 
     @Override
     public synchronized List<Item> findAll() {
         List<Item> items = new ArrayList<>();
-        for (String line : fileHandler.readLines(FILE_NAME)) {
+        for (String line : fileHandler.readLines(fileName)) {
             if (line.isBlank() || line.startsWith("#")) {
                 continue;                       // ignore empty lines and comments
             }
             try {
                 items.add(ItemFactory.fromFileLine(line));
             } catch (RuntimeException e) {      // one bad line must not break the whole page
-                System.err.println("Skipping bad line in " + FILE_NAME + ": " + line);
+                log.warn("Skipping bad line in {}: {}", fileName, line);
             }
         }
         return items;
@@ -85,19 +94,11 @@ public class FileItemRepository implements ItemRepository {
         for (Item item : items) {
             lines.add(item.toFileLine());       // polymorphism: each child writes itself
         }
-        fileHandler.writeLines(FILE_NAME, lines);
+        fileHandler.writeLines(fileName, lines);
     }
 
-    /** ITM-001, ITM-002 ... (highest existing number + 1) */
+    /** ITM001, ITM002 ... (highest existing number + 1) - same rule as every other module. */
     private String nextId(List<Item> items) {
-        int max = 0;
-        for (Item item : items) {
-            try {
-                max = Math.max(max, Integer.parseInt(item.getId().substring(4)));
-            } catch (RuntimeException ignored) {
-                // an id in another format: ignore it
-            }
-        }
-        return String.format("ITM-%03d", max + 1);
+        return IdGenerator.nextId("ITM", items.stream().map(Item::getId).toList());
     }
 }

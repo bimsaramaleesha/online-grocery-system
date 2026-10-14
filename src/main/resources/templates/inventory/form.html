@@ -7,84 +7,88 @@
   th:field="*{name}"   = connects the input to form.name (value + submit)
 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Item Form - Online Grocery</title>
-    <link rel="stylesheet" th:href="@{/css/inventory.css}">
-</head>
+<head th:replace="~{fragments/layout :: headWithCss('Item Form', '/css/inventory.css')}"></head>
 <body>
-<main class="container narrow">
-    <h1 th:text="${editMode} ? 'Edit Item' : 'Add Item'">Add Item</h1>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-    <p class="alert error" th:if="${error}" th:text="${error}"></p>
+<main class="container my-4 inv-narrow">
+    <h1 class="h3 mb-3" th:text="${editMode} ? 'Edit Item' : 'Add Item'">Add Item</h1>
+
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
 
     <form th:object="${form}"
           th:action="${editMode} ? @{/inventory/{id}/edit(id=${form.id})} : @{/inventory/new}"
-          method="post" class="card">
+          method="post" class="card card-body">
 
         <!-- Item type: choosable when adding, fixed when editing -->
-        <div class="field" th:unless="${editMode}">
-            <label for="type">Item type</label>
-            <select id="type" th:field="*{type}">
+        <div class="mb-3" th:unless="${editMode}">
+            <label for="type" class="form-label">Item type</label>
+            <select id="type" class="form-select" th:field="*{type}" required>
                 <option value="">-- choose --</option>
                 <option value="PERISHABLE">Perishable (milk, vegetables...)</option>
                 <option value="NON_PERISHABLE">Non-Perishable (rice, canned food...)</option>
             </select>
         </div>
-        <div class="field" th:if="${editMode}">
-            <label>Item ID</label>
-            <input type="text" th:value="${form.id}" disabled>
+        <div class="mb-3" th:if="${editMode}">
+            <label class="form-label">Item ID</label>
+            <input type="text" class="form-control" th:value="${form.id}" disabled>
             <input type="hidden" id="type" th:field="*{type}">
         </div>
 
-        <div class="field">
-            <label for="name">Name</label>
-            <input type="text" id="name" th:field="*{name}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}" required>
         </div>
-        <div class="field">
-            <label for="category">Category</label>
-            <input type="text" id="category" th:field="*{category}" placeholder="Dairy, Grains, Vegetables...">
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" id="category" class="form-control" th:field="*{category}"
+                   placeholder="Dairy, Grains, Vegetables..." required>
         </div>
         <div class="row">
-            <div class="field">
-                <label for="price">Price</label>
-                <input type="number" id="price" step="0.01" min="0" th:field="*{price}">
+            <div class="col-sm-6 mb-3">
+                <label for="price" class="form-label">Price (Rs.)</label>
+                <input type="number" id="price" class="form-control" step="0.01" min="0"
+                       th:field="*{price}" required>
             </div>
-            <div class="field">
-                <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" step="1" min="0" th:field="*{quantity}">
+            <div class="col-sm-6 mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" id="quantity" class="form-control" step="1" min="0"
+                       th:field="*{quantity}" required>
             </div>
         </div>
 
         <!-- shown only for PERISHABLE (inventory.js hides/shows these blocks) -->
-        <div id="perishableFields" class="type-fields">
-            <div class="field">
-                <label for="expiryDate">Expiry date</label>
-                <input type="date" id="expiryDate" th:field="*{expiryDate}">
+        <div id="perishableFields" class="inv-type-fields">
+            <div class="mb-3">
+                <label for="expiryDate" class="form-label">Expiry date</label>
+                <input type="date" id="expiryDate" class="form-control" th:field="*{expiryDate}">
             </div>
         </div>
 
         <!-- shown only for NON_PERISHABLE -->
-        <div id="nonPerishableFields" class="type-fields">
+        <div id="nonPerishableFields" class="inv-type-fields">
             <div class="row">
-                <div class="field">
-                    <label for="brand">Brand</label>
-                    <input type="text" id="brand" th:field="*{brand}">
+                <div class="col-sm-6 mb-3">
+                    <label for="brand" class="form-label">Brand</label>
+                    <input type="text" id="brand" class="form-control" th:field="*{brand}">
                 </div>
-                <div class="field">
-                    <label for="shelfLifeMonths">Shelf life (months)</label>
-                    <input type="number" id="shelfLifeMonths" step="1" min="1" th:field="*{shelfLifeMonths}">
+                <div class="col-sm-6 mb-3">
+                    <label for="shelfLifeMonths" class="form-label">Shelf life (months)</label>
+                    <input type="number" id="shelfLifeMonths" class="form-control" step="1" min="1"
+                           th:field="*{shelfLifeMonths}">
                 </div>
             </div>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary" th:text="${editMode} ? 'Save Changes' : 'Add Item'">Save</button>
-            <a th:href="@{/inventory}" class="btn btn-light">Cancel</a>
+        <div class="d-flex gap-2 mt-2">
+            <button type="submit" class="btn btn-success" th:text="${editMode} ? 'Save Changes' : 'Add Item'">Save</button>
+            <a th:href="@{/inventory}" class="btn btn-outline-secondary">Cancel</a>
         </div>
     </form>
 </main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 <script th:src="@{/js/inventory.js}"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@ Customers can browse groceries, add items to a cart, apply promo codes, place or
 | # | Module | What it does | URL prefix | Owner |
 |---|--------|--------------|------------|-------|
 | 1 | User & Authentication | Registration, login, user accounts | `/users` | @MrHasit |
-| 2 | Grocery Inventory & Items | Add, list, edit and delete grocery items and stock | `/items` | @bimsaramaleesha |
+| 2 | Grocery Inventory & Items | Add, list, edit and delete grocery items and stock | `/inventory` | @bimsaramaleesha |
 | 3 | Supplier & Vendor Logistics | Suppliers and delivery tracking | `/suppliers` | @Thilanjana01 |
 | 4 | Cart & Order Processing | Shopping cart and orders | `/cart`, `/orders` | @Piumanjali K. K. |
 | 5 | Discounts & Promo Codes | Create and apply promo codes | `/promos` | @Yashindi J.P.M |

@@ -1,71 +1,141 @@
 <!DOCTYPE html>
 <!--
+  Inventory list page, wrapped in the shared layout (navbar, footer, Bootstrap).
   Thymeleaf basics used here:
-    th:text="${...}"   put a value into the tag
+    th:text="${...}"       put a value into the tag
     th:each="x : ${list}"  repeat the tag for every item
-    th:if="${...}"     show the tag only when the condition is true
-    th:href / th:action  build URLs  (@{/inventory/new})
-  NOTE: this page is standalone. When you are ready, wrap it with your
-  layout.html fragment the same way the other modules do.
+    th:if="${...}"         show the tag only when the condition is true
+    th:href / th:action    build URLs  (@{/inventory/new})
 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inventory - Online Grocery</title>
-    <link rel="stylesheet" th:href="@{/css/inventory.css}">
-</head>
+<head th:replace="~{fragments/layout :: headWithCss('Inventory', '/css/inventory.css')}"></head>
 <body>
-<main class="container">
-    <h1>Grocery Inventory</h1>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-    <!-- messages sent by the controller after add / edit / delete -->
-    <p class="alert success" th:if="${message}" th:text="${message}"></p>
-    <p class="alert error" th:if="${error}" th:text="${error}"></p>
+<main class="container my-4">
 
-    <div class="toolbar">
-        <form th:action="@{/inventory}" method="get" class="search">
-            <input type="text" name="q" th:value="${q}" placeholder="Search name, category or ID">
-            <button type="submit" class="btn">Search</button>
-            <a th:href="@{/inventory}" class="btn btn-light">Clear</a>
-        </form>
-        <a th:href="@{/inventory/new}" class="btn btn-primary">+ Add Item</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <div>
+            <h1 class="h3 mb-0">Grocery Inventory</h1>
+            <small class="text-muted">Manage items, stock levels and expiry dates</small>
+        </div>
+        <a th:href="@{/inventory/new}" class="btn btn-success">+ Add Item</a>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th><th>Name</th><th>Category</th><th>Type</th>
-            <th>Price</th><th>Selling Price</th><th>Qty</th><th>Details</th><th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.id}">ITM-001</td>
-            <td th:text="${item.name}">Name</td>
-            <td th:text="${item.category}">Category</td>
-            <td><span class="badge" th:text="${item.typeLabel}">Type</span></td>
-            <td th:text="${#numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}">0.00</td>
-            <td th:text="${#numbers.formatDecimal(item.sellingPrice, 1, 'COMMA', 2, 'POINT')}">0.00</td>
-            <td>
-                <span th:text="${item.quantity}">0</span>
-                <span class="low" th:if="${item.lowStock}">LOW</span>
-            </td>
-            <td th:text="${item.details}">details</td>
-            <td class="actions">
-                <a th:href="@{/inventory/{id}/edit(id=${item.id})}" class="btn btn-small">Edit</a>
-                <form th:action="@{/inventory/{id}/delete(id=${item.id})}" method="post"
-                      class="delete-form" th:attr="data-name=${item.name}">
-                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(items)}">
-            <td colspan="9" class="empty">No items found.</td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- messages sent by the controller after add / edit / delete -->
+    <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+    <!-- summary cards (click one to filter the table) -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/inventory}" class="inv-stat card h-100 text-decoration-none"
+               th:classappend="${filter == null or filter == ''} ? 'inv-stat-active'">
+                <div class="card-body">
+                    <div class="inv-stat-label">Total items</div>
+                    <div class="inv-stat-number" th:text="${summary.total}">0</div>
+                    <div class="inv-stat-note text-muted">
+                        Stock value Rs.
+                        <span th:text="${#numbers.formatDecimal(summary.stockValue, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/inventory(filter='low')}" class="inv-stat inv-stat-low card h-100 text-decoration-none"
+               th:classappend="${filter == 'low'} ? 'inv-stat-active'">
+                <div class="card-body">
+                    <div class="inv-stat-label">Low stock</div>
+                    <div class="inv-stat-number" th:text="${summary.lowStock}">0</div>
+                    <div class="inv-stat-note text-muted">10 or fewer left</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/inventory(filter='soon')}" class="inv-stat inv-stat-soon card h-100 text-decoration-none"
+               th:classappend="${filter == 'soon'} ? 'inv-stat-active'">
+                <div class="card-body">
+                    <div class="inv-stat-label">Expiring soon</div>
+                    <div class="inv-stat-number" th:text="${summary.expiringSoon}">0</div>
+                    <div class="inv-stat-note text-muted">within 3 days (20% off)</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/inventory(filter='expired')}" class="inv-stat inv-stat-expired card h-100 text-decoration-none"
+               th:classappend="${filter == 'expired'} ? 'inv-stat-active'">
+                <div class="card-body">
+                    <div class="inv-stat-label">Expired</div>
+                    <div class="inv-stat-number" th:text="${summary.expired}">0</div>
+                    <div class="inv-stat-note text-muted">remove or restock</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- search -->
+    <form th:action="@{/inventory}" method="get" class="row g-2 mb-3">
+        <input type="hidden" name="filter" th:value="${filter}" th:if="${filter != null and filter != ''}">
+        <div class="col-12 col-md">
+            <input type="text" name="q" class="form-control" th:value="${q}"
+                   placeholder="Search by name, category or ID">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-success">Search</button>
+            <a th:href="@{/inventory}" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+    <!-- table -->
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-success">
+                <tr>
+                    <th>ID</th><th>Name</th><th>Category</th><th>Type</th>
+                    <th class="text-end">Price (Rs.)</th><th class="text-end">Selling (Rs.)</th>
+                    <th class="text-end">Qty</th><th>Details</th><th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${items}"
+                    th:classappend="${item.expired} ? 'table-danger' : (${item.expiringSoon} ? 'table-warning' : '')">
+                    <td class="text-muted" th:text="${item.id}">ITM001</td>
+                    <td class="fw-semibold" th:text="${item.name}">Name</td>
+                    <td th:text="${item.category}">Category</td>
+                    <td>
+                        <span class="badge inv-type"
+                              th:classappend="${item.itemType == 'PERISHABLE'} ? 'inv-type-perishable' : 'inv-type-shelf'"
+                              th:text="${item.typeLabel}">Type</span>
+                    </td>
+                    <td class="text-end" th:text="${#numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                    <td class="text-end fw-semibold"
+                        th:text="${#numbers.formatDecimal(item.sellingPrice, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                    <td class="text-end">
+                        <span th:text="${item.quantity}">0</span>
+                        <span class="badge text-bg-warning ms-1" th:if="${item.lowStock}">LOW</span>
+                    </td>
+                    <td class="small" th:text="${item.details}">details</td>
+                    <td class="text-end text-nowrap">
+                        <a th:href="@{/inventory/{id}/edit(id=${item.id})}"
+                           class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form th:action="@{/inventory/{id}/delete(id=${item.id})}" method="post"
+                              class="d-inline delete-form" th:attr="data-name=${item.name}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(items)}">
+                    <td colspan="9" class="text-center text-muted py-4">No items found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 <script th:src="@{/js/inventory.js}"></script>
 </body>
 </html>

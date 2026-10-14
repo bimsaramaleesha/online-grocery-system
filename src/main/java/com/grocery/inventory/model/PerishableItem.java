@@ -30,10 +30,12 @@ public class PerishableItem extends Item {
         this.expiryDate = expiryDate;
     }
 
+    @Override
     public boolean isExpired() {
         return expiryDate.isBefore(LocalDate.now());
     }
 
+    @Override
     public boolean isExpiringSoon() {
         long daysLeft = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
         return daysLeft >= 0 && daysLeft <= SOON_DAYS;
