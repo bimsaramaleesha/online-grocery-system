@@ -24,22 +24,20 @@ public class FileItemRepository implements ItemRepository {
 
     private static final Logger log = LoggerFactory.getLogger(FileItemRepository.class);
 
-    private final FileHandler fileHandler;
     private final String fileName;
 
-    // Spring passes the FileHandler in automatically (constructor injection).
-    // The file name has a default, so nobody needs to configure anything;
-    // tests pass a temporary file so they never touch the real data/items.txt.
-    public FileItemRepository(FileHandler fileHandler,
-                              @Value("${grocery.data.items-file:data/items.txt}") String fileName) {
-        this.fileHandler = fileHandler;
+    // FileHandler is a static helper (shared by every module) and always works inside
+    // the "data" folder, so the name here is just "items.txt".
+    // The default means nobody needs to configure anything; tests pass another name
+    // so they never touch the real data/items.txt.
+    public FileItemRepository(@Value("${grocery.data.items-file:items.txt}") String fileName) {
         this.fileName = fileName;
     }
 
     @Override
     public synchronized List<Item> findAll() {
         List<Item> items = new ArrayList<>();
-        for (String line : fileHandler.readLines(fileName)) {
+        for (String line : FileHandler.readLines(fileName)) {
             if (line.isBlank() || line.startsWith("#")) {
                 continue;                       // ignore empty lines and comments
             }
@@ -94,7 +92,7 @@ public class FileItemRepository implements ItemRepository {
         for (Item item : items) {
             lines.add(item.toFileLine());       // polymorphism: each child writes itself
         }
-        fileHandler.writeLines(fileName, lines);
+        FileHandler.writeLines(fileName, lines);
     }
 
     /** ITM001, ITM002 ... (highest existing number + 1) - same rule as every other module. */

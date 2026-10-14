@@ -5,6 +5,7 @@ import com.grocery.inventory.dto.ItemForm;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.repository.FileItemRepository;
 import com.grocery.inventory.service.InventoryService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,17 +19,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Uses a temporary file, so the real data/items.txt is never touched. */
+/** Uses its own data/items-test-*.txt file (deleted afterwards), so the real data/items.txt is never touched. */
 class FileItemRepositoryTest {
 
     private InventoryService service;
-    private Path file;
+    private String fileName;
 
     @BeforeEach
-    void setUp() throws IOException {
-        file = Files.createTempFile("items-test", ".txt");
-        Files.delete(file);   // start with "no file yet", like a fresh install
-        service = new InventoryService(new FileItemRepository(new FileHandler(), file.toString()));
+    void setUp() {
+        fileName = "items-test-" + System.nanoTime() + ".txt";   // lives in the data/ folder
+        service = new InventoryService(new FileItemRepository(fileName));
+    }
+
+    @AfterEach
+    void cleanUp() throws IOException {
+        Files.deleteIfExists(Path.of("data", fileName));
     }
 
     private ItemForm rice(String name) {
@@ -74,7 +79,7 @@ class FileItemRepositoryTest {
         service.updateItem(added.getId(), edit);
 
         // a brand-new service reading the same file proves the data was really saved
-        InventoryService reopened = new InventoryService(new FileItemRepository(new FileHandler(), file.toString()));
+        InventoryService reopened = new InventoryService(new FileItemRepository(fileName));
         Item saved = reopened.getById(added.getId());
         assertEquals("Rice A Premium", saved.getName());
         assertEquals(5, saved.getQuantity());
@@ -115,8 +120,8 @@ class FileItemRepositoryTest {
     }
 
     @Test
-    void oneCorruptLineDoesNotBreakTheList() throws IOException {
-        Files.write(file, List.of(
+    void oneCorruptLineDoesNotBreakTheList() {
+        FileHandler.writeLines(fileName, List.of(
                 "PERISHABLE|ITM001|Milk|Dairy|100.0|20|2030-01-01",
                 "this line is garbage",
                 "NON_PERISHABLE|ITM002|Rice|Grains|500.0|40|Araliya|24"));

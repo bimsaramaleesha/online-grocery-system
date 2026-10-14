@@ -1,5 +1,7 @@
 package com.grocery.inventory.model;
 
+import com.grocery.common.FileHandler;
+
 /**
  * ABSTRACTION: Item is an abstract class. You can never write "new Item(...)".
  * It holds what EVERY grocery item has, and forces each child class to say
@@ -92,9 +94,9 @@ public abstract class Item {
                 getExtraFields());
     }
 
-    /** The "|" character is our separator, so it must never appear inside data. */
+    /** The "|" character is our separator, so it must never appear inside data (shared team rule). */
     protected static String clean(String text) {
-        return text == null ? "" : text.replace("|", "/").replace("\n", " ").replace("\r", " ");
+        return FileHandler.clean(text);
     }
 
     // ---------- every child MUST implement these (abstraction) ----------

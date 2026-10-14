@@ -81,8 +81,10 @@ class ItemModelTest {
     @Test
     void pipeCharacterInATextFieldCannotBreakTheFile() {
         Item item = new NonPerishableItem("ITM006", "Soap | Lavender", "Household", 100.0, 5, "Brand", 12);
-        Item copy = ItemFactory.fromFileLine(item.toFileLine());
-        assertEquals("Soap / Lavender", copy.getName());
+        Item copy = ItemFactory.fromFileLine(item.toFileLine());   // would fail if "|" broke the columns
+        assertFalse(copy.getName().contains("|"));
+        assertEquals("Household", copy.getCategory());
+        assertEquals(5, copy.getQuantity());
     }
 
     @Test

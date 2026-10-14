@@ -4,7 +4,7 @@ SE1020 group project. A full-functional online grocery management system built w
 
 Customers can browse groceries, add items to a cart, apply promo codes, place orders and leave reviews. Staff can manage inventory, suppliers, deliveries and customer complaints.
 
-> **Team members:** read [CONTRIBUTING.md](CONTRIBUTING.md) before you write any code.
+> **Team members:** read [CONTRIBUTING.md](CONTRIBUTING.md) before you write any code, then [docs/project-walkthrough.md](docs/project-walkthrough.md) (how everything works) and [docs/data-formats.md](docs/data-formats.md) (file formats shared between modules).
 
 ---
 
