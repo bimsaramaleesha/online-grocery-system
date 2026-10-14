@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Fresh Farm Basket')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <!-- Market Progress Steps -->
+    <div class="farm-steps">
+        <div class="farm-step-item active">🧺 1. Harvest Basket</div>
+        <div class="farm-step-item">🚜 2. Farm Checkout</div>
+        <div class="farm-step-item">🌾 3. Confirmation</div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-warning-subtle">
+        <div>
+            <span class="farm-tag farm-tag-leaf mb-2">🌿 100% Organically Grown & Locally Sourced</span>
+            <h1 class="h2 farm-heading mb-1">Your Harvest Basket</h1>
+            <p class="farm-subheading mb-0">Handpicked farm goods ready for same-day delivery to your doorstep.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex align-items-center gap-2">
+            <span class="badge rounded-pill px-3 py-2 fs-6 fw-bold text-dark" style="background-color: var(--farm-border);" th:text="${itemCount} + ' Fresh Items'">0 Items</span>
+            <a th:href="@{/orders}" class="btn btn-sm btn-farm-outline">📦 Past Farm Orders</a>
+        </div>
+    </div>
+
+    <!-- Feedback Alerts -->
+    <div th:if="${successMessage}" class="farm-alert-success d-flex justify-content-between align-items-center mb-4">
+        <div><span>🌿 </span><span th:text="${successMessage}">Operation successful!</span></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="farm-alert-danger d-flex justify-content-between align-items-center mb-4">
+        <div><span>⚠️ </span><span th:text="${errorMessage}">Something went wrong.</span></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Cart Items Column -->
+        <div class="col-lg-8">
+            <div class="farm-card mb-4">
+                <div class="farm-card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">
+                        🧺 Selected Farm Groceries
+                    </h5>
+                    <form th:if="${!#lists.isEmpty(cartItems)}" th:action="@{/cart/clear}" method="post" class="d-inline" onsubmit="return confirm('Empty your entire harvest basket?');">
+                        <button type="submit" class="btn btn-sm text-danger text-decoration-none fw-semibold p-0">
+                            &times; Empty Basket
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card-body p-0">
+                    <!-- Empty Basket State -->
+                    <div th:if="${#lists.isEmpty(cartItems)}" class="text-center py-5 px-3">
+                        <div class="display-4 mb-2">🧺</div>
+                        <h4 class="farm-heading mb-2">Your basket is waiting for fresh harvest</h4>
+                        <p class="text-muted mx-auto mb-4" style="max-width: 420px;">
+                            No groceries added yet. Browse our morning harvest below to fill your basket with garden fresh produce.
+                        </p>
+                    </div>
+
+                    <!-- Cart Table -->
+                    <div th:if="${!#lists.isEmpty(cartItems)}" class="table-responsive">
+                        <table class="farm-table">
+                            <thead>
+                            <tr>
+                                <th style="width: 44%;">Farm Item</th>
+                                <th class="text-end" style="width: 16%;">Price</th>
+                                <th class="text-center" style="width: 22%;">Quantity</th>
+                                <th class="text-end" style="width: 14%;">Total</th>
+                                <th style="width: 4%;"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${cartItems}">
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-3 p-2 text-center" style="background: var(--farm-cream-card); font-size: 1.5rem; min-width: 45px;">
+                                            🌱
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold" style="color: var(--farm-text);" th:text="${item.itemName}">Item Name</div>
+                                            <small class="text-muted">
+                                                Code: <code class="text-secondary" th:text="${item.itemId}">ITM001</code> &middot; Sold per <span class="fw-semibold" th:text="${item.unit}">unit</span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end fw-semibold text-muted">
+                                    Rs. <span th:text="${#numbers.formatDecimal(item.unitPrice, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <form th:action="@{/cart/update}" method="post" class="d-inline-flex justify-content-center">
+                                        <input type="hidden" name="cartId" th:value="${item.cartId}"/>
+                                        <div class="farm-qty-group">
+                                            <button type="button" class="farm-qty-btn" onclick="decreaseQty(this)">-</button>
+                                            <input type="number" name="quantity" class="farm-qty-input order-qty-input" th:value="${item.quantity}" min="1" max="99" onchange="this.form.submit()"/>
+                                            <button type="button" class="farm-qty-btn" onclick="increaseQty(this)">+</button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end fw-bold" style="color: var(--farm-leaf);">
+                                    Rs. <span th:text="${#numbers.formatDecimal(item.lineTotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                </td>
+                                <td class="text-center pe-3">
+                                    <form th:action="@{/cart/remove}" method="post" class="d-inline">
+                                        <input type="hidden" name="cartId" th:value="${item.cartId}"/>
+                                        <button type="submit" class="btn btn-sm btn-link text-muted p-0 hover-danger" title="Remove item" style="font-size: 1.25rem; text-decoration: none;">&times;</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fresh Farm Marketplace Catalog Section -->
+            <div class="farm-card">
+                <div class="farm-card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="farm-tag farm-tag-lime mb-1">Morning Harvest</span>
+                        <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">Fresh Direct From Valley Farms</h5>
+                    </div>
+                    <span class="badge bg-light text-dark border">Daily Replenished</span>
+                </div>
+                <div class="farm-card-body">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+                        <div class="col" th:each="cat : ${availableItems}">
+                            <div class="farm-product-card">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="farm-tag farm-tag-leaf" th:text="${cat.category}">Category</span>
+                                        <small class="text-muted fw-bold" th:text="${cat.id}">ITM001</small>
+                                    </div>
+                                    <h6 class="fw-bold mb-1" style="color: var(--farm-text);" th:text="${cat.name}">Product Name</h6>
+                                    <div class="farm-product-price mb-3">
+                                        Rs. <span th:text="${#numbers.formatDecimal(cat.price, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                        <small class="text-muted fw-normal fs-6">/ <span th:text="${cat.unit}">unit</span></small>
+                                    </div>
+                                </div>
+                                <form th:action="@{/cart/add}" method="post" class="d-flex align-items-center gap-2">
+                                    <input type="hidden" name="itemId" th:value="${cat.id}"/>
+                                    <input type="number" name="quantity" value="1" min="1" max="50" class="form-control form-control-sm text-center farm-input py-1 fw-bold" style="width: 55px;"/>
+                                    <button type="submit" class="btn btn-sm btn-farm-primary flex-grow-1 py-2">
+                                        + Add to Basket
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Order Calculation & Checkout Card -->
+        <div class="col-lg-4">
+            <div class="farm-summary-card sticky-top" style="top: 24px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="farm-heading mb-0">Basket Summary</h5>
+                    <span class="farm-stamp">Farm Fresh</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Harvest Subtotal</span>
+                    <span class="fw-bold" style="color: var(--farm-text);">
+                        Rs. <span th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                    </span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Farm Dispatch</span>
+                    <span class="fw-bold" style="color: var(--farm-lime-dark);">FREE DELIVERY</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Direct Farm Packaging</span>
+                    <span class="text-muted">Eco-friendly &middot; Rs. 0.00</span>
+                </div>
+
+                <div class="farm-receipt-divider"></div>
+
+                <div class="d-flex justify-content-between align-items-baseline mb-4">
+                    <div>
+                        <span class="fs-5 fw-bold" style="color: var(--farm-leaf);">Total Payable</span>
+                        <div class="text-muted small">Taxes included</div>
+                    </div>
+                    <span class="fs-4 fw-bold" style="color: var(--farm-leaf);">
+                        Rs. <span th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                    </span>
+                </div>
+
+                <a th:if="${!#lists.isEmpty(cartItems)}" th:href="@{/orders/checkout}" class="btn btn-farm-orange w-100 text-center text-decoration-none d-block mb-3">
+                    Proceed to Farm Checkout &rarr;
+                </a>
+                <button th:if="${#lists.isEmpty(cartItems)}" class="btn btn-secondary w-100 py-3 rounded-3" disabled>
+                    Basket Is Empty
+                </button>
+
+                <div class="p-3 rounded-3 mt-3" style="background-color: var(--farm-cream-card); border: 1px solid var(--farm-border);">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="fs-5">🚜</span>
+                        <span class="fw-bold small" style="color: var(--farm-leaf);">Freshness Guarantee</span>
+                    </div>
+                    <p class="small text-muted mb-0">
+                        Harvested within 24 hours. If any item is not fresh upon arrival, we replace it instantly with no questions asked.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/order.js}"></script>
+</body>
+</html>

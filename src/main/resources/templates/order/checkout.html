@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Farm Delivery Checkout')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <!-- Market Progress Steps -->
+    <div class="farm-steps">
+        <a th:href="@{/cart}" class="farm-step-item text-decoration-none">🧺 1. Harvest Basket</a>
+        <div class="farm-step-item active">🚜 2. Farm Checkout</div>
+        <div class="farm-step-item">🌾 3. Confirmation</div>
+    </div>
+
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-warning-subtle">
+        <div>
+            <span class="farm-tag farm-tag-lime mb-2">🚜 Courier Delivery From Local Farmers</span>
+            <h1 class="h2 farm-heading mb-1">Delivery & Checkout</h1>
+            <p class="farm-subheading mb-0">Provide your delivery location and payment preference to finalize your harvest order.</p>
+        </div>
+        <a th:href="@{/cart}" class="btn btn-sm btn-farm-outline mt-2 mt-md-0">&larr; Return to Harvest Basket</a>
+    </div>
+
+    <!-- Error Alert -->
+    <div th:if="${errorMessage}" class="farm-alert-danger d-flex justify-content-between align-items-center mb-4">
+        <div><span>⚠️ </span><span th:text="${errorMessage}">Validation error occurred.</span></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <form th:action="@{/orders/checkout}" th:object="${checkoutForm}" method="post">
+        <div class="row g-4">
+            <!-- Left: Delivery Details & Payment -->
+            <div class="col-lg-7">
+                <!-- Address Details -->
+                <div class="farm-card mb-4">
+                    <div class="farm-card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">
+                            📍 1. Delivery Destination
+                        </h5>
+                        <span class="badge bg-light text-muted border">Direct Dispatch</span>
+                    </div>
+                    <div class="farm-card-body">
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullName" class="farm-label">Recipient Full Name <span class="text-danger">*</span></label>
+                            <input type="text" id="fullName" th:field="*{fullName}" class="form-control farm-input" th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid' : ''" placeholder="e.g. Ruwan Silva"/>
+                            <div class="invalid-feedback" th:errors="*{fullName}">Name error</div>
+                        </div>
+
+                        <!-- Contact Phone -->
+                        <div class="mb-3">
+                            <label for="contactPhone" class="farm-label">Contact Phone Number <span class="text-danger">*</span></label>
+                            <input type="tel" id="contactPhone" th:field="*{contactPhone}" class="form-control farm-input" th:classappend="${#fields.hasErrors('contactPhone')} ? 'is-invalid' : ''" placeholder="e.g. 0771234567"/>
+                            <small class="text-muted">Our farm courier will call this number prior to arrival.</small>
+                            <div class="invalid-feedback" th:errors="*{contactPhone}">Phone error</div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="mb-3">
+                            <label for="shippingAddress" class="farm-label">Delivery Street Address <span class="text-danger">*</span></label>
+                            <textarea id="shippingAddress" th:field="*{shippingAddress}" rows="3" class="form-control farm-input" th:classappend="${#fields.hasErrors('shippingAddress')} ? 'is-invalid' : ''" placeholder="House / Apartment number, street name, city..."></textarea>
+                            <div class="invalid-feedback" th:errors="*{shippingAddress}">Address error</div>
+                        </div>
+
+                        <!-- Delivery Notes -->
+                        <div class="mb-0">
+                            <label for="deliveryNotes" class="farm-label">Farm Courier Instructions (Optional)</label>
+                            <input type="text" id="deliveryNotes" th:field="*{deliveryNotes}" class="form-control farm-input" placeholder="e.g. Ring front gate bell, leave with security"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Selection Card -->
+                <div class="farm-card">
+                    <div class="farm-card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">
+                            💵 2. Payment Preference
+                        </h5>
+                        <span class="farm-tag farm-tag-leaf">Pay on Delivery</span>
+                    </div>
+                    <div class="farm-card-body">
+                        <!-- COD Option -->
+                        <div class="p-3 rounded-3 mb-3 border d-flex align-items-start gap-3" style="background: var(--farm-cream-card); border-color: var(--farm-border) !important;">
+                            <input class="form-check-input mt-1" type="radio" id="payCod" th:field="*{paymentMethod}" value="Cash on Delivery" checked/>
+                            <label class="form-check-label w-100" for="payCod">
+                                <div class="fw-bold" style="color: var(--farm-leaf);">💵 Cash on Delivery (COD)</div>
+                                <div class="text-muted small">Pay with physical cash directly to the courier when your harvest crate arrives.</div>
+                            </label>
+                        </div>
+
+                        <!-- Card on Delivery Option -->
+                        <div class="p-3 rounded-3 border d-flex align-items-start gap-3" style="background: #ffffff;">
+                            <input class="form-check-input mt-1" type="radio" id="payCard" th:field="*{paymentMethod}" value="Card Payment"/>
+                            <label class="form-check-label w-100" for="payCard">
+                                <div class="fw-bold" style="color: var(--farm-leaf);">💳 Card on Delivery (POS Terminal)</div>
+                                <div class="text-muted small">Courier brings a portable contactless wireless card machine to your door.</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Breakdown & Promo Code -->
+            <div class="col-lg-5">
+                <div class="farm-summary-card sticky-top" style="top: 24px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="farm-heading mb-0">Harvest Order (<span th:text="${#lists.size(cartItems)}">0</span>)</h5>
+                        <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-2 py-1 small">Locked Prices</span>
+                    </div>
+
+                    <!-- Mini Cart Line Items -->
+                    <div class="mb-3" style="max-height: 250px; overflow-y: auto;">
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-light" th:each="ci : ${cartItems}">
+                            <div>
+                                <div class="fw-semibold small" style="color: var(--farm-text);" th:text="${ci.itemName}">Item</div>
+                                <small class="text-muted">
+                                    <span th:text="${ci.quantity}">1</span> &times; Rs. <span th:text="${#numbers.formatDecimal(ci.unitPrice, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                </small>
+                            </div>
+                            <span class="fw-bold small" style="color: var(--farm-leaf);">
+                                Rs. <span th:text="${#numbers.formatDecimal(ci.lineTotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Promo Code Box -->
+                    <div class="p-3 rounded-3 mb-3" style="background: var(--farm-orange-soft); border: 1px dashed var(--farm-orange-border);">
+                        <label for="promoCode" class="farm-label small d-flex justify-content-between">
+                            <span>🏷️ Harvest Discount Voucher</span>
+                            <span class="text-muted" style="font-size: 0.75rem;">Optional</span>
+                        </label>
+                        <div class="input-group input-group-sm mb-1">
+                            <input type="text" id="promoCode" th:field="*{promoCode}" class="form-control farm-input text-uppercase fw-bold" placeholder="e.g. WELCOME10"/>
+                        </div>
+                        <small class="text-muted d-block" style="font-size: 0.75rem;">
+                            Active coupons: <code class="fw-bold" style="color: var(--farm-orange-hover);">WELCOME10</code> (10% off) &middot; <code class="fw-bold" style="color: var(--farm-orange-hover);">SAVE200</code> (Rs. 200 off)
+                        </small>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Harvest Subtotal</span>
+                        <span class="fw-bold">Rs. <span th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Farm Dispatch</span>
+                        <span class="fw-bold" style="color: var(--farm-lime-dark);">FREE</span>
+                    </div>
+
+                    <div class="farm-receipt-divider"></div>
+
+                    <div class="d-flex justify-content-between align-items-baseline mb-4">
+                        <div>
+                            <span class="fs-5 fw-bold" style="color: var(--farm-leaf);">Payable Total</span>
+                            <small class="d-block text-muted" style="font-size: 0.75rem;">*Discounts applied upon confirmation</small>
+                        </div>
+                        <span class="fs-4 fw-bold" style="color: var(--farm-leaf);">
+                            Rs. <span th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                        </span>
+                    </div>
+
+                    <button type="submit" class="btn btn-farm-orange w-100 py-3 shadow">
+                        🌾 Confirm & Place Farm Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
