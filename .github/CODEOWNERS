@@ -10,12 +10,12 @@
 
 # Each member owns their module. Leader: replace the usernames, remove the leading "# ",
 # and make sure every person has accepted the repository invitation first.
-# /src/main/java/com/grocery/user/                @member1-username
-# /src/main/resources/templates/user/             @member1-username
-# /src/main/java/com/grocery/inventory/           @member2-username
-# /src/main/resources/templates/inventory/        @member2-username
-# /src/main/java/com/grocery/supplier/            @member3-username
-# /src/main/resources/templates/supplier/         @member3-username
+/src/main/java/com/grocery/user/                @MrHasit
+/src/main/resources/templates/user/             @MrHasit
+/src/main/java/com/grocery/inventory/           @bimsaramaleesha
+/src/main/resources/templates/inventory/        @bimsaramaleesha
+/src/main/java/com/grocery/supplier/            @Thilanjana01
+/src/main/resources/templates/supplier/         @Thilanjana01
 # /src/main/java/com/grocery/order/               @member4-username
 # /src/main/resources/templates/order/            @member4-username
 # /src/main/java/com/grocery/promo/               @member5-username
