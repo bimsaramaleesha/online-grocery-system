@@ -1,1 +1,2 @@
-// supplier module scripts. Only the owner of the supplier module edits this file.
+// Member 3: Supplier & Vendor Logistics JS
+console.log("Supplier management module initialized.");
