@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Create account', '/css/user.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <div class="card usr-card">
+                <div class="card-body p-4 p-md-5">
+
+                    <h1 class="h3 text-center mb-4">Create your account</h1>
+
+                    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+                    <form th:object="${form}" th:action="@{/users/register}" method="post" data-match-form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full name</label>
+                            <input type="text" id="name" class="form-control" th:field="*{name}"
+                                   maxlength="100" autocomplete="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" id="email" class="form-control" th:field="*{email}"
+                                   maxlength="254" autocomplete="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control" th:field="*{password}"
+                                   minlength="8" maxlength="128" autocomplete="new-password" required>
+                            <div class="form-text">Use 8 to 128 characters.</div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="confirmPassword" class="form-label">Confirm password</label>
+                            <input type="password" id="confirmPassword" class="form-control" th:field="*{confirmPassword}"
+                                   minlength="8" maxlength="128" autocomplete="new-password" required>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input type="checkbox" id="showPassword" class="form-check-input"
+                                   data-toggle-password="password,confirmPassword">
+                            <label for="showPassword" class="form-check-label small">Show passwords</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Register</button>
+                    </form>
+
+                    <p class="text-center mt-4 mb-0">
+                        Already registered?
+                        <a th:href="@{/users/login}" class="text-success fw-semibold">Log in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>
