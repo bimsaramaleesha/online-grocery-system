@@ -1,16 +1,14 @@
-
-package com.grocery.promo.service;
+ package com.grocery.promo.service;
 
 import com.grocery.promo.model.Promotion;
 import com.grocery.promo.repository.PromotionRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
-// Contains business logic for promotions and coupons
 @Service
 public class PromotionService {
 
@@ -25,152 +23,149 @@ public class PromotionService {
     }
 
     public List<Promotion> getActivePromotions() {
-        return repository.findByActiveTrue();
+        LocalDate today = LocalDate.now();
+
+        return repository.findAll().stream()
+                .filter(Promotion::isActive)
+                .filter(p -> p.getStartDate() == null
+                        || !p.getStartDate().isAfter(today))
+                .filter(p -> p.getExpiryDate() == null
+                        || !p.getExpiryDate().isBefore(today))
+                .toList();
     }
 
-    public Optional<Promotion> getPromotionById(Long id) {
+    public Optional<Promotion> getPromotionById(String id) {
         return repository.findById(id);
     }
 
-    public Optional<Promotion> getByCouponCode(String code) {
-        if (code == null || code.isBlank()) {
-            return Optional.empty();
-        }
-
-        return repository.findByCouponCodeIgnoreCase(
-                code.trim());
-    }
-
-    @Transactional
     public Promotion createPromotion(Promotion promotion) {
         validatePromotion(promotion);
 
-        promotion.setCouponCode(
-                promotion.getCouponCode().trim());
+        promotion.setId(null);
+        promotion.setName(clean(promotion.getName()));
+        promotion.setDescription(clean(promotion.getDescription()));
+        promotion.setCouponCode(clean(promotion.getCouponCode())
+                .toUpperCase(Locale.ROOT));
 
-        if (getByCouponCode(
+        if (repository.findByCouponCodeIgnoreCase(
                 promotion.getCouponCode()).isPresent()) {
             throw new IllegalArgumentException(
-                    "Coupon code already exists");
+                    "A promotion with this coupon code already exists.");
         }
 
         return repository.save(promotion);
     }
 
-    @Transactional
-    public Promotion updatePromotion(
-            Long id, Promotion updated) {
+    public Promotion updatePromotion(String id, Promotion promotion) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Promotion not found: " + id);
+        }
 
-        Promotion existing = repository.findById(id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Promotion not found"));
-
-        validatePromotion(updated);
+        validatePromotion(promotion);
 
         Optional<Promotion> duplicate =
-                getByCouponCode(updated.getCouponCode());
+                repository.findByCouponCodeIgnoreCase(
+                        clean(promotion.getCouponCode()));
 
         if (duplicate.isPresent()
                 && !duplicate.get().getId().equals(id)) {
             throw new IllegalArgumentException(
-                    "Coupon code already exists");
+                    "A promotion with this coupon code already exists.");
         }
 
-        existing.setName(updated.getName());
-        existing.setDescription(updated.getDescription());
-        existing.setCouponCode(
-                updated.getCouponCode().trim());
-        existing.setDiscountPercentage(
-                updated.getDiscountPercentage());
-        existing.setMinimumOrderAmount(
-                updated.getMinimumOrderAmount());
-        existing.setStartDate(updated.getStartDate());
-        existing.setExpiryDate(updated.getExpiryDate());
-        existing.setActive(updated.isActive());
+        promotion.setId(id);
+        promotion.setName(clean(promotion.getName()));
+        promotion.setDescription(clean(promotion.getDescription()));
+        promotion.setCouponCode(clean(promotion.getCouponCode())
+                .toUpperCase(Locale.ROOT));
 
-        return repository.save(existing);
+        return repository.save(promotion);
     }
 
-    @Transactional
-    public void deletePromotion(Long id) {
+    public void deletePromotion(String id) {
         if (!repository.existsById(id)) {
-            throw new IllegalArgumentException(
-                    "Promotion not found");
+            throw new IllegalArgumentException("Promotion not found: " + id);
         }
 
         repository.deleteById(id);
     }
 
-    public boolean isCouponValid(
-            Promotion promotion, double orderAmount) {
+    public Optional<Promotion> findPromotionByCouponCode(String couponCode) {
+        return repository.findByCouponCodeIgnoreCase(clean(couponCode));
+    }
 
-        if (promotion == null
-                || promotion.getStartDate() == null
-                || promotion.getExpiryDate() == null
-                || promotion.getCouponCode() == null
-                || orderAmount < 0) {
+    public boolean isCouponValid(String couponCode, double orderAmount) {
+        if (couponCode == null || couponCode.isBlank() || orderAmount < 0) {
             return false;
         }
 
         LocalDate today = LocalDate.now();
 
-        return promotion.isActive()
-                && !promotion.getCouponCode().isBlank()
-                && promotion.getDiscountPercentage() > 0
-                && promotion.getDiscountPercentage() <= 100
-                && promotion.getMinimumOrderAmount() >= 0
-                && orderAmount >= promotion.getMinimumOrderAmount()
-                && !today.isBefore(promotion.getStartDate())
-                && !today.isAfter(promotion.getExpiryDate());
+        return repository.findByCouponCodeIgnoreCase(
+                        clean(couponCode).toUpperCase(Locale.ROOT))
+                .filter(Promotion::isActive)
+                .filter(p -> p.getStartDate() == null
+                        || !today.isBefore(p.getStartDate()))
+                .filter(p -> p.getExpiryDate() == null
+                        || !today.isAfter(p.getExpiryDate()))
+                .filter(p -> orderAmount >= p.getMinimumOrderAmount())
+                .filter(p -> p.getDiscountPercentage() > 0
+                        && p.getDiscountPercentage() <= 100)
+                .isPresent();
     }
 
-    public double calculateDiscount(
-            Promotion promotion, double orderAmount) {
-
-        if (!isCouponValid(promotion, orderAmount)) {
+    public double calculateDiscount(String couponCode, double orderAmount) {
+        if (!isCouponValid(couponCode, orderAmount)) {
             return 0.0;
         }
 
-        return orderAmount
-                * promotion.getDiscountPercentage() / 100.0;
+        Promotion promotion = repository
+                .findByCouponCodeIgnoreCase(clean(couponCode))
+                .orElseThrow();
+
+        return orderAmount * promotion.getDiscountPercentage() / 100.0;
     }
 
     private void validatePromotion(Promotion promotion) {
         if (promotion == null) {
-            throw new IllegalArgumentException(
-                    "Promotion is required");
+            throw new IllegalArgumentException("Promotion cannot be empty.");
         }
 
         if (promotion.getName() == null
                 || promotion.getName().isBlank()) {
             throw new IllegalArgumentException(
-                    "Promotion name is required");
+                    "Promotion name is required.");
         }
 
         if (promotion.getCouponCode() == null
                 || promotion.getCouponCode().isBlank()) {
             throw new IllegalArgumentException(
-                    "Coupon code is required");
+                    "Coupon code is required.");
         }
 
         if (promotion.getDiscountPercentage() <= 0
                 || promotion.getDiscountPercentage() > 100) {
             throw new IllegalArgumentException(
-                    "Discount must be between 0 and 100");
+                    "Discount must be between 1 and 100 percent.");
         }
 
-        if (promotion.getMinimumOrderAmount() < 0) {
+        if (!Double.isFinite(promotion.getMinimumOrderAmount())
+                || promotion.getMinimumOrderAmount() < 0) {
             throw new IllegalArgumentException(
-                    "Minimum order amount cannot be negative");
+                    "Minimum order amount must be a valid non-negative amount.");
         }
 
-        if (promotion.getStartDate() == null
-                || promotion.getExpiryDate() == null
-                || promotion.getExpiryDate().isBefore(
-                promotion.getStartDate())) {
+        if (promotion.getStartDate() != null
+                && promotion.getExpiryDate() != null
+                && promotion.getExpiryDate()
+                .isBefore(promotion.getStartDate())) {
             throw new IllegalArgumentException(
-                    "Invalid promotion dates");
+                    "Expiry date cannot be before the start date.");
         }
     }
+
+    private String clean(String value) {
+        return value == null ? "" : value.trim();
+    }
 }
+

@@ -1,70 +1,57 @@
-
 package com.grocery.promo.controller;
 
 import com.grocery.promo.model.Promotion;
 import com.grocery.promo.service.PromotionService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
-// Handles API requests for promotions
-@RestController
-@RequestMapping("/api/promotions")
+@Controller
+@RequestMapping("/promos")
 public class PromotionController {
 
-    private final PromotionService service;
+    private final PromotionService promotionService;
 
-    public PromotionController(PromotionService service) {
-
-        this.service = service;
+    public PromotionController(PromotionService promotionService) {
+        this.promotionService = promotionService;
     }
 
     @GetMapping
-    public List<Promotion> getAllPromotions() {
-        return service.getAllPromotions();
+    public String showPromotions(Model model) {
+        model.addAttribute("promotions",
+                promotionService.getAllPromotions());
+        model.addAttribute("promotion", new Promotion());
+        return "promo/promotions";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Promotion> getPromotionById(
-            @PathVariable Long id) {
-
-        return service.getPromotionById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping("/add")
+    public String addPromotion(
+            @ModelAttribute("promotion") Promotion promotion,
+            RedirectAttributes redirectAttributes) {
+        try {
+            promotionService.createPromotion(promotion);
+            redirectAttributes.addFlashAttribute(
+                    "successMessage", "Promotion added successfully!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage", e.getMessage());
+        }
+        return "redirect:/promos";
     }
 
-    @GetMapping("/coupon/{code}")
-    public ResponseEntity<Promotion> getByCouponCode(
-            @PathVariable String code) {
-
-        return service.getByCouponCode(code)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<Promotion> createPromotion(
-            @RequestBody Promotion promotion) {
-
-        return ResponseEntity.ok(
-                service.createPromotion(promotion));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Promotion> updatePromotion(
-            @PathVariable Long id,
-            @RequestBody Promotion promotion) {
-
-        return ResponseEntity.ok(
-                service.updatePromotion(id, promotion));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePromotion(
-            @PathVariable Long id) {
-
-        service.deletePromotion(id);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/delete/{id}")
+    public String deletePromotion(
+            @PathVariable String id,
+            RedirectAttributes redirectAttributes) {
+        try {
+            promotionService.deletePromotion(id);
+            redirectAttributes.addFlashAttribute(
+                    "successMessage", "Promotion deleted successfully!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage", e.getMessage());
+        }
+        return "redirect:/promos";
     }
 }

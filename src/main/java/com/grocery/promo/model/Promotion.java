@@ -1,40 +1,45 @@
+ package com.grocery.promo.model;
 
-package com.grocery.promo.model;
-
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
-// Represents a promotion or discount
-@Entity
-@Table(name = "promotions")
+/**
+ * Represents a grocery store promotion or discount coupon.
+ */
 public class Promotion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private String name;
     private String description;
-
-    @Column(unique = true, nullable = false)
     private String couponCode;
-
     private double discountPercentage;
     private double minimumOrderAmount;
-
     private LocalDate startDate;
     private LocalDate expiryDate;
-
     private boolean active;
 
     public Promotion() {
     }
 
-    public Long getId() {
+    public Promotion(String id, String name, String description,
+                     String couponCode, double discountPercentage,
+                     double minimumOrderAmount, LocalDate startDate,
+                     LocalDate expiryDate, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.couponCode = couponCode;
+        this.discountPercentage = discountPercentage;
+        this.minimumOrderAmount = minimumOrderAmount;
+        this.startDate = startDate;
+        this.expiryDate = expiryDate;
+        this.active = active;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -102,3 +107,4 @@ public class Promotion {
         this.active = active;
     }
 }
+
