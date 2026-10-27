@@ -3,6 +3,10 @@ package com.grocery.inventory.dto;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.model.NonPerishableItem;
 import com.grocery.inventory.model.PerishableItem;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,19 +20,33 @@ import java.time.LocalDate;
  */
 public class ItemForm {
 
+    @NotBlank(message = "Please choose an item type.")
     private String type;
-    private String id;
+
+    private String id;   // set by the controller on edit; not from the form
+
+    @NotBlank(message = "Name is required.")
     private String name;
+
+    @NotBlank(message = "Category is required.")
     private String category;
+
+    @NotNull(message = "Price is required.")
+    @PositiveOrZero(message = "Price cannot be negative.")
     private Double price;
+
+    @NotNull(message = "Quantity is required.")
+    @PositiveOrZero(message = "Quantity cannot be negative.")
     private Integer quantity;
 
-    // perishable only
+    // perishable only — expiry date presence is checked in ItemFactory
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate expiryDate;
 
     // non-perishable only
     private String brand;
+
+    @Positive(message = "Shelf life must be at least 1 month.")
     private Integer shelfLifeMonths;
 
     /** Fills the edit form with the values of an existing item. */

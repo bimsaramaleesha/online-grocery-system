@@ -4,7 +4,7 @@ All files live in `data/` (not in Git). One record per line, fields separated by
 
 | File | Module | Prefix | Line format |
 |------|--------|--------|-------------|
-| `users.txt` | user | `U` | decided by the user owner, first field `type` if you have child classes (e.g. `CUSTOMER` / `ADMIN`) then `id` |
+| `users.txt` | auth (login) | `U` | `TYPE\|id\|fullName\|email\|passwordHash\|phone\|createdDate\|extra` - TYPE is `CUSTOMER` (extra = address) or `ADMIN` (extra = job title). Password is a salted hash, never plain text. |
 | `items.txt` | inventory | `ITM` | `TYPE\|id\|name\|category\|price\|quantity\|extra...` |
 | `suppliers.txt` | supplier | `SUP` | `TYPE\|id\|companyName\|contact\|email\|category\|extra...` (see `Supplier.toFileString()`) |
 | `carts.txt` | order | `CRT` | `cartId\|userId\|itemId\|quantity\|addedDate` |
@@ -45,3 +45,4 @@ PRM002|SAVE200|FIXED|200.0|1000.0|2026-01-01|2026-12-31|true
 - order -> `userId` (a `U...` ID), `promoCode` (a code from `promos.txt`)
 - review -> `itemId`, `userId`; complaint -> `orderId`, `userId`
 - supplier restock -> `itemId`
+
