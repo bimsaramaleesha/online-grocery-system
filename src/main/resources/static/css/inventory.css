@@ -1,1 +1,25 @@
-/* inventory module styles. Only the owner of the inventory module edits this file. Prefix your classes, e.g. .inv-card */
+/* Inventory module styles.
+   Bootstrap (loaded by the layout) does the basics; this file only adds the
+   extras. Every class starts with "inv-" so it can never clash with another
+   module's CSS. */
+
+.inv-narrow { max-width: 680px; }
+
+/* summary cards */
+.inv-stat { border: 1px solid #dee2e6; border-left: 5px solid #198754; color: #212529; transition: box-shadow .15s, transform .15s; }
+.inv-stat:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, .1); transform: translateY(-2px); color: #212529; }
+.inv-stat-low     { border-left-color: #fd7e14; }
+.inv-stat-soon    { border-left-color: #ffc107; }
+.inv-stat-expired { border-left-color: #dc3545; }
+.inv-stat-active  { box-shadow: 0 0 0 2px #198754 inset; }
+.inv-stat-label  { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #6c757d; }
+.inv-stat-number { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.inv-stat-note   { font-size: .8rem; }
+
+/* item type badges */
+.inv-type { font-weight: 500; }
+.inv-type-perishable { background: #e8f5e9; color: #1b5e20; }
+.inv-type-shelf      { background: #e7f1ff; color: #0a4a9e; }
+
+/* add/edit form: the type-specific blocks start hidden, inventory.js shows one */
+.inv-type-fields { display: none; }

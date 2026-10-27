@@ -1,9 +1,11 @@
 package com.grocery.common;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,9 +28,19 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleAny(Exception e, Model model) {
+    public String handleAny(Exception e, Model model, HttpServletResponse response) {
+        // Errors raised by Spring itself (unknown URL = 404, wrong method = 405 ...)
+        // carry their own status, so a missing page is not reported as a server crash.
+        if (e instanceof ErrorResponse spring) {
+            int status = spring.getStatusCode().value();
+            response.setStatus(status);
+            model.addAttribute("message", status == 404
+                    ? "That page does not exist (it may not be built yet)."
+                    : "That request is not allowed.");
+            return "error";
+        }
         log.error("Unexpected error", e);
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         model.addAttribute("message", "Something went wrong. Please go back and try again.");
         return "error";
     }

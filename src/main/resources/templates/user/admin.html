@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Manage users', '/css/user.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <div>
+            <h1 class="h3 mb-0">Users</h1>
+            <small class="text-muted">Manage customer and administrator accounts</small>
+        </div>
+        <div class="d-flex gap-2">
+            <a th:href="@{/users/new}" class="btn btn-success">+ Add User</a>
+            <a th:href="@{/users/profile}" class="btn btn-outline-secondary">My account</a>
+            <form th:action="@{/users/logout}" method="post">
+                <button type="submit" class="btn btn-outline-secondary">Log out</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <a th:href="@{/users}" class="usr-stat card h-100 text-decoration-none"
+               th:classappend="${role == null or role == ''} ? 'usr-stat-active'">
+                <div class="card-body">
+                    <div class="usr-stat-label">All accounts</div>
+                    <div class="usr-stat-number" th:text="${summary.total}">0</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4">
+            <a th:href="@{/users(role='CUSTOMER')}" class="usr-stat usr-stat-customer card h-100 text-decoration-none"
+               th:classappend="${role == 'CUSTOMER'} ? 'usr-stat-active'">
+                <div class="card-body">
+                    <div class="usr-stat-label">Customers</div>
+                    <div class="usr-stat-number" th:text="${summary.customers}">0</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4">
+            <a th:href="@{/users(role='ADMIN')}" class="usr-stat usr-stat-admin card h-100 text-decoration-none"
+               th:classappend="${role == 'ADMIN'} ? 'usr-stat-active'">
+                <div class="card-body">
+                    <div class="usr-stat-label">Administrators</div>
+                    <div class="usr-stat-number" th:text="${summary.admins}">0</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <form th:action="@{/users}" method="get" class="row g-2 mb-3">
+        <input type="hidden" name="role" th:value="${role}" th:if="${role != null and role != ''}">
+        <div class="col-12 col-md">
+            <input type="text" name="q" class="form-control" th:value="${q}"
+                   placeholder="Search by name, email or ID">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-success">Search</button>
+            <a th:href="@{/users}" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-success">
+                <tr>
+                    <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Details</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${users}">
+                    <td class="text-muted" th:text="${u.id}">U001</td>
+                    <td class="fw-semibold">
+                        <span th:text="${u.name}">Name</span>
+                        <span class="badge text-bg-light ms-1" th:if="${u.id == currentUserId}">you</span>
+                    </td>
+                    <td th:text="${u.email}">email</td>
+                    <td>
+                        <span class="badge usr-role"
+                              th:classappend="${u.role == 'ADMIN'} ? 'usr-role-admin' : 'usr-role-customer'"
+                              th:text="${u.role}">CUSTOMER</span>
+                    </td>
+                    <td class="small" th:text="${u.details}">details</td>
+                    <td class="text-end text-nowrap">
+                        <a th:href="@{/users/{id}/edit(id=${u.id})}"
+                           class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form th:action="@{/users/{id}/delete(id=${u.id})}" method="post"
+                              class="d-inline usr-delete-form" th:attr="data-name=${u.name}"
+                              th:unless="${u.id == currentUserId}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="6" class="text-center text-muted py-4">No users found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>

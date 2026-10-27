@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Access denied', '/css/auth.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-5 text-center">
+    <div style="font-size:4rem;">🔒</div>
+    <h1 class="h2">Access denied</h1>
+    <p class="text-muted">Your account does not have permission to open that page.</p>
+    <a class="btn btn-success" th:href="@{/shop}">Back to shop</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

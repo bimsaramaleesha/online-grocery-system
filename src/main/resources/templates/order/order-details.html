@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Farm Order Receipt')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <!-- Header Navigation -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-warning-subtle">
+        <div>
+            <a th:href="@{/orders}" class="text-decoration-none small fw-semibold" style="color: var(--farm-leaf);">&larr; Back to Order History</a>
+            <h1 class="h2 farm-heading mb-0 mt-1">
+                Order <span th:text="${order.orderId}">ORD001</span>
+            </h1>
+            <p class="farm-subheading mb-0">Placed on <span th:text="${order.orderDate}">2026-10-10</span> &middot; Official Farm Receipt</p>
+        </div>
+        <div class="mt-2 mt-md-0 d-flex align-items-center gap-2">
+            <span th:if="${order.status.name() == 'PENDING'}" class="badge-farm-pending fs-6 px-3 py-2" th:text="${order.status.displayName}">Pending</span>
+            <span th:if="${order.status.name() == 'CONFIRMED'}" class="badge-farm-confirmed fs-6 px-3 py-2" th:text="${order.status.displayName}">Confirmed</span>
+            <span th:if="${order.status.name() == 'SHIPPED'}" class="badge-farm-shipped fs-6 px-3 py-2" th:text="${order.status.displayName}">Shipped</span>
+            <span th:if="${order.status.name() == 'DELIVERED'}" class="badge-farm-delivered fs-6 px-3 py-2" th:text="${order.status.displayName}">Delivered</span>
+            <span th:if="${order.status.name() == 'CANCELLED'}" class="badge-farm-cancelled fs-6 px-3 py-2" th:text="${order.status.displayName}">Cancelled</span>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="farm-alert-success d-flex justify-content-between align-items-center mb-4">
+        <div><span>🌿 </span><span th:text="${successMessage}">Operation successful!</span></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="farm-alert-danger d-flex justify-content-between align-items-center mb-4">
+        <div><span>⚠️ </span><span th:text="${errorMessage}">Something went wrong.</span></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main: Ordered Items Table -->
+        <div class="col-lg-8">
+            <div class="farm-card mb-4">
+                <div class="farm-card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">
+                        🧺 Harvest Items In This Order (<span th:text="${order.totalQuantity}">0</span> units)
+                    </h5>
+                    <span class="farm-tag farm-tag-lime">Locked Unit Prices</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="farm-table">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%;">Farm Product</th>
+                                <th class="text-end" style="width: 18%;">Unit Price</th>
+                                <th class="text-center" style="width: 14%;">Qty</th>
+                                <th class="text-end" style="width: 18%;">Line Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${order.items}">
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="fs-4">🌱</span>
+                                        <div>
+                                            <div class="fw-bold" style="color: var(--farm-text);" th:text="${item.itemName}">Item Name</div>
+                                            <small class="text-muted">Item ID: <code th:text="${item.itemId}">ITM001</code></small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end fw-semibold text-muted">
+                                    Rs. <span th:text="${#numbers.formatDecimal(item.unitPrice, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                </td>
+                                <td class="text-center fw-bold" th:text="${item.quantity}">1</td>
+                                <td class="text-end fw-bold" style="color: var(--farm-leaf);">
+                                    Rs. <span th:text="${#numbers.formatDecimal(item.lineTotal, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Actions: Cancel or Status Testing -->
+            <div class="farm-card">
+                <div class="farm-card-header">
+                    <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">⚙️ Order Controls & Status Tracking</h5>
+                </div>
+                <div class="farm-card-body">
+                    <!-- Customer Cancellation (Only when PENDING) -->
+                    <div th:if="${order.canBeCancelled()}" class="p-3 rounded-3 mb-3 d-flex flex-wrap justify-content-between align-items-center" style="background: #fef2f2; border: 1.5px solid #fecaca;">
+                        <div>
+                            <div class="fw-bold text-danger mb-1">Need to cancel this order?</div>
+                            <small class="text-muted">Cancellation is available free of charge while your order is still in Pending status.</small>
+                        </div>
+                        <form th:action="@{'/orders/' + ${order.orderId} + '/cancel'}" method="post" class="mt-2 mt-md-0" onsubmit="return confirm('Confirm cancellation of order ' + '[[${order.orderId}]]' + '?');">
+                            <button type="submit" class="btn btn-sm btn-danger fw-semibold px-3 py-2">
+                                Cancel This Order
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Demo Status Simulator -->
+                    <div class="pt-2">
+                        <label class="farm-label small text-muted">Demo / Staff Testing: Update Lifecycle Status</label>
+                        <form th:action="@{'/orders/' + ${order.orderId} + '/status'}" method="post" class="d-flex gap-2">
+                            <select name="status" class="form-select farm-input py-1" style="max-width: 220px;">
+                                <option th:each="st : ${allStatuses}" th:value="${st.name()}" th:text="${st.displayName}" th:selected="${st == order.status}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-farm-primary px-3">Update Status</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Official Farm Receipt Summary -->
+        <div class="col-lg-4">
+            <!-- Official Receipt Card -->
+            <div class="farm-summary-card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="farm-heading mb-0">Official Receipt</h5>
+                    <span class="farm-stamp">PAID / COD</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Receipt Ref</span>
+                    <span class="fw-bold" th:text="${order.orderId}">ORD001</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Date & Time</span>
+                    <span class="fw-semibold text-dark" th:text="${order.orderDate}">2026-10-10</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Harvest Subtotal</span>
+                    <span class="fw-bold">Rs. <span th:text="${#numbers.formatDecimal(order.subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2" th:if="${order.discountAmount > 0}">
+                    <span style="color: var(--farm-orange-hover);">Discount (<span th:text="${order.promoCode}">PROMO</span>)</span>
+                    <span class="fw-bold" style="color: var(--farm-orange-hover);">- Rs. <span th:text="${#numbers.formatDecimal(order.discountAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Farm Dispatch</span>
+                    <span class="fw-bold" style="color: var(--farm-lime-dark);">FREE</span>
+                </div>
+
+                <div class="farm-receipt-divider"></div>
+
+                <div class="d-flex justify-content-between align-items-baseline mb-0">
+                    <span class="fs-5 fw-bold" style="color: var(--farm-leaf);">Net Amount</span>
+                    <span class="fs-4 fw-bold" style="color: var(--farm-leaf);">
+                        Rs. <span th:text="${#numbers.formatDecimal(order.netAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Delivery Details Box -->
+            <div class="farm-card">
+                <div class="farm-card-header">
+                    <h5 class="mb-0 fw-bold" style="color: var(--farm-leaf);">📍 Courier Destination</h5>
+                </div>
+                <div class="farm-card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Delivering to:</small>
+                        <div class="fw-semibold text-dark" th:text="${order.shippingAddress}">Address details</div>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Contact Phone:</small>
+                        <div class="fw-semibold text-dark" th:text="${order.contactPhone}">0771234567</div>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Payment Method:</small>
+                        <div class="fw-bold" style="color: var(--farm-leaf);" th:text="${order.paymentMethod}">Cash on Delivery</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
