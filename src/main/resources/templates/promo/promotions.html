@@ -1,0 +1,250 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Promotions')}"></head>
+
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+
+    <h1 class="h3 mb-3">Promotions &amp; Promo Codes</h1>
+
+    <p class="text-muted">
+        Manage grocery discounts and promotional offers.
+    </p>
+
+    <!-- Success and error messages -->
+    <div th:if="${successMessage}"
+         class="alert alert-success"
+         th:text="${successMessage}">
+    </div>
+
+    <div th:if="${errorMessage}"
+         class="alert alert-danger"
+         th:text="${errorMessage}">
+    </div>
+
+    <!-- Existing promotions -->
+    <section class="promo-card mb-4">
+
+        <h2 class="h5">Available Promotions</h2>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped align-middle">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Promotion</th>
+                    <th>Coupon Code</th>
+                    <th>Discount</th>
+                    <th>Minimum Order</th>
+                    <th>Start Date</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="promo : ${promotions}">
+
+                    <td th:text="${promo.id}"></td>
+
+                    <td>
+                        <strong th:text="${promo.name}"></strong>
+                        <br>
+                        <small class="text-muted"
+                               th:text="${promo.description}">
+                        </small>
+                    </td>
+
+                    <td th:text="${promo.couponCode}"></td>
+
+                    <td>
+                        <span th:text="${promo.discountPercentage}"></span>%
+                    </td>
+
+                    <td>
+                        Rs.
+                        <span th:text="${promo.minimumOrderAmount}"></span>
+                    </td>
+
+                    <td th:text="${promo.startDate != null ? promo.startDate : '-'}"></td>
+
+                    <td th:text="${promo.expiryDate != null ? promo.expiryDate : '-'}"></td>
+
+                    <td>
+                        <span th:if="${promo.active}"
+                              class="badge bg-success">Active</span>
+
+                        <span th:unless="${promo.active}"
+                              class="badge bg-secondary">Inactive</span>
+                    </td>
+
+                    <td>
+                        <form th:action="@{/promos/delete/{id}(id=${promo.id})}"
+                              method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this promotion?');">
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+
+                        </form>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(promotions)}">
+                    <td colspan="9" class="text-center text-muted">
+                        No promotions available yet.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- Create promotion form -->
+    <section class="promo-card mb-4">
+
+        <h2 class="h5 mb-3">Create a Promotion</h2>
+
+        <form th:action="@{/promos/add}"
+              th:object="${promotion}"
+              method="post">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">
+                    Promotion Name
+                </label>
+
+                <input id="name"
+                       type="text"
+                       th:field="*{name}"
+                       class="form-control"
+                       placeholder="e.g. New Year Discount"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">
+                    Description
+                </label>
+
+                <textarea id="description"
+                          th:field="*{description}"
+                          class="form-control"
+                          rows="2"
+                          placeholder="Describe this promotion">
+                </textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="couponCode" class="form-label">
+                    Coupon Code
+                </label>
+
+                <input id="couponCode"
+                       type="text"
+                       th:field="*{couponCode}"
+                       class="form-control"
+                       placeholder="e.g. SAVE10"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="discountPercentage" class="form-label">
+                    Discount (%)
+                </label>
+
+                <input id="discountPercentage"
+                       type="number"
+                       th:field="*{discountPercentage}"
+                       class="form-control"
+                       min="0.01"
+                       max="100"
+                       step="0.01"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="minimumOrderAmount" class="form-label">
+                    Minimum Order Amount (Rs.)
+                </label>
+
+                <input id="minimumOrderAmount"
+                       type="number"
+                       th:field="*{minimumOrderAmount}"
+                       class="form-control"
+                       min="0"
+                       step="0.01"
+                       value="0"
+                       required>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label for="startDate" class="form-label">
+                        Start Date
+                    </label>
+
+                    <input id="startDate"
+                           type="date"
+                           th:field="*{startDate}"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="expiryDate" class="form-label">
+                        Expiry Date
+                    </label>
+
+                    <input id="expiryDate"
+                           type="date"
+                           th:field="*{expiryDate}"
+                           class="form-control">
+                </div>
+
+            </div>
+
+            <div class="form-check mb-3">
+                <input id="active"
+                       type="checkbox"
+                       th:field="*{active}"
+                       class="form-check-input">
+
+                <label for="active" class="form-check-label">
+                    Promotion is active
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Add Promotion
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>
+```
