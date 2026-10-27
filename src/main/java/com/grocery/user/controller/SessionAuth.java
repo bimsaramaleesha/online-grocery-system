@@ -1,5 +1,6 @@
 package com.grocery.user.controller;
 
+import com.grocery.auth.AuthSession;
 import com.grocery.user.model.User;
 import com.grocery.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ public class SessionAuth {
     }
 
     public User currentUser(HttpSession session) {
+        if (session == null) {
+            return null;
+        }
         Object id = session.getAttribute(USER_ID);
         if (id == null) {
             return null;
@@ -37,10 +41,21 @@ public class SessionAuth {
         session.setAttribute(USER_ID, user.getId());
         session.setAttribute(USER_NAME, user.getName());
         session.setAttribute(USER_ROLE, user.getRole());
+        session.setAttribute(AuthSession.ROLE, user.getRole());
         session.setMaxInactiveInterval(TIMEOUT_SECONDS);
     }
 
+    public void refresh(HttpSession session, User user) {
+        if (session != null && user != null) {
+            session.setAttribute(USER_NAME, user.getName());
+            session.setAttribute(USER_ROLE, user.getRole());
+            session.setAttribute(AuthSession.ROLE, user.getRole());
+        }
+    }
+
     public void logout(HttpSession session) {
-        session.invalidate();
+        if (session != null) {
+            session.invalidate();
+        }
     }
 }

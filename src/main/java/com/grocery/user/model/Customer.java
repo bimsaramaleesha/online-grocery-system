@@ -22,6 +22,13 @@ public class Customer extends User {
         setAddress(address);
     }
 
+    public Customer(String id, String name, String email, String passwordHash,
+                    String phone, String createdDate, String address) {
+        super(id, name, email, passwordHash, createdDate);
+        setPhone(phone);
+        setAddress(address);
+    }
+
     public String getPhone() { return phone; }
     public final void setPhone(String phone) {
         String clean = FileHandler.clean(phone);
@@ -63,6 +70,6 @@ public class Customer extends User {
 
     @Override
     public String toFileLine() {
-        return baseLine() + "|" + phone + "|" + address;
+        return baseLine() + "|" + phone + "|" + getCreatedDate() + "|" + address;
     }
 }

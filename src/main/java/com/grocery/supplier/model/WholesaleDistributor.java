@@ -106,7 +106,7 @@ public class WholesaleDistributor extends Supplier {
      */
     @Override
     public String toFileString() {
-        return String.format("WHOLESALE|%s|%s|%s|%s|%s|%s|%d|%.4f",
+        return String.format(java.util.Locale.US, "WHOLESALE|%s|%s|%s|%s|%s|%s|%d|%.4f",
                 getSupplierId(),
                 getCompanyName(),
                 getContactNumber(),

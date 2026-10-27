@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -69,12 +70,17 @@ public class SupplierController {
                               @RequestParam(value = "freshHandlingFee", required = false, defaultValue = "0.0") double handlingFee,
                               @RequestParam(value = "warehouseCode", required = false, defaultValue = "") String warehouseCode,
                               @RequestParam(value = "minOrderQuantity", required = false, defaultValue = "50") int minQty,
-                              @RequestParam(value = "bulkDiscountRate", required = false, defaultValue = "0.05") double discountRate) {
-
-        if ("LOCAL".equalsIgnoreCase(type)) {
-            supplierService.registerFarmer(name, phone, email, category, farmLocation, organic, handlingFee);
-        } else {
-            supplierService.registerDistributor(name, phone, email, category, warehouseCode, minQty, discountRate);
+                              @RequestParam(value = "bulkDiscountRate", required = false, defaultValue = "0.05") double discountRate,
+                              RedirectAttributes redirectAttributes) {
+        try {
+            if ("LOCAL".equalsIgnoreCase(type)) {
+                supplierService.registerFarmer(name, phone, email, category, farmLocation, organic, handlingFee);
+            } else {
+                supplierService.registerDistributor(name, phone, email, category, warehouseCode, minQty, discountRate);
+            }
+            redirectAttributes.addFlashAttribute("successMessage", "Supplier registered successfully!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
         return "redirect:/suppliers";
@@ -84,14 +90,24 @@ public class SupplierController {
     public String updateSupplier(@RequestParam("supplierId") String id,
                                  @RequestParam("companyName") String name,
                                  @RequestParam("contactNumber") String phone,
-                                 @RequestParam("email") String email) {
-        supplierService.updateSupplier(id, name, phone, email);
+                                 @RequestParam("email") String email,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            supplierService.updateSupplier(id, name, phone, email);
+            redirectAttributes.addFlashAttribute("successMessage", "Supplier updated successfully!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/suppliers";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteSupplier(@PathVariable("id") String id) {
-        supplierService.deleteSupplier(id);
+    public String deleteSupplier(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        if (supplierService.deleteSupplier(id)) {
+            redirectAttributes.addFlashAttribute("successMessage", "Supplier deleted.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Supplier not found.");
+        }
         return "redirect:/suppliers";
     }
 }

@@ -1,12 +1,13 @@
 package com.grocery.user.service;
 
+import com.grocery.auth.PasswordHasher;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
-
 
 public final class PasswordUtil {
 
@@ -30,6 +31,9 @@ public final class PasswordUtil {
     public static boolean verify(String password, String savedHash) {
         if (password == null || savedHash == null) {
             return false;
+        }
+        if (savedHash.contains("$")) {
+            return PasswordHasher.matches(password, savedHash);
         }
         String[] parts = savedHash.split(":", -1);
         if (parts.length != 3) {

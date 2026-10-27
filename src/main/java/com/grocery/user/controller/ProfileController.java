@@ -44,7 +44,8 @@ public class ProfileController {
             return loginRequired(redirect);
         }
         try {
-            service.updateProfile(user.getId(), form);
+            User updated = service.updateProfile(user.getId(), form);
+            auth.refresh(session, updated);
         } catch (IllegalArgumentException e) {
             fillPage(model, user, form);
             model.addAttribute("error", e.getMessage());

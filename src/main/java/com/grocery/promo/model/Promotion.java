@@ -1,4 +1,4 @@
- package com.grocery.promo.model;
+package com.grocery.promo.model;
 
 import java.time.LocalDate;
 

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * including modules your teammates have not pushed yet.
  *
  *   Guest      -> shop pages, login, register
- *   Customer   -> + cart, own orders
+ *   Customer   -> + cart, own orders, own user profile
  *   Admin      -> everything
  *
  * To protect a new page, just add its URL start to one of the two lists below.
@@ -29,13 +29,17 @@ import java.util.regex.Pattern;
 @Component
 public class AccessInterceptor implements HandlerInterceptor {
 
+    /** Public user auth paths under /users that do not require an admin session. */
+    private static final List<String> PUBLIC_USER_PATHS =
+            List.of("/users/login", "/users/register", "/users/logout");
+
     /** Only admins may open these (and everything below them). */
     private static final List<String> ADMIN_AREAS =
             List.of("/admin", "/inventory", "/suppliers", "/promos", "/users");
 
     /** Any logged-in user (customer or admin) may open these. */
     private static final List<String> LOGIN_AREAS =
-            List.of("/cart", "/orders", "/reviews", "/complaints");
+            List.of("/cart", "/orders", "/reviews", "/complaints", "/users/profile");
 
     /** Changing an order's status (Pending -> Shipped ...) is an admin job. */
     private static final Pattern ORDER_STATUS_URL = Pattern.compile("^/orders/[^/]+/status$");
@@ -53,10 +57,16 @@ public class AccessInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         String path = request.getRequestURI().substring(request.getContextPath().length());
+        if (startsWithAny(path, PUBLIC_USER_PATHS)) {
+            return true;
+        }
+
         HttpSession session = request.getSession(false);
         Role role = AuthSession.roleOf(session);
 
-        boolean adminOnly = startsWithAny(path, ADMIN_AREAS) || ORDER_STATUS_URL.matcher(path).matches();
+        boolean isUserProfile = startsWithAny(path, List.of("/users/profile"));
+        boolean adminOnly = !isUserProfile
+                && (startsWithAny(path, ADMIN_AREAS) || ORDER_STATUS_URL.matcher(path).matches());
         boolean loginNeeded = adminOnly || startsWithAny(path, LOGIN_AREAS);
 
         if (!loginNeeded) {

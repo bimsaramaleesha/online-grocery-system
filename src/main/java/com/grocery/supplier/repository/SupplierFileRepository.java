@@ -118,7 +118,7 @@ public class SupplierFileRepository implements SupplierRepository {
 
     private Supplier parseLine(String line) {
         String[] parts = line.split("\\|");
-        if (parts.length < 8) return null;
+        if (parts.length < 9) return null;
         try {
             String type = parts[0].trim();
             String id = parts[1].trim();

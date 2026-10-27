@@ -11,6 +11,7 @@ public final class AuthSession {
 
     public static final String USER_ID = "userId";
     public static final String ROLE = "role";          // "CUSTOMER" or "ADMIN" (the navbar reads this)
+    public static final String USER_ROLE = "userRole"; // kept in sync with the user module
     public static final String USER_NAME = "userName";
 
     private AuthSession() { }
@@ -18,15 +19,27 @@ public final class AuthSession {
     public static void signIn(HttpSession session, Account account) {
         session.setAttribute(USER_ID, account.getId());
         session.setAttribute(ROLE, account.getRole().name());
+        session.setAttribute(USER_ROLE, account.getRole().name());
         session.setAttribute(USER_NAME, account.getFullName());
     }
 
     /** null = not logged in (a guest). */
     public static Role roleOf(HttpSession session) {
-        if (session == null || session.getAttribute(ROLE) == null) {
+        if (session == null) {
             return null;
         }
-        return Role.valueOf((String) session.getAttribute(ROLE));
+        Object rawRole = session.getAttribute(ROLE);
+        if (rawRole == null) {
+            rawRole = session.getAttribute(USER_ROLE);
+        }
+        if (rawRole == null) {
+            return null;
+        }
+        try {
+            return Role.valueOf(rawRole.toString());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public static String userIdOf(HttpSession session) {

@@ -1,8 +1,7 @@
-```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/layout :: head('Promotions')}"></head>
+<head th:replace="~{fragments/layout :: headWithCss('Promotions', '/css/promo.css')}"></head>
 
 <body>
 
@@ -244,7 +243,7 @@
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/promo.js}"></script>
 
 </body>
 </html>
-```

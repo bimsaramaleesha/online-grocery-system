@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class UserService {
 
@@ -25,7 +24,6 @@ public class UserService {
     public UserService(UserRepository repository) {
         this.repository = repository;
     }
-
 
     public synchronized User register(UserForm form) {
         form.setType(Customer.TYPE);
@@ -91,7 +89,6 @@ public class UserService {
         return update(id, form, false);
     }
 
-
     public synchronized User adminUpdate(String id, UserForm form) {
         return update(id, form, true);
     }
@@ -108,6 +105,7 @@ public class UserService {
         }
 
         User updated = build(id, form, hash);
+        updated.setCreatedDate(existing.getCreatedDate());
         ensureEmailFree(updated.getEmail(), id);
         return repository.save(updated);
     }
@@ -140,7 +138,6 @@ public class UserService {
         }
         repository.deleteById(id);
     }
-
 
     private User build(String id, UserForm f, String passwordHash) {
         return UserFactory.create(f.getType(), id, f.getName(), f.getEmail(), passwordHash,

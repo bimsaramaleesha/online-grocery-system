@@ -32,7 +32,7 @@ public class ModuleDirectory {
                         "All customer orders and their status"),
                 module("Promotions", "🏷️", "/promos", "/promos", "@manujiyashindi-glit",
                         "Promo codes and discounts"),
-                module("Reviews", "⭐", "/reviews", "/reviews", "@sahiru05",
+                module("Reviews", "⭐", "/reviews", "/reviews", "@bimsaramaleesha",
                         "Customer reviews and complaints"),
                 module("User management", "👥", "/users", "/users", "@MrHasit",
                         "Manage customer and admin accounts"));

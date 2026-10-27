@@ -52,7 +52,7 @@ public class Order {
                 .map(OrderItem::toToken)
                 .collect(Collectors.joining(","));
 
-        return String.format("%s|%s|%s|%.2f|%.2f|%.2f|%s|%s|%s|%s|%s|%s",
+        return String.format(java.util.Locale.US, "%s|%s|%s|%.2f|%.2f|%.2f|%s|%s|%s|%s|%s|%s",
                 FileHandler.clean(orderId),
                 FileHandler.clean(userId),
                 itemsSummary,

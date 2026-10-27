@@ -96,14 +96,18 @@ public class AdminUserController {
     @PostMapping("/{id}/edit")
     public String update(@PathVariable String id, @ModelAttribute("form") UserForm form,
                          HttpSession session, Model model, RedirectAttributes redirect) {
-        String denied = guard(auth.currentUser(session), redirect);
+        User me = auth.currentUser(session);
+        String denied = guard(me, redirect);
         if (denied != null) {
             return denied;
         }
         form.setId(id);
         model.addAttribute("editMode", true);
         try {
-            service.adminUpdate(id, form);
+            User updated = service.adminUpdate(id, form);
+            if (me.getId().equals(id)) {
+                auth.refresh(session, updated);
+            }
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "user/user-form";

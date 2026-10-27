@@ -72,9 +72,10 @@ public class OrderController {
 
         if (!model.containsAttribute("checkoutForm")) {
             CheckoutForm form = new CheckoutForm();
-            form.setFullName(" ");
-            form.setContactPhone(" ");
-            form.setShippingAddress(" ");
+            Object userName = session.getAttribute("userName");
+            if (userName != null && !userName.toString().isBlank()) {
+                form.setFullName(userName.toString());
+            }
             model.addAttribute("checkoutForm", form);
         }
 

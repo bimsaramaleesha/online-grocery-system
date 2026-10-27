@@ -1,5 +1,7 @@
 package com.grocery.auth;
 
+import com.grocery.user.service.PasswordUtil;
+
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
@@ -26,15 +28,28 @@ public final class PasswordHasher {
         return encode(salt) + "$" + encode(derive(password, salt));
     }
 
-    /** True when the typed password matches the stored  salt$hash. */
+    /** True when the typed password matches the stored salt$hash (or iterations:salt:hash from UserService). */
     public static boolean matches(String password, String stored) {
-        if (password == null || stored == null || !stored.contains("$")) {
+        if (password == null || stored == null) {
             return false;
         }
-        String[] parts = stored.split("\\$");
-        byte[] salt = Base64.getUrlDecoder().decode(parts[0]);
-        byte[] expected = Base64.getUrlDecoder().decode(parts[1]);
-        return MessageDigest.isEqual(expected, derive(password, salt));   // constant-time compare
+        if (stored.contains(":")) {
+            return PasswordUtil.verify(password, stored);
+        }
+        if (!stored.contains("$")) {
+            return false;
+        }
+        try {
+            String[] parts = stored.split("\\$");
+            if (parts.length != 2) {
+                return false;
+            }
+            byte[] salt = Base64.getUrlDecoder().decode(parts[0]);
+            byte[] expected = Base64.getUrlDecoder().decode(parts[1]);
+            return MessageDigest.isEqual(expected, derive(password, salt));   // constant-time compare
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private static byte[] derive(String password, byte[] salt) {
