@@ -42,7 +42,14 @@
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <input type="text" id="category" class="form-control" th:field="*{category}"
-                   placeholder="Dairy, Grains, Vegetables..." required>
+                   list="categoryList" placeholder="Dairy, Toys, Books, Electronics..." required>
+            <!-- suggestions only: you can still type any new category -->
+            <datalist id="categoryList">
+                <option>Dairy</option><option>Vegetables</option><option>Fruits</option><option>Bakery</option>
+                <option>Meat</option><option>Grains</option><option>Canned Food</option><option>Beverages</option>
+                <option>Snacks</option><option>Household</option><option>Toys</option><option>Books</option>
+                <option>Stationery</option><option>Electronics</option>
+            </datalist>
         </div>
         <div class="row">
             <div class="col-sm-6 mb-3">

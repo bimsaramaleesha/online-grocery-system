@@ -1,0 +1,17 @@
+/* Admin dashboard styles. Every class starts with "adm-". */
+
+.adm-stat { border-left: 6px solid; transition: transform .15s, box-shadow .15s; color: #212529; }
+.adm-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, .12); }
+.adm-blue   { border-left-color: #0d6efd; }
+.adm-green  { border-left-color: #198754; }
+.adm-orange { border-left-color: #fd7e14; }
+.adm-purple { border-left-color: #6f42c1; }
+.adm-label  { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: #6c757d; }
+.adm-number { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.adm-note   { font-size: .8rem; color: #6c757d; }
+
+.adm-module .adm-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+    background: #e8f5e9;
+}

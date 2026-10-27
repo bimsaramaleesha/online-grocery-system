@@ -2,6 +2,7 @@ package com.grocery.inventory.controller;
 
 import com.grocery.inventory.dto.ItemForm;
 import com.grocery.inventory.service.InventoryService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +50,7 @@ public class InventoryController {
     }
 
     @PostMapping("/new")
-    public String add(@ModelAttribute("form") ItemForm form, BindingResult binding,
+    public String add(@Valid @ModelAttribute("form") ItemForm form, BindingResult binding,
                       Model model, RedirectAttributes redirect) {
         model.addAttribute("editMode", false);
         if (binding.hasErrors()) {      // e.g. letters typed in the price box
@@ -81,7 +82,7 @@ public class InventoryController {
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable String id,
-                         @ModelAttribute("form") ItemForm form, BindingResult binding,
+                         @Valid @ModelAttribute("form") ItemForm form, BindingResult binding,
                          Model model, RedirectAttributes redirect) {
         form.setId(id);
         model.addAttribute("editMode", true);

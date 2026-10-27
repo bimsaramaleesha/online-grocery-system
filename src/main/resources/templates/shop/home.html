@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--
+  Customer storefront. Guests can browse; "Add to cart" needs a login.
+  The add-to-cart form posts to the Order module's /cart/add (itemId + quantity).
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Shop', '/css/shop.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<!-- hero banner: only on the plain home view -->
+<section class="shop-hero text-white" th:if="${deals != null}">
+    <div class="container py-5">
+        <h1 class="display-5 fw-bold mb-2">Everything you need, delivered.</h1>
+        <p class="lead mb-4">Fresh groceries, toys, books and electronics in one place.</p>
+        <form th:action="@{/shop}" method="get" class="shop-hero-search">
+            <div class="input-group input-group-lg">
+                <input type="text" name="q" class="form-control" placeholder="Search products, e.g. milk, toy, earbuds...">
+                <button class="btn btn-warning fw-semibold" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<main class="container my-4">
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+    <!-- category chips -->
+    <div class="shop-chips mb-4">
+        <a th:href="@{/shop}" class="shop-chip" th:classappend="${#strings.isEmpty(category)} ? 'active'">🛍️ All</a>
+        <a th:each="c : ${categories}" th:href="@{/shop(category=${c.name})}" class="shop-chip"
+           th:classappend="${c.name == category} ? 'active'">
+            <span th:text="${c.emoji}">🥛</span> <span th:text="${c.name}">Dairy</span>
+            <small class="text-muted" th:text="'(' + ${c.count} + ')'">(3)</small>
+        </a>
+    </div>
+
+    <!-- hot deals strip -->
+    <div th:if="${deals != null and !#lists.isEmpty(deals)}" class="mb-4">
+        <h2 class="h4 mb-3">🔥 Hot deals <small class="text-muted fs-6">20% off, close to expiry</small></h2>
+        <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-2" th:each="p : ${deals}">
+                <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none">
+                    <div class="card shop-card h-100">
+                        <div class="shop-thumb" th:classappend="'shop-grad-' + ${p.colorIndex}" th:text="${p.emoji}">🥛</div>
+                        <div class="card-body p-2 text-center">
+                            <div class="small fw-semibold text-dark" th:text="${p.name}">Name</div>
+                            <div class="text-danger fw-bold" th:text="'Rs. ' + ${#numbers.formatDecimal(p.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- search + sort bar -->
+    <form th:action="@{/shop}" method="get" class="row g-2 align-items-center mb-3">
+        <input type="hidden" name="category" th:value="${category}" th:if="${!#strings.isEmpty(category)}">
+        <div class="col-12 col-md">
+            <h2 class="h4 mb-0">
+                <span th:if="${#strings.isEmpty(category)}">All products</span>
+                <span th:if="${!#strings.isEmpty(category)}" th:text="${category}">Category</span>
+                <small class="text-muted fs-6" th:text="'(' + ${#lists.size(products)} + ' items)'">(0 items)</small>
+            </h2>
+        </div>
+        <div class="col-7 col-md-4">
+            <input type="text" name="q" th:value="${q}" class="form-control" placeholder="Search...">
+        </div>
+        <div class="col-5 col-md-3">
+            <select name="sort" class="form-select" onchange="this.form.submit()">
+                <option value="" th:selected="${#strings.isEmpty(sort)}">Newest</option>
+                <option value="price-asc" th:selected="${sort == 'price-asc'}">Price: low to high</option>
+                <option value="price-desc" th:selected="${sort == 'price-desc'}">Price: high to low</option>
+                <option value="name" th:selected="${sort == 'name'}">Name A-Z</option>
+            </select>
+        </div>
+    </form>
+
+    <!-- product grid -->
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-3" th:each="p : ${products}">
+            <div class="card shop-card h-100">
+                <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none position-relative">
+                    <div class="shop-thumb" th:classappend="'shop-grad-' + ${p.colorIndex}" th:text="${p.emoji}">🥛</div>
+                    <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20%</span>
+                    <span class="badge text-bg-secondary shop-badge" th:if="${!p.inStock}">Sold out</span>
+                </a>
+                <div class="card-body d-flex flex-column">
+                    <div class="small text-muted" th:text="${p.category}">Category</div>
+                    <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none text-dark fw-semibold mb-1"
+                       th:text="${p.name}">Product name</a>
+                    <div class="mb-2">
+                        <span class="fs-5 fw-bold text-success"
+                              th:text="'Rs. ' + ${#numbers.formatDecimal(p.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0.00</span>
+                        <span class="text-muted text-decoration-line-through small ms-1" th:if="${p.onSale}"
+                              th:text="'Rs. ' + ${#numbers.formatDecimal(p.price, 1, 'COMMA', 2, 'POINT')}">old</span>
+                    </div>
+                    <div class="small text-warning-emphasis mb-2" th:if="${p.lowStock}" th:text="'Only ' + ${p.quantity} + ' left!'">Only 3 left!</div>
+
+                    <div class="mt-auto">
+                        <form th:action="@{/cart/add}" method="post" th:if="${session.role != null}">
+                            <input type="hidden" name="itemId" th:value="${p.id}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-success w-100" th:disabled="${!p.inStock}"
+                                    th:text="${p.inStock} ? '🛒 Add to cart' : 'Sold out'">Add to cart</button>
+                        </form>
+                        <a th:if="${session.role == null}" th:href="@{/login(next='/shop')}"
+                           class="btn btn-outline-success w-100">Login to buy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-muted py-5" th:if="${#lists.isEmpty(products)}">
+        <div style="font-size:3rem;">🔍</div>
+        <p class="mb-1">No products found.</p>
+        <a th:href="@{/shop}">Clear search</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,36 @@
+/* Shop (customer storefront) styles. Every class starts with "shop-". */
+
+.shop-hero {
+    background: linear-gradient(120deg, #0f5132 0%, #198754 50%, #ffc107 140%);
+}
+.shop-hero-search { max-width: 640px; }
+
+/* category chips */
+.shop-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.shop-chip {
+    background: #fff; border: 1px solid #dee2e6; border-radius: 999px;
+    padding: .35rem .9rem; color: #212529; text-decoration: none; font-size: .9rem;
+    transition: all .15s;
+}
+.shop-chip:hover { border-color: #198754; color: #198754; }
+.shop-chip.active { background: #198754; border-color: #198754; color: #fff; }
+.shop-chip.active small { color: #d1e7dd !important; }
+
+/* product cards */
+.shop-card { overflow: hidden; transition: transform .15s, box-shadow .15s; }
+.shop-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0, 0, 0, .12); }
+
+/* the big emoji "picture": each category gets one of 6 gradients */
+.shop-thumb {
+    height: 140px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+}
+.shop-thumb-lg { height: 100%; min-height: 300px; font-size: 8rem; }
+.shop-grad-0 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.shop-grad-1 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.shop-grad-2 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.shop-grad-3 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+.shop-grad-4 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+.shop-grad-5 { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+
+.shop-badge { position: absolute; top: .6rem; right: .6rem; }

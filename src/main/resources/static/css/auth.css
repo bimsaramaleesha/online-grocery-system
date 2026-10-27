@@ -1,0 +1,10 @@
+/* Login / register pages. Every class starts with "auth-". */
+
+.auth-wrap { display: flex; justify-content: center; padding: 3rem 1rem; }
+.auth-card { width: 100%; max-width: 440px; }
+.auth-card-wide { max-width: 640px; }
+.auth-logo {
+    width: 72px; height: 72px; margin: 0 auto 1rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+}

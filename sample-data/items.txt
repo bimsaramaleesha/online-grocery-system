@@ -1,8 +1,29 @@
-PERISHABLE|ITM001|Fresh Milk 1L|Dairy|420.0|25|2026-10-25
-PERISHABLE|ITM002|Yoghurt Cup|Dairy|90.0|8|2026-10-12
-PERISHABLE|ITM003|Carrots 1kg|Vegetables|350.0|40|2026-10-15
-PERISHABLE|ITM004|Sandwich Bread|Bakery|180.0|30|2026-10-14
-PERISHABLE|ITM005|Chicken Breast 500g|Meat|950.0|12|2026-10-20
+PERISHABLE|ITM001|Fresh Milk 1L|Dairy|420.0|25|2026-11-15
+PERISHABLE|ITM002|Yoghurt Cup|Dairy|90.0|8|2026-10-29
+PERISHABLE|ITM003|Carrots 1kg|Vegetables|350.0|40|2026-11-20
+PERISHABLE|ITM004|Sandwich Bread|Bakery|180.0|30|2026-10-28
+PERISHABLE|ITM005|Chicken Breast 500g|Meat|950.0|12|2026-11-10
 NON_PERISHABLE|ITM006|Basmati Rice 5kg|Grains|1850.0|40|Araliya|24
 NON_PERISHABLE|ITM007|Canned Tuna 185g|Canned Food|620.0|6|Seafresh|36
 NON_PERISHABLE|ITM008|Dishwash Liquid 500ml|Household|480.0|18|Sunlight|30
+PERISHABLE|ITM009|Fresh Strawberries 250g|Fruits|550.0|20|2026-10-30
+PERISHABLE|ITM010|Bananas 1kg|Fruits|320.0|45|2026-11-05
+PERISHABLE|ITM011|Free-Range Eggs (10 pack)|Dairy|480.0|35|2026-11-12
+PERISHABLE|ITM012|Cheddar Cheese 200g|Dairy|890.0|15|2026-12-01
+NON_PERISHABLE|ITM013|Ceylon Black Tea 200g|Beverages|350.0|60|Ceylon Pure|24
+NON_PERISHABLE|ITM014|Instant Noodles Family Pack|Snacks|140.0|120|Quick Bite|12
+NON_PERISHABLE|ITM015|Chocolate Biscuits 200g|Snacks|210.0|80|Munchee|9
+NON_PERISHABLE|ITM016|Building Blocks Set 100 pcs|Toys|3450.0|18|BrickBuild|60
+NON_PERISHABLE|ITM017|Teddy Bear 40cm|Toys|2250.0|25|CuddleCo|60
+NON_PERISHABLE|ITM018|Remote Control Car|Toys|5900.0|9|SpeedRacer|36
+NON_PERISHABLE|ITM019|Jigsaw Puzzle 500 pcs|Toys|1650.0|30|PuzzleWorld|60
+NON_PERISHABLE|ITM020|Atomic Habits (Paperback)|Books|3200.0|14|Penguin|120
+NON_PERISHABLE|ITM021|Kids Story Collection|Books|1450.0|40|Sunrise Books|120
+NON_PERISHABLE|ITM022|A5 Notebook 200 pages|Stationery|390.0|100|Atlas|60
+NON_PERISHABLE|ITM023|Ball Point Pens (10 pack)|Stationery|250.0|150|Atlas|60
+NON_PERISHABLE|ITM024|Wireless Earbuds|Electronics|7900.0|22|SoundBeat|24
+NON_PERISHABLE|ITM025|Power Bank 10000mAh|Electronics|5600.0|7|VoltMax|24
+NON_PERISHABLE|ITM026|USB-C Fast Charger 30W|Electronics|2800.0|40|VoltMax|24
+NON_PERISHABLE|ITM027|LED Desk Lamp|Electronics|4200.0|16|BrightHome|36
+NON_PERISHABLE|ITM028|Bluetooth Speaker|Electronics|8900.0|11|SoundBeat|24
+NON_PERISHABLE|ITM029|Laundry Detergent 1kg|Household|950.0|50|Sunlight|30
