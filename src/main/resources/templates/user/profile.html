@@ -17,7 +17,7 @@
         </div>
         <div class="d-flex gap-2">
             <a th:href="@{/users}" class="btn btn-outline-success" th:if="${user.role == 'ADMIN'}">Manage users</a>
-            <form th:action="@{/users/logout}" method="post">
+            <form th:action="@{/logout}" method="post">
                 <button type="submit" class="btn btn-outline-secondary">Log out</button>
             </form>
         </div>

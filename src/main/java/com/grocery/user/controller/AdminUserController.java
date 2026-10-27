@@ -30,10 +30,9 @@ public class AdminUserController {
     public String list(@RequestParam(required = false) String q,
                        @RequestParam(required = false) String role,
                        HttpSession session, Model model, RedirectAttributes redirect) {
-        // /users is also the link in the navbar, so a customer is simply sent to their own profile
         User me = auth.currentUser(session);
         if (me != null && !me.canManageUsers()) {
-            return "redirect:" + me.getHomePath();
+            return "redirect:/users/profile";
         }
         String denied = guard(me, redirect);
         if (denied != null) {
@@ -140,7 +139,7 @@ public class AdminUserController {
     private String guard(User me, RedirectAttributes redirect) {
         if (me == null) {
             redirect.addFlashAttribute("error", "Please log in to continue.");
-            return "redirect:/users/login";
+            return "redirect:/login";
         }
         if (!me.canManageUsers()) {
             redirect.addFlashAttribute("error", "Only administrators can open that page.");

@@ -42,7 +42,7 @@ public class Admin extends User {
     public boolean canManageUsers() { return true; }
 
     @Override
-    public String getHomePath() { return "/users"; }
+    public String getHomePath() { return "/admin"; }
 
     @Override
     public String toFileLine() {

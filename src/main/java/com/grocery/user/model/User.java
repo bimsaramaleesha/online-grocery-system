@@ -76,12 +76,8 @@ public abstract class User {
     }
 
     public abstract String getRole();
-
     public abstract String getDetails();
-
     public abstract boolean canManageUsers();
-
     public abstract String getHomePath();
-
     public abstract String toFileLine();
 }

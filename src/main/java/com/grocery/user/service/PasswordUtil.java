@@ -1,7 +1,5 @@
 package com.grocery.user.service;
 
-import com.grocery.auth.PasswordHasher;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.GeneralSecurityException;
@@ -11,7 +9,7 @@ import java.util.Base64;
 
 public final class PasswordUtil {
 
-    private static final int ITERATIONS = 210000;
+    private static final int ITERATIONS = 210_000;
     private static final int KEY_LENGTH = 256;
     private static final int SALT_LENGTH = 16;
 
@@ -20,9 +18,7 @@ public final class PasswordUtil {
     public static String hash(String password) {
         byte[] salt = new byte[SALT_LENGTH];
         new SecureRandom().nextBytes(salt);
-
         byte[] hash = derive(password, salt, ITERATIONS);
-
         return ITERATIONS + ":"
                 + Base64.getEncoder().encodeToString(salt) + ":"
                 + Base64.getEncoder().encodeToString(hash);
@@ -32,33 +28,39 @@ public final class PasswordUtil {
         if (password == null || savedHash == null) {
             return false;
         }
-        if (savedHash.contains("$")) {
-            return PasswordHasher.matches(password, savedHash);
+        if (savedHash.indexOf('$') > 0 && savedHash.indexOf(':') < 0) {
+            return verifyLegacyHash(password, savedHash);
         }
         String[] parts = savedHash.split(":", -1);
         if (parts.length != 3) {
             return false;
         }
-
-        int iterations;
         try {
-            iterations = Integer.parseInt(parts[0]);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-        if (iterations < 100000 || iterations > 1000000) {
-            return false;
-        }
-
-        try {
+            int iterations = Integer.parseInt(parts[0]);
+            if (iterations < 10_000 || iterations > 1_000_000) {
+                return false;
+            }
             byte[] salt = Base64.getDecoder().decode(parts[1]);
             byte[] expected = Base64.getDecoder().decode(parts[2]);
             if (salt.length != SALT_LENGTH || expected.length != KEY_LENGTH / 8) {
                 return false;
             }
-            byte[] actual = derive(password, salt, iterations);
-            return MessageDigest.isEqual(expected, actual);
+            return MessageDigest.isEqual(expected, derive(password, salt, iterations));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /** Verifies legacy salt$hash format (PBKDF2, 65,000 rounds, Base64Url). */
+    private static boolean verifyLegacyHash(String password, String savedHash) {
+        String[] parts = savedHash.split("\\$");
+        if (parts.length != 2) {
+            return false;
+        }
+        try {
+            byte[] salt = Base64.getUrlDecoder().decode(parts[0]);
+            byte[] expected = Base64.getUrlDecoder().decode(parts[1]);
+            return MessageDigest.isEqual(expected, derive(password, salt, 65_000));
         } catch (IllegalArgumentException e) {
             return false;
         }

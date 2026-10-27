@@ -13,17 +13,17 @@
                     <h1 class="h3 text-center mb-1">Welcome back</h1>
                     <p class="text-center text-muted mb-4">Log in to your account</p>
 
-                    <!-- messages: flash ones come after a redirect, ?logout / ?deleted come from the URL -->
                     <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
                     <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
                     <div class="alert alert-info" role="alert" th:if="${param.logout != null}">You have been logged out.</div>
                     <div class="alert alert-info" role="alert" th:if="${param.deleted != null}">Your account has been deleted.</div>
 
-                    <form th:object="${form}" th:action="@{/users/login}" method="post">
+                    <form th:object="${form}" th:action="@{/login}" method="post">
+                        <input type="hidden" name="next" th:if="${next != null}" th:value="${next}">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" id="email" class="form-control" th:field="*{email}"
-                                   maxlength="254" autocomplete="email" required>
+                                   maxlength="254" autocomplete="email" placeholder="you@example.com" required autofocus>
                         </div>
 
                         <div class="mb-2">
@@ -40,9 +40,15 @@
                         <button type="submit" class="btn btn-success w-100">Log in</button>
                     </form>
 
+                    <div class="usr-demo-box mt-4 p-3 rounded-3 small">
+                        <div class="fw-semibold mb-1">Quick Demo Logins:</div>
+                        <div>Customer: <code>customer@grocery.lk</code> / <code>Customer@123</code></div>
+                        <div>Admin: <code>admin@grocery.lk</code> / <code>Admin@123</code></div>
+                    </div>
+
                     <p class="text-center mt-4 mb-0">
-                        Don't have an account?
-                        <a th:href="@{/users/register}" class="text-success fw-semibold">Register here</a>
+                        New customer?
+                        <a th:href="@{/register}" class="text-success fw-semibold">Create a free account</a>
                     </p>
                 </div>
             </div>

@@ -34,7 +34,7 @@ public class ShopService {
         this.inventory = inventory;
     }
 
-    /** Products for the shop page. sort = price-asc | price-desc | name (anything else = newest id first). */
+    /** Products for the shop page. sort = price-asc | price-desc | popular | name (anything else = newest id first). */
     public List<ProductView> products(String q, String category, String sort) {
         List<ProductView> list = inventory.search(q).stream()
                 .filter(i -> !i.isExpired())
@@ -45,15 +45,20 @@ public class ShopService {
         Comparator<ProductView> order = switch (sort == null ? "" : sort) {
             case "price-asc" -> Comparator.comparingDouble(ProductView::sellingPrice);
             case "price-desc" -> Comparator.comparingDouble(ProductView::sellingPrice).reversed();
+            case "popular" -> Comparator.comparingInt(ProductView::soldCount).reversed();
             case "name" -> Comparator.comparing(ProductView::name, String.CASE_INSENSITIVE_ORDER);
             default -> Comparator.comparing(ProductView::id).reversed();
         };
         return list.stream().sorted(order).toList();
     }
 
-    /** Products on sale first (close-to-expiry discount), used for the "Hot deals" strip. */
+    /** Products on sale first (close-to-expiry discount), used for the "SuperDeals" strip. */
     public List<ProductView> deals() {
-        return products(null, null, null).stream().filter(ProductView::onSale).limit(6).toList();
+        List<ProductView> onSale = products(null, null, null).stream().filter(ProductView::onSale).limit(6).toList();
+        if (!onSale.isEmpty()) {
+            return onSale;
+        }
+        return products(null, null, "price-asc").stream().limit(6).toList();
     }
 
     public Optional<ProductView> find(String id) {
@@ -87,11 +92,15 @@ public class ShopService {
 
     private ProductView toView(Item i) {
         double selling = i.getSellingPrice();
+        int hash = Math.abs(i.getId().hashCode());
+        double rating = 4.5 + ((hash % 5) * 0.1);
+        int soldCount = 45 + (hash % 420);
         return new ProductView(i.getId(), i.getName(), i.getCategory(), i.getTypeLabel(),
                 i.getPrice(), selling, selling < i.getPrice(),
                 i.getQuantity(), i.getQuantity() > 0, i.isLowStock() && i.getQuantity() > 0,
                 i.getDetails(), iconFor(i.getCategory()),
-                Math.abs(i.getCategory().toLowerCase().hashCode()) % 6);
+                Math.abs(i.getCategory().toLowerCase().hashCode()) % 6,
+                Math.round(rating * 10.0) / 10.0, soldCount);
     }
 
     private static String iconFor(String category) {

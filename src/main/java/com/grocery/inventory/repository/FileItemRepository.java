@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +30,16 @@ public class FileItemRepository implements ItemRepository {
 
     private final String fileName;
 
-    // FileHandler is a static helper (shared by every module) and always works inside
-    // the "data" folder, so the name here is just "items.txt".
-    // The default means nobody needs to configure anything; tests pass another name
-    // so they never touch the real data/items.txt.
     public FileItemRepository(@Value("${grocery.data.items-file:items.txt}") String fileName) {
         this.fileName = fileName;
+        if ("items.txt".equals(fileName) && FileHandler.readLines(fileName).isEmpty()) {
+            Path sample = Path.of("sample-data", "items.txt");
+            if (Files.exists(sample)) {
+                try {
+                    FileHandler.writeLines(fileName, Files.readAllLines(sample, StandardCharsets.UTF_8));
+                } catch (IOException ignored) { }
+            }
+        }
     }
 
     @Override

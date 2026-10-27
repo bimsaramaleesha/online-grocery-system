@@ -12,6 +12,8 @@ public class UserForm {
     private String email;
     private String password;
     private String confirmPassword;
+    private String currentPassword;
+    private String newPassword;
 
     // customer only
     private String phone;
@@ -48,6 +50,10 @@ public class UserForm {
     public void setPassword(String password) { this.password = password; }
     public String getConfirmPassword() { return confirmPassword; }
     public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
+    public String getCurrentPassword() { return currentPassword; }
+    public void setCurrentPassword(String currentPassword) { this.currentPassword = currentPassword; }
+    public String getNewPassword() { return newPassword; }
+    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
     public String getAddress() { return address; }

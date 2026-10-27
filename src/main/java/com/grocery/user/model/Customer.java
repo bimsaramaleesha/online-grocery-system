@@ -66,7 +66,7 @@ public class Customer extends User {
     public boolean canManageUsers() { return false; }
 
     @Override
-    public String getHomePath() { return "/users/profile"; }
+    public String getHomePath() { return "/shop"; }
 
     @Override
     public String toFileLine() {
