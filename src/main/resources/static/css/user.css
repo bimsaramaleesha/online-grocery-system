@@ -1,1 +1,22 @@
-/* user module styles. Only the owner of the user module edits this file. Prefix your classes, e.g. .use-card */
+
+
+.usr-narrow { max-width: 720px; }
+
+.usr-card { border: none; border-radius: 12px; box-shadow: 0 3px 12px rgba(0, 0, 0, .08); }
+
+.usr-role { font-weight: 500; }
+.usr-role-customer { background: #e8f5e9; color: #1b5e20; }
+.usr-role-admin    { background: #e7f1ff; color: #0a4a9e; }
+
+.usr-danger { border-color: #f1aeb5; }
+
+
+.usr-stat { border: 1px solid #dee2e6; border-left: 5px solid #198754; color: #212529; transition: box-shadow .15s, transform .15s; }
+.usr-stat:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, .1); transform: translateY(-2px); color: #212529; }
+.usr-stat-customer { border-left-color: #20c997; }
+.usr-stat-admin    { border-left-color: #0d6efd; }
+.usr-stat-active   { box-shadow: 0 0 0 2px #198754 inset; }
+.usr-stat-label  { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #6c757d; }
+.usr-stat-number { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+
+.usr-type-fields { display: none; }
