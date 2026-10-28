@@ -11,7 +11,7 @@ How our 6-person team works together on this repo. Follow these steps every time
 | 3 | Supplier & Vendor Logistics | `supplier` | `templates/supplier` | `supplier.css` / `supplier.js` | `suppliers.txt`, `deliveries.txt` | `SUP` | `/suppliers` | @Thilanjana01 |
 | 4 | Cart & Order Processing | `order` | `templates/order` | `order.css` / `order.js` | `carts.txt`, `orders.txt` | `CRT`, `ORD` | `/cart`, `/orders` | @Piumanjali K. K. |
 | 5 | Discounts & Promo Codes | `promo` | `templates/promo` | `promo.css` / `promo.js` | `promos.txt` | `PRM` | `/promos` | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @Pahan K. H. S. |
+| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @bimsaramaleesha |
 
 **Review buddies** (you review each other's pull requests): 1 and 2, 3 and 4, 5 and 6.
 

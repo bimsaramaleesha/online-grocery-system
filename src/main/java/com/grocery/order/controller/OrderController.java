@@ -6,6 +6,8 @@ import com.grocery.order.model.Order;
 import com.grocery.order.model.OrderStatus;
 import com.grocery.order.service.CartService;
 import com.grocery.order.service.OrderService;
+import com.grocery.user.model.Customer;
+import com.grocery.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -31,10 +33,12 @@ public class OrderController {
 
     private final OrderService orderService;
     private final CartService cartService;
+    private final UserService userService;
 
-    public OrderController(OrderService orderService, CartService cartService) {
+    public OrderController(OrderService orderService, CartService cartService, UserService userService) {
         this.orderService = orderService;
         this.cartService = cartService;
+        this.userService = userService;
     }
 
     private String resolveUserId(HttpSession session) {
@@ -72,9 +76,17 @@ public class OrderController {
 
         if (!model.containsAttribute("checkoutForm")) {
             CheckoutForm form = new CheckoutForm();
-            form.setFullName(" ");
-            form.setContactPhone(" ");
-            form.setShippingAddress(" ");
+            Object userName = session.getAttribute("userName");
+            if (userName != null && !userName.toString().isBlank()) {
+                form.setFullName(userName.toString());
+            }
+            userService.findById(userId).ifPresent(u -> {
+                form.setFullName(u.getName());
+                if (u instanceof Customer c) {
+                    form.setContactPhone(c.getPhone());
+                    form.setShippingAddress(c.getAddress());
+                }
+            });
             model.addAttribute("checkoutForm", form);
         }
 

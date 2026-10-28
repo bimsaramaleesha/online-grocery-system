@@ -99,7 +99,7 @@ public class LocalFarmerSupplier extends Supplier {
      */
     @Override
     public String toFileString() {
-        return String.format("LOCAL|%s|%s|%s|%s|%s|%s|%b|%.2f",
+        return String.format(java.util.Locale.US, "LOCAL|%s|%s|%s|%s|%s|%s|%b|%.2f",
                 getSupplierId(),
                 getCompanyName(),
                 getContactNumber(),

@@ -1,4 +1,4 @@
- package com.grocery.promo.service;
+package com.grocery.promo.service;
 
 import com.grocery.promo.model.Promotion;
 import com.grocery.promo.repository.PromotionRepository;

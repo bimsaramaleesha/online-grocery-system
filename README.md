@@ -17,7 +17,7 @@ Customers can browse groceries, add items to a cart, apply promo codes, place or
 | 3 | Supplier & Vendor Logistics | Suppliers and delivery tracking | `/suppliers` | @Thilanjana01 |
 | 4 | Cart & Order Processing | Shopping cart and orders | `/cart`, `/orders` | @Piumanjali K. K. |
 | 5 | Discounts & Promo Codes | Create and apply promo codes | `/promos` | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | Product reviews and complaints | `/reviews`, `/complaints` | @Pahan K. H. S. |
+| 6 | Reviews & Customer Complaints | Product reviews and complaints | `/reviews`, `/complaints` | @bimsaramaleesha |
 
 The full per-module conventions (packages, data files, ID prefixes) are in [CONTRIBUTING.md](CONTRIBUTING.md).
 

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <th:block th:replace="~{fragments/layout :: head('Farm Delivery Checkout')}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/order.css}">
-</head>
+<head th:replace="~{fragments/layout :: headWithCss('Farm Delivery Checkout', '/css/order.css')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 

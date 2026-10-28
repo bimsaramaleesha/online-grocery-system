@@ -1,6 +1,10 @@
 package com.grocery.order.service;
 
 import com.grocery.common.FileHandler;
+import com.grocery.inventory.model.Item;
+import com.grocery.inventory.model.ItemFactory;
+import com.grocery.inventory.model.NonPerishableItem;
+import com.grocery.inventory.model.PerishableItem;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,9 +63,27 @@ public class ItemCatalogService {
         try {
             List<String> lines = FileHandler.readLines("items.txt");
             for (String line : lines) {
+                if (line.isBlank() || line.startsWith("#")) {
+                    continue;
+                }
                 String[] parts = line.split("\\|", -1);
-                if (parts.length >= 3) {
-                    String id = parts[0].trim();
+                String first = parts[0].trim();
+                if (PerishableItem.TYPE.equals(first) || NonPerishableItem.TYPE.equals(first)) {
+                    try {
+                        Item item = ItemFactory.fromFileLine(line);
+                        if (!item.isExpired()) {
+                            catalog.put(item.getId(), new CatalogItem(
+                                    item.getId(),
+                                    item.getName(),
+                                    item.getCategory(),
+                                    item.getSellingPrice(),
+                                    "item"
+                            ));
+                        }
+                    } catch (RuntimeException ignored) {
+                    }
+                } else if (parts.length >= 3) {
+                    String id = first;
                     String name = parts[1].trim();
                     double price = 0.0;
                     try {

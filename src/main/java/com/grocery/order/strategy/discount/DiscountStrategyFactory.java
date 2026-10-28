@@ -3,6 +3,7 @@ package com.grocery.order.strategy.discount;
 import com.grocery.common.FileHandler;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,9 +29,28 @@ public class DiscountStrategyFactory {
         // 1. Try reading live promos.txt if configured
         try {
             List<String> lines = FileHandler.readLines("promos.txt");
+            LocalDate today = LocalDate.now();
             for (String line : lines) {
                 String[] parts = line.split("\\|", -1);
-                if (parts.length >= 4) {
+                // Format written by PromotionRepository:
+                // id|name|description|couponCode|discountPercentage|minimumOrderAmount|startDate|expiryDate|active
+                if (parts.length == 9) {
+                    String fileCode = parts[3].trim().toUpperCase();
+                    if (fileCode.equals(code)) {
+                        boolean active = Boolean.parseBoolean(parts[8].trim());
+                        LocalDate start = parts[6].isBlank() ? null : LocalDate.parse(parts[6].trim());
+                        LocalDate expiry = parts[7].isBlank() ? null : LocalDate.parse(parts[7].trim());
+                        if (!active
+                                || (start != null && today.isBefore(start))
+                                || (expiry != null && today.isAfter(expiry))) {
+                            return NoDiscountStrategy.INSTANCE;
+                        }
+                        double pct = Double.parseDouble(parts[4].trim());
+                        double minSpend = Double.parseDouble(parts[5].trim());
+                        return new PercentageDiscountStrategy(pct, minSpend);
+                    }
+                } else if (parts.length >= 4) {
+                    // Format: id|code|type|value|minSpend
                     String fileCode = parts[1].trim().toUpperCase();
                     if (fileCode.equals(code)) {
                         String type = parts[2].trim();
@@ -38,7 +58,7 @@ public class DiscountStrategyFactory {
                         double minSpend = parts.length > 4 ? Double.parseDouble(parts[4].trim()) : 0.0;
 
                         if ("PERCENTAGE".equalsIgnoreCase(type) || type.contains("%")) {
-                            return new PercentageDiscountStrategy(val);
+                            return new PercentageDiscountStrategy(val, minSpend);
                         } else {
                             return new FixedAmountDiscountStrategy(val, minSpend);
                         }

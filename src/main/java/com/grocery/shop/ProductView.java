@@ -17,5 +17,7 @@ public record ProductView(
         boolean lowStock,
         String details,
         String emoji,
-        int colorIndex) {      // 0-5, picks a card colour so every category looks different
+        int colorIndex,        // 0-5, picks a card colour so every category looks different
+        double rating,         // marketplace rating e.g. 4.8
+        int soldCount) {       // marketplace sold count e.g. 142
 }

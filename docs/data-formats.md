@@ -4,7 +4,7 @@ All files live in `data/` (not in Git). One record per line, fields separated by
 
 | File | Module | Prefix | Line format |
 |------|--------|--------|-------------|
-| `users.txt` | auth (login) | `U` | `TYPE\|id\|fullName\|email\|passwordHash\|phone\|createdDate\|extra` - TYPE is `CUSTOMER` (extra = address) or `ADMIN` (extra = job title). Password is a salted hash, never plain text. |
+| `users.txt` | user (accounts + login) | `U` | `TYPE\|id\|name\|email\|passwordHash\|phone\|createdDate\|extra` - TYPE is `CUSTOMER` (extra = address) or `ADMIN` (extra = department). Password is a salted hash, never plain text. |
 | `items.txt` | inventory | `ITM` | `TYPE\|id\|name\|category\|price\|quantity\|extra...` |
 | `suppliers.txt` | supplier | `SUP` | `TYPE\|id\|companyName\|contact\|email\|category\|extra...` (see `Supplier.toFileString()`) |
 | `carts.txt` | order | `CRT` | `cartId\|userId\|itemId\|quantity\|addedDate` |
