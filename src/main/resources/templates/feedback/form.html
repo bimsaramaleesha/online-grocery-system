@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--
+  Shared Add / Edit form for both Product Reviews (REVIEW) and Order Complaints (COMPLAINT).
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Feedback Form', '/css/feedback.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4 fb-narrow">
+    <h1 class="h3 mb-3"
+        th:text="${editMode} ? (${form.type == 'COMPLAINT'} ? 'Edit / Resolve Complaint' : 'Edit Product Review') : (${form.type == 'COMPLAINT'} ? 'File an Order Complaint' : 'Write a Product Review')">
+        Feedback Form
+    </h1>
+
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+    <form id="feedbackForm" th:object="${form}"
+          th:attr="data-edit-mode=${editMode}"
+          th:action="${editMode} ? (${form.type == 'COMPLAINT'} ? @{/complaints/{id}/edit(id=${form.id})} : @{/reviews/{id}/edit(id=${form.id})}) : (${form.type == 'COMPLAINT'} ? @{/complaints/new} : @{/reviews/new})"
+          method="post" class="card card-body">
+
+        <!-- Feedback type: choosable when adding, fixed when editing -->
+        <div class="mb-3" th:unless="${editMode}">
+            <label for="type" class="form-label">Feedback type</label>
+            <select id="type" class="form-select" th:field="*{type}" required>
+                <option value="REVIEW">⭐ Product Review (rate a grocery item)</option>
+                <option value="COMPLAINT">⚠️ Order Complaint (report an issue with an order)</option>
+            </select>
+        </div>
+        <div class="mb-3" th:if="${editMode}">
+            <label class="form-label">Reference ID</label>
+            <input type="text" class="form-control" th:value="${form.id}" disabled>
+            <input type="hidden" id="type" th:field="*{type}">
+        </div>
+
+        <!-- ==================== REVIEW FIELDS ==================== -->
+        <div id="reviewFields" class="fb-type-fields">
+            <div class="mb-3">
+                <label for="itemId" class="form-label">Product</label>
+                <select id="itemId" class="form-select" th:field="*{itemId}">
+                    <option value="">-- select product --</option>
+                    <option th:each="item : ${items}" th:value="${item.id}"
+                            th:text="${item.name + ' (' + item.id + ' - Rs. ' + item.sellingPrice + ')'}">
+                        Fresh Milk (ITM001)
+                    </option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label for="rating" class="form-label">Star rating</label>
+                    <select id="rating" class="form-select" th:field="*{rating}">
+                        <option th:value="5">⭐⭐⭐⭐⭐ (5 - Excellent)</option>
+                        <option th:value="4">⭐⭐⭐⭐ (4 - Good)</option>
+                        <option th:value="3">⭐⭐⭐ (3 - Average)</option>
+                        <option th:value="2">⭐⭐ (2 - Poor)</option>
+                        <option th:value="1">⭐ (1 - Terrible)</option>
+                    </select>
+                </div>
+                <div class="col-sm-8 mb-3">
+                    <label for="title" class="form-label">Review headline</label>
+                    <input type="text" id="title" class="form-control" th:field="*{title}"
+                           maxlength="100" placeholder="e.g. Fresh and delivered right on time!">
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== COMPLAINT FIELDS ==================== -->
+        <div id="complaintFields" class="fb-type-fields">
+            <div class="mb-3">
+                <label for="orderId" class="form-label">Order ID</label>
+                <input type="text" id="orderId" class="form-control" th:field="*{orderId}"
+                       list="orderList" placeholder="e.g. ORD001">
+                <datalist id="orderList">
+                    <option th:each="o : ${orders}" th:value="${o.orderId}"
+                            th:text="${o.orderId + ' (' + o.orderDate + ' - Rs. ' + o.netAmount + ')'}"></option>
+                </datalist>
+                <small class="text-muted">Select one of your orders or type the Order ID (e.g. ORD001).</small>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-7 mb-3">
+                    <label for="category" class="form-label">Issue category</label>
+                    <select id="category" class="form-select" th:field="*{category}">
+                        <option value="Damaged / Spoiled Item">Damaged / Spoiled Item</option>
+                        <option value="Missing Item">Missing Item</option>
+                        <option value="Late Delivery">Late Delivery</option>
+                        <option value="Wrong Product Delivered">Wrong Product Delivered</option>
+                        <option value="Billing / Promo Issue">Billing / Promo Issue</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="col-sm-5 mb-3">
+                    <label for="severity" class="form-label">Urgency / Severity</label>
+                    <select id="severity" class="form-select" th:field="*{severity}">
+                        <option value="LOW">Low</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HIGH">High (Urgent)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Admin-only status & resolution note when managing complaints -->
+            <div class="p-3 rounded-3 bg-light border mb-3" th:if="${editMode and isAdmin}">
+                <h2 class="h6 fw-bold mb-2">🛡️ Staff Resolution Controls</h2>
+                <div class="row">
+                    <div class="col-sm-5 mb-2">
+                        <label for="status" class="form-label small">Complaint status</label>
+                        <select id="status" class="form-select form-select-sm" th:field="*{status}">
+                            <option value="OPEN">Open</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="RESOLVED">Resolved</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-7 mb-2">
+                        <label for="resolutionNote" class="form-label small">Resolution note (shown to customer)</label>
+                        <input type="text" id="resolutionNote" class="form-control form-control-sm"
+                               th:field="*{resolutionNote}" placeholder="e.g. Replacement dispatched / Refund issued">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shared comment / description field -->
+        <div class="mb-3">
+            <label for="comment" class="form-label">Details / Comment</label>
+            <textarea id="comment" class="form-control" rows="4" maxlength="500"
+                      th:field="*{comment}" placeholder="Describe your experience or issue in detail..." required></textarea>
+        </div>
+
+        <div class="d-flex gap-2 mt-2">
+            <button type="submit" class="btn btn-success" th:text="${editMode} ? 'Save Changes' : 'Submit Feedback'">Submit</button>
+            <a th:href="${form.type == 'COMPLAINT'} ? @{/complaints} : @{/reviews}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/feedback.js}"></script>
+</body>
+</html>

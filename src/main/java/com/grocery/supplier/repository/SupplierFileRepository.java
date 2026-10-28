@@ -4,6 +4,7 @@ import com.grocery.common.FileHandler;
 import com.grocery.supplier.model.LocalFarmerSupplier;
 import com.grocery.supplier.model.Supplier;
 import com.grocery.supplier.model.WholesaleDistributor;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -22,6 +23,20 @@ import java.util.Optional;
 public class SupplierFileRepository implements SupplierRepository {
 
     private static final String FILE_NAME = "suppliers.txt";
+
+    @PostConstruct
+    public synchronized void seedDefaults() {
+        if (!FileHandler.readLines(FILE_NAME).isEmpty()) {
+            return;
+        }
+        List<String> defaults = List.of(
+                new LocalFarmerSupplier("SUP001", "Nuwara Eliya Highland Farms", "0771122334",
+                        "highland@farms.lk", "Vegetables", "Nuwara Eliya", true, 350.0).toFileString(),
+                new WholesaleDistributor("SUP002", "Lanka Dry Goods Wholesale", "0112233445",
+                        "orders@lankawholesale.lk", "Grains", "WH-CMB-01", 50, 0.125).toFileString()
+        );
+        FileHandler.writeLines(FILE_NAME, defaults);
+    }
 
     @Override
     public List<Supplier> findAll() {

@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Represents a completed or placed customer grocery order.
- * File format:
+ * Member 4 — Represents a customer grocery order (base class).
+ * Demonstrates Encapsulation, Builder Pattern, and Inheritance/Polymorphism via
+ * CashOrder and CardOrder subclasses.
+ * File format (orders.txt):
  * orderId|userId|itemsSummary|subtotal|discountAmount|netAmount|status|orderDate|shippingAddress|contactPhone|paymentMethod|promoCode
  */
 public class Order {
@@ -46,6 +48,68 @@ public class Order {
         this.promoCode = promoCode;
     }
 
+    /** Polymorphic method overridden by CashOrder and CardOrder subclasses. */
+    public boolean requiresCardTerminal() {
+        return false;
+    }
+
+    /** Polymorphic method overridden by CashOrder and CardOrder subclasses. */
+    public String getPaymentInstruction() {
+        return "Collect cash upon delivery.";
+    }
+
+    /** Subclass for Cash on Delivery orders (Inheritance + Polymorphism). */
+    public static class CashOrder extends Order {
+        public CashOrder(String orderId, String userId, List<OrderItem> items, double subtotal,
+                         double discountAmount, double netAmount, OrderStatus status, String orderDate,
+                         String shippingAddress, String contactPhone, String promoCode) {
+            super(orderId, userId, items, subtotal, discountAmount, netAmount, status, orderDate,
+                    shippingAddress, contactPhone, "Cash on Delivery", promoCode);
+        }
+
+        @Override
+        public boolean requiresCardTerminal() {
+            return false;
+        }
+
+        @Override
+        public String getPaymentInstruction() {
+            return "Pay physical cash directly to the courier on delivery.";
+        }
+    }
+
+    /** Subclass for Card on Delivery (POS Terminal) orders (Inheritance + Polymorphism). */
+    public static class CardOrder extends Order {
+        public CardOrder(String orderId, String userId, List<OrderItem> items, double subtotal,
+                         double discountAmount, double netAmount, OrderStatus status, String orderDate,
+                         String shippingAddress, String contactPhone, String promoCode) {
+            super(orderId, userId, items, subtotal, discountAmount, netAmount, status, orderDate,
+                    shippingAddress, contactPhone, "Card Payment", promoCode);
+        }
+
+        @Override
+        public boolean requiresCardTerminal() {
+            return true;
+        }
+
+        @Override
+        public String getPaymentInstruction() {
+            return "Courier brings a portable contactless POS card terminal.";
+        }
+    }
+
+    /** Factory helper that instantiates the appropriate Order subclass based on payment method. */
+    public static Order createTypedOrder(String orderId, String userId, List<OrderItem> items, double subtotal,
+                                         double discountAmount, double netAmount, OrderStatus status, String orderDate,
+                                         String shippingAddress, String contactPhone, String paymentMethod, String promoCode) {
+        if (paymentMethod != null && paymentMethod.toLowerCase().contains("card")) {
+            return new CardOrder(orderId, userId, items, subtotal, discountAmount, netAmount,
+                    status, orderDate, shippingAddress, contactPhone, promoCode);
+        }
+        return new CashOrder(orderId, userId, items, subtotal, discountAmount, netAmount,
+                status, orderDate, shippingAddress, contactPhone, promoCode);
+    }
+
     /** Serializes the Order to a pipe-delimited text line for orders.txt */
     public String toRecordLine() {
         String itemsSummary = items.stream()
@@ -67,7 +131,7 @@ public class Order {
                 FileHandler.clean(promoCode));
     }
 
-    /** Parses a record line from orders.txt */
+    /** Parses a record line from orders.txt into a CashOrder or CardOrder */
     public static Order fromRecordLine(String line) {
         if (line == null || line.isBlank()) {
             return null;
@@ -101,7 +165,7 @@ public class Order {
         String pay = parts.length > 10 ? parts[10].trim() : "Cash on Delivery";
         String promo = parts.length > 11 ? parts[11].trim() : "";
 
-        return new Order(oId, uId, itemList, sub, disc, net, st, date, addr, phone, pay, promo);
+        return createTypedOrder(oId, uId, itemList, sub, disc, net, st, date, addr, phone, pay, promo);
     }
 
     private static double parseDouble(String str, double def) {
@@ -217,16 +281,10 @@ public class Order {
         this.promoCode = promoCode;
     }
 
-    /**
-     * Builder Pattern: Provides an entry point for fluent Order object creation.
-     */
     public static Builder builder() {
         return new Builder();
     }
 
-    /**
-     * Builder Pattern: Creational design pattern resolving telescoping constructor issues.
-     */
     public static class Builder {
         private String orderId;
         private String userId;
@@ -312,7 +370,7 @@ public class Order {
         }
 
         public Order build() {
-            return new Order(orderId, userId, items, subtotal, discountAmount,
+            return createTypedOrder(orderId, userId, items, subtotal, discountAmount,
                     netAmount, status, orderDate, shippingAddress, contactPhone,
                     paymentMethod, promoCode);
         }
