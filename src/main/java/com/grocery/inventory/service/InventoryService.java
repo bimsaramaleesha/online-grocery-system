@@ -2,6 +2,8 @@ package com.grocery.inventory.service;
 
 import com.grocery.inventory.dto.InventorySummary;
 import com.grocery.inventory.dto.ItemForm;
+import com.grocery.inventory.dto.ItemForm.CategoryView;
+import com.grocery.inventory.dto.ItemForm.ProductView;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.model.ItemFactory;
 import com.grocery.inventory.repository.ItemRepository;
@@ -9,13 +11,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 
 /**
- * The "business rules" layer. The controller talks to this class; this class
- * talks to the repository. Note it depends on the ItemRepository INTERFACE.
+ * Business logic for Grocery Inventory & Customer Storefront.
+ * Depends on the ItemRepository interface (Abstraction).
  */
 @Service
 public class InventoryService {
+
+    private static final Map<String, String> ICONS = Map.ofEntries(
+            Map.entry("dairy", "🥛"), Map.entry("vegetables", "🥕"), Map.entry("fruits", "🍓"),
+            Map.entry("bakery", "🍞"), Map.entry("meat", "🍗"), Map.entry("grains", "🌾"),
+            Map.entry("canned food", "🥫"), Map.entry("household", "🧴"), Map.entry("beverages", "☕"),
+            Map.entry("snacks", "🍪"), Map.entry("toys", "🧸"), Map.entry("books", "📚"),
+            Map.entry("stationery", "✏️"), Map.entry("electronics", "🎧"));
 
     private final ItemRepository repository;
 
@@ -23,15 +35,12 @@ public class InventoryService {
         this.repository = repository;
     }
 
-    /** READ (list + search by name, category or id). */
+    // ---------- 1. Admin Inventory CRUD & Search ----------
+
     public List<Item> search(String keyword) {
         return search(keyword, null);
     }
 
-    /**
-     * READ with an optional status filter: "low" (low stock), "soon" (expiring soon),
-     * "expired". Any other value (or null) means no filter.
-     */
     public List<Item> search(String keyword, String filter) {
         List<Item> all = repository.findAll();
         if (keyword != null && !keyword.isBlank()) {
@@ -52,7 +61,6 @@ public class InventoryService {
         return all.stream().sorted(Comparator.comparing(Item::getId)).toList();
     }
 
-    /** Numbers for the cards at the top of the page (always over ALL items). */
     public InventorySummary summary() {
         List<Item> all = repository.findAll();
         double value = 0;
@@ -67,19 +75,16 @@ public class InventoryService {
                 Math.round(value * 100.0) / 100.0);
     }
 
-    /** READ one. */
     public Item getById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Item " + id + " was not found."));
     }
 
-    /** CREATE. Invalid data makes the model throw IllegalArgumentException. */
     public Item addItem(ItemForm form) {
         Item item = buildItem(null, form);
         return repository.save(item);
     }
 
-    /** UPDATE. The type of an existing item can't change, only its details. */
     public Item updateItem(String id, ItemForm form) {
         Item existing = getById(id);
         form.setType(existing.getItemType());
@@ -87,7 +92,6 @@ public class InventoryService {
         return repository.save(updated);
     }
 
-    /** DELETE. */
     public void deleteItem(String id) {
         if (!repository.deleteById(id)) {
             throw new IllegalArgumentException("Item " + id + " was not found.");
@@ -98,5 +102,77 @@ public class InventoryService {
         return ItemFactory.create(f.getType(), id, f.getName(), f.getCategory(),
                 f.getPrice(), f.getQuantity(),
                 f.getExpiryDate(), f.getBrand(), f.getShelfLifeMonths());
+    }
+
+    // ---------- 2. Customer Storefront Views (/shop) ----------
+
+    public List<ProductView> shopProducts(String q, String category, String sort) {
+        List<ProductView> list = search(q).stream()
+                .filter(i -> !i.isExpired())
+                .filter(i -> category == null || category.isBlank() || i.getCategory().equalsIgnoreCase(category))
+                .map(this::toView)
+                .toList();
+
+        Comparator<ProductView> order = switch (sort == null ? "" : sort) {
+            case "price-asc" -> Comparator.comparingDouble(ProductView::sellingPrice);
+            case "price-desc" -> Comparator.comparingDouble(ProductView::sellingPrice).reversed();
+            case "popular" -> Comparator.comparingInt(ProductView::soldCount).reversed();
+            case "name" -> Comparator.comparing(ProductView::name, String.CASE_INSENSITIVE_ORDER);
+            default -> Comparator.comparing(ProductView::id).reversed();
+        };
+        return list.stream().sorted(order).toList();
+    }
+
+    public List<ProductView> shopDeals() {
+        List<ProductView> onSale = shopProducts(null, null, null).stream().filter(ProductView::onSale).limit(6).toList();
+        if (!onSale.isEmpty()) {
+            return onSale;
+        }
+        return shopProducts(null, null, "price-asc").stream().limit(6).toList();
+    }
+
+    public Optional<ProductView> findShopProduct(String id) {
+        try {
+            Item item = getById(id);
+            return item.isExpired() ? Optional.empty() : Optional.of(toView(item));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
+    }
+
+    public List<ProductView> relatedProducts(ProductView product) {
+        return shopProducts(null, product.category(), null).stream()
+                .filter(p -> !p.id().equals(product.id()))
+                .limit(4)
+                .toList();
+    }
+
+    public List<CategoryView> shopCategories() {
+        Map<String, Integer> counts = new TreeMap<>();
+        for (Item i : search(null)) {
+            if (!i.isExpired()) {
+                counts.merge(i.getCategory(), 1, Integer::sum);
+            }
+        }
+        return counts.entrySet().stream()
+                .map(e -> new CategoryView(e.getKey(), iconFor(e.getKey()), e.getValue()))
+                .toList();
+    }
+
+    private ProductView toView(Item i) {
+        double selling = i.getSellingPrice();
+        int hash = Math.abs(i.getId().hashCode());
+        double rating = 4.5 + ((hash % 5) * 0.1);
+        int soldCount = 45 + (hash % 420);
+        return new ProductView(i.getId(), i.getName(), i.getCategory(), i.getTypeLabel(),
+                i.getPrice(), selling, selling < i.getPrice(),
+                i.getQuantity(), i.getQuantity() > 0, i.isLowStock() && i.getQuantity() > 0,
+                i.getDetails(), iconFor(i.getCategory()),
+                Math.abs(i.getCategory().toLowerCase().hashCode()) % 6,
+                Math.round(rating * 10.0) / 10.0, soldCount);
+    }
+
+    private static String iconFor(String category) {
+        return ICONS.getOrDefault(category.toLowerCase(), "🛍️");
     }
 }

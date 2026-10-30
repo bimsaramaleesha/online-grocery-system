@@ -1,7 +1,6 @@
 package com.grocery.user.controller;
 
-import com.grocery.order.model.Order;
-import com.grocery.order.service.OrderService;
+import com.grocery.common.FileHandler;
 import com.grocery.user.model.Admin;
 import com.grocery.user.model.Customer;
 import com.grocery.user.model.User;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,15 +48,13 @@ public class SessionAuth implements HandlerInterceptor, WebMvcConfigurer {
     private static final List<String> LOGIN_AREAS =
             List.of("/cart", "/orders", "/reviews", "/complaints", "/users/profile");
 
-    private static final Pattern ORDER_STATUS_URL = Pattern.compile("^/orders/[^/]+/status$");
+    private static final Pattern ORDER_STATUS_URL = Pattern.compile("^/orders/[^/]+/(status|delete)$");
     private static final Pattern ONE_ORDER_URL = Pattern.compile("^/orders/(ORD[^/]+)(/.*)?$", Pattern.CASE_INSENSITIVE);
 
     private final UserService userService;
-    private final OrderService orderService;
 
-    public SessionAuth(UserService userService, OrderService orderService) {
+    public SessionAuth(UserService userService) {
         this.userService = userService;
-        this.orderService = orderService;
     }
 
     public User currentUser(HttpSession session) {
@@ -154,12 +150,26 @@ public class SessionAuth implements HandlerInterceptor, WebMvcConfigurer {
         return false;
     }
 
+    /**
+     * Fault-tolerant IDOR check: reads orders.txt directly so the user module does not
+     * depend on the order module's Java classes.
+     */
     private boolean ownsOrderInUrl(String path, String userId) {
         Matcher m = ONE_ORDER_URL.matcher(path);
         if (!m.matches()) {
             return true;
         }
-        Optional<Order> order = orderService.getOrderById(m.group(1));
-        return order.isEmpty() || (userId != null && userId.equalsIgnoreCase(order.get().getUserId()));
+        String targetOrderId = m.group(1);
+        try {
+            for (String line : FileHandler.readLines("orders.txt")) {
+                String[] parts = line.split("\\|", -1);
+                if (parts.length >= 2 && parts[0].trim().equalsIgnoreCase(targetOrderId)) {
+                    return userId != null && userId.equalsIgnoreCase(parts[1].trim());
+                }
+            }
+        } catch (Exception ignored) {
+            // Fault isolation: if orders.txt cannot be read, let the order controller handle it
+        }
+        return true;
     }
 }

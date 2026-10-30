@@ -12,18 +12,36 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 /**
- * A plain "carrier" object for the HTML form.
- * Why not bind the form straight to Item? Because Item is abstract and an HTML
- * form can't choose a child class by itself. The form fills ItemForm, then the
- * service turns it into the right Item.
- * Numbers are Double/Integer (not double/int) so an empty box is null, not a crash.
+ * Carries both the HTML form fields (ItemForm) and the storefront product view (ProductView).
  */
 public class ItemForm {
+
+    /** Read-only view of an Item for the customer storefront (/shop). */
+    public record ProductView(
+            String id,
+            String name,
+            String category,
+            String typeLabel,
+            double price,
+            double sellingPrice,
+            boolean onSale,
+            int quantity,
+            boolean inStock,
+            boolean lowStock,
+            String details,
+            String emoji,
+            int colorIndex,
+            double rating,
+            int soldCount) {
+    }
+
+    /** Category chip on the storefront. */
+    public record CategoryView(String name, String emoji, int count) { }
 
     @NotBlank(message = "Please choose an item type.")
     private String type;
 
-    private String id;   // set by the controller on edit; not from the form
+    private String id;
 
     @NotBlank(message = "Name is required.")
     private String name;
@@ -39,17 +57,14 @@ public class ItemForm {
     @PositiveOrZero(message = "Quantity cannot be negative.")
     private Integer quantity;
 
-    // perishable only — expiry date presence is checked in ItemFactory
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate expiryDate;
 
-    // non-perishable only
     private String brand;
 
     @Positive(message = "Shelf life must be at least 1 month.")
     private Integer shelfLifeMonths;
 
-    /** Fills the edit form with the values of an existing item. */
     public static ItemForm from(Item item) {
         ItemForm f = new ItemForm();
         f.setType(item.getItemType());

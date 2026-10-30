@@ -1,7 +1,5 @@
-/* Inventory module styles.
-   Bootstrap (loaded by the layout) does the basics; this file only adds the
-   extras. Every class starts with "inv-" so it can never clash with another
-   module's CSS. */
+/* Inventory & Storefront module styles.
+   Every class starts with "inv-" or "shop-" so it never clashes with other modules. */
 
 .inv-narrow { max-width: 680px; }
 
@@ -23,3 +21,123 @@
 
 /* add/edit form: the type-specific blocks start hidden, inventory.js shows one */
 .inv-type-fields { display: none; }
+
+/* Storefront (/shop) styles */
+.shop-hero {
+    background: linear-gradient(180deg, #fff5f2 0%, #f4f5f7 100%);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.shop-hero-banner {
+    background: linear-gradient(125deg, #d9381e 0%, #ff5000 52%, #ff9900 100%);
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(217, 56, 30, .22);
+}
+
+.shop-hero-pill {
+    background: rgba(0, 0, 0, .25);
+    padding: .3rem .85rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+}
+
+.shop-hero-search { max-width: 640px; }
+
+.shop-side-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+}
+
+.shop-coupon-ticket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff5f5;
+    border: 1px dashed #feb2b2;
+    border-radius: 10px;
+    padding: .6rem .85rem;
+}
+
+.shop-deals-box {
+    background: linear-gradient(135deg, #fff5f5 0%, #fffaf0 100%);
+    border: 1px solid #fed7d7;
+    border-radius: 16px;
+}
+
+.shop-flash-badge {
+    background: linear-gradient(90deg, #ff2e00, #ff6a00);
+    color: #fff;
+    font-weight: 800;
+    font-size: .78rem;
+    padding: .3rem .75rem;
+    border-radius: 999px;
+    letter-spacing: .04em;
+}
+
+.shop-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.shop-chip {
+    background: #fff; border: 1px solid #dee2e6; border-radius: 999px;
+    padding: .38rem .95rem; color: #212529; text-decoration: none; font-size: .9rem;
+    font-weight: 500; transition: all .15s;
+}
+.shop-chip:hover { border-color: #ff5000; color: #ff5000; }
+.shop-chip.active { background: #198754; border-color: #198754; color: #fff; }
+.shop-chip.active small { color: #d1e7dd !important; }
+
+.shop-card { overflow: hidden; transition: transform .15s, box-shadow .15s; border-radius: 14px; }
+.shop-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(0, 0, 0, .12); }
+
+.shop-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.6em;
+    line-height: 1.3;
+}
+
+.shop-thumb {
+    height: 145px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+}
+.shop-thumb-sm { height: 110px; font-size: 3rem; }
+.shop-thumb-lg { height: 100%; min-height: 340px; font-size: 8rem; }
+.shop-grad-0 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.shop-grad-1 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.shop-grad-2 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.shop-grad-3 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+.shop-grad-4 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+.shop-grad-5 { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+
+.shop-badge { position: absolute; top: .6rem; right: .6rem; }
+.shop-choice-badge {
+    position: absolute; top: .6rem; left: .6rem;
+    background: #ffc107; color: #111827; font-weight: 700; font-size: .7rem;
+}
+
+.shop-tag-free {
+    background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;
+    font-size: .72rem; font-weight: 600; padding: .1rem .45rem; border-radius: 4px;
+}
+.shop-tag-low {
+    background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa;
+    font-size: .72rem; font-weight: 600; padding: .1rem .45rem; border-radius: 4px;
+}
+
+.shop-btn-buy {
+    background: linear-gradient(90deg, #ff5000, #ff2e00);
+    color: #fff; border: none;
+}
+.shop-btn-buy:hover:not(:disabled) {
+    background: linear-gradient(90deg, #e04600, #d92600);
+    color: #fff;
+}
+
+.shop-price-banner {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+}

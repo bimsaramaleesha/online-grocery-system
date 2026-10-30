@@ -1,84 +1,64 @@
 # Online Grocery Order Management System
 
-SE1020 group project. A full-functional online grocery management system built with **Java, Spring Boot, Thymeleaf, HTML, CSS and JavaScript**. Data is stored in plain text files (no database).
+SE1020 Object-Oriented Programming group project. A full-functional online grocery management system built with **Java, Spring Boot, Thymeleaf, HTML, CSS and JavaScript**. Data is stored in plain text files (`data/*.txt`) via `FileHandler` and automatically seeded on first launch.
 
-Customers can browse groceries, add items to a cart, apply promo codes, place orders and leave reviews. Staff can manage inventory, suppliers, deliveries and customer complaints.
+Customers can browse groceries, add items to a cart, apply promo codes, place orders and leave reviews or complaints. Administrators can manage users, inventory, suppliers, orders, promotions and customer complaints.
 
 > **Team members:** read [CONTRIBUTING.md](CONTRIBUTING.md) before you write any code, then [docs/project-walkthrough.md](docs/project-walkthrough.md) (how everything works) and [docs/data-formats.md](docs/data-formats.md) (file formats shared between modules).
 
 ---
 
-## Features (by module)
+## System Architecture (6 Independent Modules)
 
-| # | Module | What it does | URL prefix | Owner |
-|---|--------|--------------|------------|-------|
-| 1 | User & Authentication | Registration, login, user accounts | `/users` | @MrHasit |
-| 2 | Grocery Inventory & Items | Add, list, edit and delete grocery items and stock | `/inventory` | @bimsaramaleesha |
-| 3 | Supplier & Vendor Logistics | Suppliers and delivery tracking | `/suppliers` | @Thilanjana01 |
-| 4 | Cart & Order Processing | Shopping cart and orders | `/cart`, `/orders` | @Piumanjali K. K. |
-| 5 | Discounts & Promo Codes | Create and apply promo codes | `/promos` | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | Product reviews and complaints | `/reviews`, `/complaints` | @bimsaramaleesha |
+Each module is self-contained and loosely coupled — modules communicate through `data/*.txt` files using fault-tolerant `FileHandler` readers so modifying or testing one module never breaks the others.
 
-The full per-module conventions (packages, data files, ID prefixes) are in [CONTRIBUTING.md](CONTRIBUTING.md).
+| # | Module | Package | Data File | URL Prefix |
+|---|--------|---------|-----------|------------|
+| 1 | User & Authentication | `com.grocery.user` | `users.txt` | `/login`, `/register`, `/users`, `/admin` |
+| 2 | Grocery Inventory & Items | `com.grocery.inventory` | `items.txt` | `/shop`, `/inventory` |
+| 3 | Supplier & Vendor Logistics | `com.grocery.supplier` | `suppliers.txt` | `/suppliers` |
+| 4 | Cart & Order Processing | `com.grocery.order` | `orders.txt` (`carts.txt`) | `/cart`, `/orders` |
+| 5 | Discounts & Promo Codes | `com.grocery.promo` | `promotions.txt` | `/promos` |
+| 6 | Reviews & Customer Complaints | `com.grocery.feedback` | `feedbacks.txt` | `/reviews`, `/complaints` |
 
-## Tech stack
+## Tech Stack
 
 | Part | Choice |
 |------|--------|
 | Language | Java 17 or newer |
 | Framework | Spring Boot (Maven, with the Maven Wrapper) |
-| Web pages | Thymeleaf templates + HTML / CSS / JavaScript |
-| Data storage | Plain text files through the shared `FileHandler` |
-| Collaboration | Git + GitHub (pull requests, CODEOWNERS, build check) |
+| Web pages | Thymeleaf templates + Bootstrap 5 + HTML / CSS / JavaScript |
+| Data storage | Plain text files (`data/*.txt`) through the shared `FileHandler` |
+| Security | PBKDF2-HMAC-SHA256 salted password hashing, session fixation protection, role-based access (`SessionAuth`), IDOR prevention |
 
-## Getting started
-
-**Requirements:** JDK 17 or newer, Git, and IntelliJ IDEA (recommended). You do not need to install Maven separately.
+## Getting Started (Deployable Out-of-the-Box)
 
 ```bash
-git clone https://github.com/bimsaramaleesha/online-grocery-system.git
-cd online-grocery-system
-git checkout develop
+./mvnw spring-boot:run        # Windows: .\mvnw.cmd spring-boot:run
 ```
 
-Run it from IntelliJ (open `GroceryApplication` and press the green play button), or from a terminal:
+Then open <http://localhost:8080>. Default accounts and sample items/suppliers/promotions/feedbacks are automatically seeded into `data/` on first run:
+- **Admin:** `admin@grocery.lk` / `Admin@123`
+- **Customer:** `customer@grocery.lk` / `Customer@123`
 
-```bash
-./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
-```
-
-Then open <http://localhost:8080>. You should see the home page.
-
-First-time Git and IntelliJ setup is explained step by step in [CONTRIBUTING.md](CONTRIBUTING.md#2-first-time-setup).
-
-## Project structure
+## Project Structure
 
 ```
 src/main/java/com/grocery/
-    common/        shared helpers (FileHandler, IdGenerator, GlobalExceptionHandler)
-    user/ inventory/ supplier/ order/ promo/ feedback/
-        controller/   handles web requests
-        model/        the classes (User, GroceryItem ...)
-        service/      business logic
-        repository/   reads and writes the .txt file using FileHandler
+    common/        shared helpers (FileHandler, IdGenerator, GlobalExceptionHandler, WebConfig)
+    user/          Member 1: User, Customer, Admin, UserService, UserController, SessionAuth
+    inventory/     Member 2: Item, PerishableItem, NonPerishableItem, InventoryService, InventoryController
+    supplier/      Member 3: Supplier, LocalFarmerSupplier, WholesaleDistributor, SupplierService, SupplierController
+    order/         Member 4: Order (CashOrder, CardOrder), CartItem, OrderService, OrderController
+    promo/         Member 5: Promotion (PercentagePromotion, FixedPromotion), PromotionService, PromotionController
+    feedback/      Member 6: Feedback, Review, Complaint, FeedbackService, FeedbackController
 src/main/resources/
-    templates/     HTML pages (Thymeleaf), one folder per module
+    templates/     HTML pages (Thymeleaf), one folder per module (user, inventory, supplier, order, promo, feedback)
     static/css     one CSS file per module + common.css
     static/js      one JS file per module + common.js
-data/              live text files (created automatically, NOT in Git)
-sample-data/       demo data
-docs/              class diagrams and report
+data/              live text files (created & seeded automatically on startup)
+docs/              architecture & data format guides
 ```
-
-## Branches
-
-| Branch | Purpose |
-|--------|---------|
-| `main` | Stable, demo-ready code. Only the team leader merges here. |
-| `develop` | Where everyone's finished work comes together. Every pull request targets this branch. |
-| `feature/<module>-<task>` | Short-lived working branches, e.g. `feature/inventory-add-item`. |
-
-Full workflow and rules: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
