@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <th:block th:replace="~{fragments/layout :: head('Fresh Farm Basket')}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/order.css}">
-</head>
+<head th:replace="~{fragments/layout :: headWithCss('Fresh Farm Basket', '/css/order.css')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 

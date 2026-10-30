@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss(p.name, '/css/inventory.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/shop}">Marketplace</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/shop(category=${p.category})}" th:text="${p.category}">Category</a></li>
+            <li class="breadcrumb-item active" th:text="${p.name}">Product</li>
+        </ol>
+    </nav>
+
+    <div class="card overflow-hidden">
+        <div class="row g-0">
+            <div class="col-md-5 position-relative">
+                <div class="shop-thumb shop-thumb-lg" th:classappend="'shop-grad-' + ${p.colorIndex}" th:text="${p.emoji}">🥛</div>
+                <span class="badge shop-choice-badge">Choice</span>
+                <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20% OFF</span>
+            </div>
+            <div class="col-md-7">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <span class="badge text-bg-warning">Choice Verified</span>
+                        <span class="badge text-bg-light border" th:text="${p.typeLabel}">Type</span>
+                        <span class="small text-muted" th:text="'Code: ' + ${p.id}">ITM001</span>
+                    </div>
+
+                    <h1 class="h3 fw-bold mb-2" th:text="${p.name}">Product name</h1>
+
+                    <div class="d-flex align-items-center gap-3 mb-3 small">
+                        <span class="fw-semibold text-warning-emphasis">⭐ <span th:text="${p.rating}">4.8</span> / 5.0</span>
+                        <span class="text-muted">&middot;</span>
+                        <span class="text-muted" th:text="${p.soldCount} + '+ orders completed'">120+ orders</span>
+                        <span class="text-muted">&middot;</span>
+                        <span class="text-success fw-semibold">🚚 Free Delivery</span>
+                    </div>
+
+                    <div class="shop-price-banner p-3 rounded-3 mb-3">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="display-6 fw-bold text-danger"
+                                  th:text="'Rs. ' + ${#numbers.formatDecimal(p.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0.00</span>
+                            <span class="text-muted text-decoration-line-through" th:if="${p.onSale}"
+                                  th:text="'Rs. ' + ${#numbers.formatDecimal(p.price, 1, 'COMMA', 2, 'POINT')}">old</span>
+                            <span class="badge text-bg-danger" th:if="${p.onSale}">SuperDeal -20%</span>
+                        </div>
+                        <div class="small text-muted mt-1">
+                            🎟️ Extra discount at checkout with promo code <code>WELCOME10</code> (10% off) or <code>SAVE200</code>
+                        </div>
+                    </div>
+
+                    <p class="mb-2" th:text="${p.details}">Details</p>
+                    <p class="mb-4">
+                        <span class="badge text-bg-success" th:if="${p.inStock and !p.lowStock}"
+                              th:text="'In Stock (' + ${p.quantity} + ' available)'">In stock</span>
+                        <span class="badge text-bg-warning" th:if="${p.lowStock}"
+                              th:text="'Hurry! Only ' + ${p.quantity} + ' left in stock'">Low</span>
+                        <span class="badge text-bg-secondary" th:if="${!p.inStock}">Sold out</span>
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-2" th:if="${session.role != null}">
+                        <form th:action="@{/cart/add}" method="post" class="d-flex flex-wrap gap-2">
+                            <input type="hidden" name="itemId" th:value="${p.id}">
+                            <input type="number" name="quantity" value="1" min="1" th:max="${p.quantity}"
+                                   class="form-control" style="max-width:100px;" th:disabled="${!p.inStock}">
+                            <button type="submit" class="btn shop-btn-buy btn-lg px-4 fw-semibold" th:disabled="${!p.inStock}">
+                                🛒 Add to Cart
+                            </button>
+                        </form>
+                        <a th:href="@{/reviews/new(itemId=${p.id})}" class="btn btn-outline-success btn-lg">
+                            ⭐ Write Review
+                        </a>
+                    </div>
+
+                    <div th:if="${session.role == null}" class="d-flex flex-wrap gap-2">
+                        <a th:href="@{/login(next=${'/shop/' + p.id})}" class="btn shop-btn-buy btn-lg px-4 fw-semibold">
+                            Sign In to Buy
+                        </a>
+                        <a th:href="@{/register}" class="btn btn-outline-dark btn-lg">
+                            New Customer? Register Free
+                        </a>
+                    </div>
+
+                    <div class="row g-2 mt-4 pt-3 border-top small text-muted">
+                        <div class="col-sm-4">🛡️ <strong>Buyer Protection</strong><br>Full refund if item is damaged</div>
+                        <div class="col-sm-4">🚚 <strong>Fast Dispatch</strong><br>Same-day local courier</div>
+                        <div class="col-sm-4">💵 <strong>Flexible Payment</strong><br>Cash or Card on delivery</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Reviews for this Product -->
+    <div class="mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h4 fw-bold mb-0">⭐ Customer Reviews (<span th:text="${#lists.size(reviews)}">0</span>)</h2>
+            <a th:if="${session.role != null}" th:href="@{/reviews/new(itemId=${p.id})}" class="btn btn-sm btn-success">+ Write a Review</a>
+        </div>
+        <div class="row g-3" th:if="${!#lists.isEmpty(reviews)}">
+            <div class="col-md-6" th:each="rev : ${reviews}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold" th:text="${rev['title']}">Headline</span>
+                            <span class="text-warning" th:text="${rev['stars']}">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="small text-muted mb-2" th:text="${rev['comment']}">Comment</p>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span th:text="'By ' + ${rev['userName']}">By Customer</span>
+                            <span th:text="${rev['createdDate']}">Date</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body text-center text-muted py-4" th:if="${#lists.isEmpty(reviews)}">
+            No customer reviews for this product yet. Be the first to review it!
+        </div>
+    </div>
+
+    <div class="mt-5" th:if="${!#lists.isEmpty(related)}">
+        <h2 class="h4 fw-bold mb-3">Similar Items You May Like</h2>
+        <div class="row g-3">
+            <div class="col-6 col-md-3" th:each="r : ${related}">
+                <a th:href="@{/shop/{id}(id=${r.id})}" class="text-decoration-none">
+                    <div class="card shop-card h-100">
+                        <div class="shop-thumb" th:classappend="'shop-grad-' + ${r.colorIndex}" th:text="${r.emoji}">🥛</div>
+                        <div class="card-body p-3">
+                            <div class="small fw-semibold text-dark text-truncate" th:text="${r.name}">Name</div>
+                            <div class="text-danger fw-bold"
+                                 th:text="'Rs. ' + ${#numbers.formatDecimal(r.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0</div>
+                            <div class="small text-muted">⭐ <span th:text="${r.rating}">4.8</span> &middot; <span th:text="${r.soldCount} + ' sold'">80 sold</span></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

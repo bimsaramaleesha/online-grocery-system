@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Product Reviews', '/css/feedback.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <div>
+            <h1 class="h3 mb-0">⭐ Product Reviews &amp; Customer Feedback</h1>
+            <small class="text-muted">Read verified shopper ratings or share your own grocery experience</small>
+        </div>
+        <div class="d-flex gap-2">
+            <a th:href="@{/reviews/new}" class="btn btn-success">+ Write a Review</a>
+            <a th:href="@{/complaints/new}" class="btn btn-outline-danger">⚠️ Report Order Issue</a>
+        </div>
+    </div>
+
+    <!-- Switch tabs: Product Reviews vs Order Complaints -->
+    <ul class="nav fb-tabs gap-2 mb-4">
+        <li class="nav-item">
+            <a class="nav-link active" th:href="@{/reviews}">⭐ Product Reviews (<span th:text="${summary.totalReviews}">0</span>)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/complaints}">
+                📋 Order Complaints (<span th:text="${summary.totalComplaints}">0</span>)
+                <span class="badge text-bg-danger ms-1" th:if="${summary.openComplaints > 0}" th:text="${summary.openComplaints} + ' open'">0 open</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="alert alert-success" role="alert" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+    <!-- Summary cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/reviews}" class="fb-stat card h-100 text-decoration-none"
+               th:classappend="${rating == null} ? 'fb-stat-active'">
+                <div class="card-body">
+                    <div class="fb-stat-label">Total reviews</div>
+                    <div class="fb-stat-number" th:text="${summary.totalReviews}">0</div>
+                    <div class="fb-stat-note text-muted">all verified customers</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="fb-stat fb-stat-gold card h-100">
+                <div class="card-body">
+                    <div class="fb-stat-label">Average rating</div>
+                    <div class="fb-stat-number"><span th:text="${summary.averageRating}">0.0</span> <small class="fs-6 text-warning">⭐</small></div>
+                    <div class="fb-stat-note text-muted">out of 5.0 stars</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/reviews(rating=5)}" class="fb-stat fb-stat-positive card h-100 text-decoration-none"
+               th:classappend="${rating == 5} ? 'fb-stat-active'">
+                <div class="card-body">
+                    <div class="fb-stat-label">Positive (4★–5★)</div>
+                    <div class="fb-stat-number" th:text="${summary.positiveReviews}">0</div>
+                    <div class="fb-stat-note text-muted">click for 5-star reviews</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/complaints}" class="fb-stat fb-stat-open card h-100 text-decoration-none">
+                <div class="card-body">
+                    <div class="fb-stat-label">Open complaints</div>
+                    <div class="fb-stat-number" th:text="${summary.openComplaints}">0</div>
+                    <div class="fb-stat-note text-muted"><span th:text="${summary.resolvedComplaints}">0</span> resolved</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Search & Rating Filter -->
+    <form th:action="@{/reviews}" method="get" class="row g-2 mb-3">
+        <div class="col-12 col-md">
+            <input type="text" name="q" class="form-control" th:value="${q}"
+                   placeholder="Search by product ID, customer name, title or comment...">
+        </div>
+        <div class="col-6 col-md-3">
+            <select name="rating" class="form-select" onchange="this.form.submit()">
+                <option value="" th:selected="${rating == null}">All star ratings</option>
+                <option value="5" th:selected="${rating == 5}">⭐⭐⭐⭐⭐ (5 stars)</option>
+                <option value="4" th:selected="${rating == 4}">⭐⭐⭐⭐ (4 stars)</option>
+                <option value="3" th:selected="${rating == 3}">⭐⭐⭐ (3 stars)</option>
+                <option value="2" th:selected="${rating == 2}">⭐⭐ (2 stars)</option>
+                <option value="1" th:selected="${rating == 1}">⭐ (1 star)</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-success">Search</button>
+            <a th:href="@{/reviews}" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+    <!-- Reviews Table -->
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Customer</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Date</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r : ${reviews}">
+                    <td class="text-muted small" th:text="${r.id}">REV001</td>
+                    <td>
+                        <a th:href="@{/shop/{id}(id=${r.itemId})}" class="fw-semibold text-decoration-none"
+                           th:text="${itemNames[r.itemId] != null ? itemNames[r.itemId] : r.itemId}">Fresh Milk</a>
+                        <div class="small text-muted" th:text="${r.itemId}">ITM001</div>
+                    </td>
+                    <td>
+                        <span th:text="${r.userName}">Customer</span>
+                        <span class="badge text-bg-light ms-1" th:if="${r.userId == currentUserId}">you</span>
+                    </td>
+                    <td>
+                        <span class="fb-stars" th:text="${r.stars}">⭐⭐⭐⭐⭐</span>
+                        <div class="small text-muted" th:text="${r.badgeText}">5 / 5 Stars</div>
+                    </td>
+                    <td>
+                        <div class="fw-semibold" th:text="${r.title}">Great product</div>
+                        <div class="small text-muted" th:text="${r.comment}">Comment details</div>
+                    </td>
+                    <td class="small text-nowrap" th:text="${r.createdDate}">2026-10-25</td>
+                    <td class="text-end text-nowrap">
+                        <th:block th:if="${isAdmin or r.userId == currentUserId}">
+                            <a th:href="@{/reviews/{id}/edit(id=${r.id})}"
+                               class="btn btn-sm btn-outline-primary">Edit</a>
+                            <form th:action="@{/reviews/{id}/delete(id=${r.id})}" method="post"
+                                  class="d-inline fb-delete-form" th:attr="data-name=${r.title}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </th:block>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(reviews)}">
+                    <td colspan="7" class="text-center text-muted py-4">No product reviews found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/feedback.js}"></script>
+</body>
+</html>

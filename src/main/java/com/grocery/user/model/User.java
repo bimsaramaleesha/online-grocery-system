@@ -2,6 +2,7 @@ package com.grocery.user.model;
 
 import com.grocery.common.FileHandler;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public abstract class User {
@@ -12,12 +13,20 @@ public abstract class User {
     private String name;
     private String email;
     private String passwordHash;
+    private String createdDate;
 
     protected User(String id, String name, String email, String passwordHash) {
+        this(id, name, email, passwordHash, LocalDate.now().toString());
+    }
+
+    protected User(String id, String name, String email, String passwordHash, String createdDate) {
         this.id = id;
         setName(name);
         setEmail(email);
         setPasswordHash(passwordHash);
+        this.createdDate = (createdDate == null || createdDate.isBlank())
+                ? LocalDate.now().toString()
+                : FileHandler.clean(createdDate);
     }
 
     public String getId() { return id; }
@@ -55,17 +64,20 @@ public abstract class User {
         this.passwordHash = passwordHash;
     }
 
+    public String getCreatedDate() { return createdDate; }
+    public void setCreatedDate(String createdDate) {
+        if (createdDate != null && !createdDate.isBlank()) {
+            this.createdDate = FileHandler.clean(createdDate);
+        }
+    }
+
     protected final String baseLine() {
         return String.join("|", getRole(), id, name, email, passwordHash);
     }
 
     public abstract String getRole();
-
     public abstract String getDetails();
-
     public abstract boolean canManageUsers();
-
     public abstract String getHomePath();
-
     public abstract String toFileLine();
 }

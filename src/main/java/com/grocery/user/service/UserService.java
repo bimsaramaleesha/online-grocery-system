@@ -1,22 +1,26 @@
 package com.grocery.user.service;
 
-import com.grocery.user.dto.PasswordForm;
 import com.grocery.user.dto.UserForm;
-import com.grocery.user.dto.UserSummary;
+import com.grocery.user.model.Admin;
 import com.grocery.user.model.Customer;
 import com.grocery.user.model.User;
 import com.grocery.user.model.UserFactory;
 import com.grocery.user.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class UserService {
 
+    public record UserSummary(int total, int customers, int admins) { }
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private static final int MIN_PASSWORD = 8;
     private static final int MAX_PASSWORD = 128;
 
@@ -26,6 +30,34 @@ public class UserService {
         this.repository = repository;
     }
 
+    /** Seeds default Admin and Customer accounts on startup if none exist yet. */
+    @PostConstruct
+    public synchronized void seedDefaults() {
+        UserSummary s = summary();
+        if (s.admins() == 0) {
+            UserForm f = new UserForm();
+            f.setType(Admin.TYPE);
+            f.setName("Store Admin");
+            f.setEmail("admin@grocery.lk");
+            f.setPassword("Admin@123");
+            f.setConfirmPassword("Admin@123");
+            f.setDepartment("Store Manager");
+            createUser(f);
+            log.info("Created default admin  ->  admin@grocery.lk / Admin@123");
+        }
+        if (s.customers() == 0) {
+            UserForm f = new UserForm();
+            f.setType(Customer.TYPE);
+            f.setName("Demo Customer");
+            f.setEmail("customer@grocery.lk");
+            f.setPassword("Customer@123");
+            f.setConfirmPassword("Customer@123");
+            f.setPhone("0771234567");
+            f.setAddress("No. 1, Galle Road, Colombo");
+            createUser(f);
+            log.info("Created demo customer ->  customer@grocery.lk / Customer@123");
+        }
+    }
 
     public synchronized User register(UserForm form) {
         form.setType(Customer.TYPE);
@@ -91,7 +123,6 @@ public class UserService {
         return update(id, form, false);
     }
 
-
     public synchronized User adminUpdate(String id, UserForm form) {
         return update(id, form, true);
     }
@@ -108,11 +139,12 @@ public class UserService {
         }
 
         User updated = build(id, form, hash);
+        updated.setCreatedDate(existing.getCreatedDate());
         ensureEmailFree(updated.getEmail(), id);
         return repository.save(updated);
     }
 
-    public synchronized void changePassword(String id, PasswordForm form) {
+    public synchronized void changePassword(String id, UserForm form) {
         User user = getById(id);
         if (form.getCurrentPassword() == null
                 || form.getCurrentPassword().length() > MAX_PASSWORD
@@ -140,7 +172,6 @@ public class UserService {
         }
         repository.deleteById(id);
     }
-
 
     private User build(String id, UserForm f, String passwordHash) {
         return UserFactory.create(f.getType(), id, f.getName(), f.getEmail(), passwordHash,

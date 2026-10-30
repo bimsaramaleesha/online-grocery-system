@@ -32,7 +32,7 @@ public class OrderItem {
      */
     public String toToken() {
         String cleanName = FileHandler.clean(itemName).replace(":", " ").replace(",", " ");
-        return String.format("%s:%d:%.2f:%s",
+        return String.format(java.util.Locale.US, "%s:%d:%.2f:%s",
                 FileHandler.clean(itemId),
                 quantity,
                 unitPrice,
