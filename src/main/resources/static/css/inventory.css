@@ -19,6 +19,15 @@
 .inv-type-perishable { background: #e8f5e9; color: #1b5e20; }
 .inv-type-shelf      { background: #e7f1ff; color: #0a4a9e; }
 
+.inv-list-thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
 /* add/edit form: the type-specific blocks start hidden, inventory.js shows one */
 .inv-type-fields { display: none; }
 
@@ -101,17 +110,29 @@
 }
 
 .shop-thumb {
-    height: 145px; display: flex; align-items: center; justify-content: center;
-    font-size: 4rem;
+    height: 170px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
-.shop-thumb-sm { height: 110px; font-size: 3rem; }
-.shop-thumb-lg { height: 100%; min-height: 340px; font-size: 8rem; }
-.shop-grad-0 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
-.shop-grad-1 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-.shop-grad-2 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-.shop-grad-3 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-.shop-grad-4 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
-.shop-grad-5 { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+.shop-thumb-sm { height: 120px; }
+.shop-thumb-lg { height: 100%; min-height: 340px; }
+
+.shop-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: .5rem;
+    display: block;
+}
+
+.shop-no-image {
+    color: #adb5bd;
+    font-size: .85rem;
+    font-weight: 500;
+}
 
 .shop-badge { position: absolute; top: .6rem; right: .6rem; }
 .shop-choice-badge {

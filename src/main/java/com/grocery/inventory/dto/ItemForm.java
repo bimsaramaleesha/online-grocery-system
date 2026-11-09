@@ -5,7 +5,6 @@ import com.grocery.inventory.model.NonPerishableItem;
 import com.grocery.inventory.model.PerishableItem;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,14 +28,13 @@ public class ItemForm {
             boolean inStock,
             boolean lowStock,
             String details,
-            String emoji,
-            int colorIndex,
+            String imageUrl,
             double rating,
             int soldCount) {
     }
 
     /** Category chip on the storefront. */
-    public record CategoryView(String name, String emoji, int count) { }
+    public record CategoryView(String name, int count) { }
 
     @NotBlank(message = "Please choose an item type.")
     private String type;
@@ -57,12 +55,14 @@ public class ItemForm {
     @PositiveOrZero(message = "Quantity cannot be negative.")
     private Integer quantity;
 
+    private String imageUrl;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate expiryDate;
 
     private String brand;
 
-    @Positive(message = "Shelf life must be at least 1 month.")
+    @PositiveOrZero(message = "Shelf life cannot be negative.")
     private Integer shelfLifeMonths;
 
     public static ItemForm from(Item item) {
@@ -73,11 +73,14 @@ public class ItemForm {
         f.setCategory(item.getCategory());
         f.setPrice(item.getPrice());
         f.setQuantity(item.getQuantity());
+        f.setImageUrl(item.getImageUrl());
         if (item instanceof PerishableItem p) {
             f.setExpiryDate(p.getExpiryDate());
         } else if (item instanceof NonPerishableItem n) {
             f.setBrand(n.getBrand());
-            f.setShelfLifeMonths(n.getShelfLifeMonths());
+            if (n.getShelfLifeMonths() > 0) {
+                f.setShelfLifeMonths(n.getShelfLifeMonths());
+            }
         }
         return f;
     }
@@ -94,6 +97,8 @@ public class ItemForm {
     public void setPrice(Double price) { this.price = price; }
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public LocalDate getExpiryDate() { return expiryDate; }
     public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
     public String getBrand() { return brand; }

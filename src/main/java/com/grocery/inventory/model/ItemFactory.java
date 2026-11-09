@@ -26,15 +26,13 @@ public final class ItemFactory {
             return new PerishableItem(id, name, category, price, quantity, expiryDate);
         }
         if (NonPerishableItem.TYPE.equals(type)) {
-            if (shelfLifeMonths == null) {
-                throw new IllegalArgumentException("Shelf life is required for non-perishable items.");
-            }
-            return new NonPerishableItem(id, name, category, price, quantity, brand, shelfLifeMonths);
+            int months = (shelfLifeMonths == null) ? 0 : shelfLifeMonths;
+            return new NonPerishableItem(id, name, category, price, quantity, brand, months);
         }
         throw new IllegalArgumentException("Please choose an item type.");
     }
 
-    /** Expected: TYPE|id|name|category|price|quantity|extra... */
+    /** Expected: TYPE|id|name|category|price|quantity|extra...|imageUrl */
     public static Item fromFileLine(String line) {
         String[] p = line.split("\\|", -1);   // -1 keeps empty values at the end
         String type = p[0];
@@ -45,10 +43,19 @@ public final class ItemFactory {
         int quantity = Integer.parseInt(p[5]);
 
         if (PerishableItem.TYPE.equals(type)) {
-            return new PerishableItem(id, name, category, price, quantity, LocalDate.parse(p[6]));
+            Item item = new PerishableItem(id, name, category, price, quantity, LocalDate.parse(p[6]));
+            if (p.length > 7) {
+                item.setImageUrl(p[7]);
+            }
+            return item;
         }
         if (NonPerishableItem.TYPE.equals(type)) {
-            return new NonPerishableItem(id, name, category, price, quantity, p[6], Integer.parseInt(p[7]));
+            int months = (p.length > 7 && !p[7].isBlank()) ? Integer.parseInt(p[7]) : 0;
+            Item item = new NonPerishableItem(id, name, category, price, quantity, p[6], months);
+            if (p.length > 8) {
+                item.setImageUrl(p[8]);
+            }
+            return item;
         }
         throw new IllegalArgumentException("Unknown item type in file: " + type);
     }
