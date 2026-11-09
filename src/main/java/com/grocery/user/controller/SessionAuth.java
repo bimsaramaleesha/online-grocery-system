@@ -19,13 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Handles HTTP session state for logged-in users and acts as the request door-guard
- * (HandlerInterceptor + WebMvcConfigurer) for the whole application:
- *  - New customers / guests -> can browse /shop, /shop/{id}, /login, /register
- *  - Existing customers     -> + /cart, /orders (own orders), /users/profile, /reviews, /complaints
- *  - Administrators         -> + /admin/**, /inventory, /suppliers, /promos, /users
- */
+
 @Configuration
 public class SessionAuth implements HandlerInterceptor, WebMvcConfigurer {
 
@@ -150,10 +144,6 @@ public class SessionAuth implements HandlerInterceptor, WebMvcConfigurer {
         return false;
     }
 
-    /**
-     * Fault-tolerant IDOR check: reads orders.txt directly so the user module does not
-     * depend on the order module's Java classes.
-     */
     private boolean ownsOrderInUrl(String path, String userId) {
         Matcher m = ONE_ORDER_URL.matcher(path);
         if (!m.matches()) {
@@ -168,7 +158,7 @@ public class SessionAuth implements HandlerInterceptor, WebMvcConfigurer {
                 }
             }
         } catch (Exception ignored) {
-            // Fault isolation: if orders.txt cannot be read, let the order controller handle it
+
         }
         return true;
     }

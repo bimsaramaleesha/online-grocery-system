@@ -30,7 +30,6 @@ public class UserService {
         this.repository = repository;
     }
 
-    /** Seeds default Admin and Customer accounts on startup if none exist yet. */
     @PostConstruct
     public synchronized void seedDefaults() {
         UserSummary s = summary();

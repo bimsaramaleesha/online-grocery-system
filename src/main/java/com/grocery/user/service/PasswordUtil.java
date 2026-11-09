@@ -51,7 +51,6 @@ public final class PasswordUtil {
         }
     }
 
-    /** Verifies legacy salt$hash format (PBKDF2, 65,000 rounds, Base64Url). */
     private static boolean verifyLegacyHash(String password, String savedHash) {
         String[] parts = savedHash.split("\\$");
         if (parts.length != 2) {

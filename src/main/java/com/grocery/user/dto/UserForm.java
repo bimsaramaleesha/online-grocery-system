@@ -15,14 +15,11 @@ public class UserForm {
     private String currentPassword;
     private String newPassword;
 
-    // customer only
     private String phone;
     private String address;
 
-    // admin only
     private String department;
 
-    /** Fills the edit form with the values of an existing user (never the password). */
     public static UserForm from(User user) {
         UserForm f = new UserForm();
         f.setType(user.getRole());
