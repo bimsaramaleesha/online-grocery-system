@@ -158,6 +158,30 @@ public class InventoryController {
         return "redirect:/inventory";
     }
 
+    @PostMapping("/inventory/{id}/restock")
+    public String restock(@PathVariable String id,
+                          @RequestParam(defaultValue = "10") int amount,
+                          RedirectAttributes redirect) {
+        try {
+            service.restockItem(id, amount);
+            redirect.addFlashAttribute("message", "Restocked +" + amount + " units for item " + id + ".");
+        } catch (IllegalArgumentException e) {
+            redirect.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/inventory";
+    }
+
+    @PostMapping("/inventory/delete-expired")
+    public String deleteExpired(RedirectAttributes redirect) {
+        int removed = service.deleteExpiredItems();
+        if (removed > 0) {
+            redirect.addFlashAttribute("message", "Removed " + removed + " expired item(s).");
+        } else {
+            redirect.addFlashAttribute("message", "No expired items to remove.");
+        }
+        return "redirect:/inventory";
+    }
+
     @PostMapping("/inventory/{id}/delete")
     public String delete(@PathVariable String id, RedirectAttributes redirect) {
         try {

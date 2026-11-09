@@ -19,6 +19,7 @@ public abstract class Item {
     private String category;
     private double price;
     private int quantity;
+    private String imageUrl = "";
 
     protected Item(String id, String name, String category, double price, int quantity) {
         this.id = id;
@@ -65,6 +66,11 @@ public abstract class Item {
         this.quantity = quantity;
     }
 
+    public String getImageUrl() { return imageUrl; }
+    public final void setImageUrl(String imageUrl) {
+        this.imageUrl = (imageUrl == null) ? "" : imageUrl.trim();
+    }
+
     // ---------- behaviour shared by all items ----------
 
     /** INFORMATION HIDING: the limit is private; others only ask the question. */
@@ -79,7 +85,7 @@ public abstract class Item {
 
     /**
      * Turns the item into ONE line of text for items.txt.
-     * Format: TYPE|id|name|category|price|quantity|<extra fields of the child>
+     * Format: TYPE|id|name|category|price|quantity|<extra fields of the child>|imageUrl
      * (This is the "template method" idea: the base class builds the line,
      * the child class only supplies its own extra fields.)
      */
@@ -91,7 +97,8 @@ public abstract class Item {
                 clean(category),
                 String.valueOf(price),
                 String.valueOf(quantity),
-                getExtraFields());
+                getExtraFields(),
+                clean(imageUrl));
     }
 
     /** The "|" character is our separator, so it must never appear inside data (shared team rule). */

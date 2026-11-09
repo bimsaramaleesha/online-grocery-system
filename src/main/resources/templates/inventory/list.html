@@ -19,7 +19,15 @@
             <h1 class="h3 mb-0">Grocery Inventory</h1>
             <small class="text-muted">Manage items, stock levels and expiry dates</small>
         </div>
-        <a th:href="@{/inventory/new}" class="btn btn-success">+ Add Item</a>
+        <div class="d-flex gap-2">
+            <form th:if="${summary.expired > 0}" th:action="@{/inventory/delete-expired}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger"
+                        onclick="return confirm('Remove all expired perishable items from inventory?');">
+                    Remove Expired (<span th:text="${summary.expired}">0</span>)
+                </button>
+            </form>
+            <a th:href="@{/inventory/new}" class="btn btn-success">+ Add Item</a>
+        </div>
     </div>
 
     <!-- messages sent by the controller after add / edit / delete -->
@@ -92,7 +100,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-success">
                 <tr>
-                    <th>ID</th><th>Name</th><th>Category</th><th>Type</th>
+                    <th>ID</th><th>Image</th><th>Name</th><th>Category</th><th>Type</th>
                     <th class="text-end">Price (Rs.)</th><th class="text-end">Selling (Rs.)</th>
                     <th class="text-end">Qty</th><th>Details</th><th class="text-end">Actions</th>
                 </tr>
@@ -101,6 +109,12 @@
                 <tr th:each="item : ${items}"
                     th:classappend="${item.expired} ? 'table-danger' : (${item.expiringSoon} ? 'table-warning' : '')">
                     <td class="text-muted" th:text="${item.id}">ITM001</td>
+                    <td>
+                        <img th:if="${!#strings.isEmpty(item.imageUrl)}" th:src="${item.imageUrl}" th:alt="${item.name}"
+                             class="inv-list-thumb"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="text-muted small" th:style="${#strings.isEmpty(item.imageUrl)} ? '' : 'display:none'">—</span>
+                    </td>
                     <td class="fw-semibold" th:text="${item.name}">Name</td>
                     <td th:text="${item.category}">Category</td>
                     <td>
@@ -117,6 +131,10 @@
                     </td>
                     <td class="small" th:text="${item.details}">details</td>
                     <td class="text-end text-nowrap">
+                        <form th:action="@{/inventory/{id}/restock(id=${item.id})}" method="post" class="d-inline">
+                            <input type="hidden" name="amount" value="10">
+                            <button type="submit" class="btn btn-sm btn-outline-success" title="Add 10 units to stock">+10 Stock</button>
+                        </form>
                         <a th:href="@{/inventory/{id}/edit(id=${item.id})}"
                            class="btn btn-sm btn-outline-primary">Edit</a>
                         <form th:action="@{/inventory/{id}/delete(id=${item.id})}" method="post"
@@ -126,7 +144,7 @@
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(items)}">
-                    <td colspan="9" class="text-center text-muted py-4">No items found.</td>
+                    <td colspan="10" class="text-center text-muted py-4">No items found.</td>
                 </tr>
                 </tbody>
             </table>
