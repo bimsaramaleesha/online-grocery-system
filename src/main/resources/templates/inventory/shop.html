@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Marketplace', '/css/inventory.css')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<!-- Marketplace Hero + Welcome Vouchers (only on the main home view) -->
+<section class="shop-hero" th:if="${deals != null}">
+    <div class="container py-4">
+        <div class="row g-3 align-items-stretch">
+            <!-- Left: Main SuperDeals Banner -->
+            <div class="col-lg-8">
+                <div class="shop-hero-banner h-100 p-4 p-md-5 text-white d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-inline-flex align-items-center gap-2 shop-hero-pill mb-3">
+                            <span>⚡ CHOICE MARKETPLACE</span>
+                            <span>&middot;</span>
+                            <span>SAME-DAY DISPATCH</span>
+                        </div>
+                        <h1 class="display-5 fw-bold mb-2">SuperDeals on Groceries &amp; Daily Essentials</h1>
+                        <p class="lead mb-4 opacity-90">Fresh farm produce, snacks, electronics, toys and books — delivered straight to your door.</p>
+                    </div>
+                    <form th:action="@{/shop}" method="get" class="shop-hero-search">
+                        <div class="input-group input-group-lg shadow-sm">
+                            <input type="text" name="q" class="form-control border-0"
+                                   placeholder="Search for milk, rice, wireless earbuds, toys, books...">
+                            <button class="btn btn-warning fw-bold px-4" type="submit">🔍 Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: User-Aware Welcome / Voucher Card -->
+            <div class="col-lg-4">
+                <div class="shop-side-card h-100 p-4 d-flex flex-column justify-content-between">
+                    <!-- Guest / New Customer -->
+                    <div th:if="${session.role == null}">
+                        <span class="badge text-bg-danger mb-2">🎁 NEW CUSTOMER DEAL</span>
+                        <h2 class="h4 fw-bold mb-1">Welcome to GroceryExpress!</h2>
+                        <p class="text-muted small mb-3">Create a free customer account in 30 seconds to unlock welcome coupons and track your deliveries.</p>
+                        <div class="shop-coupon-ticket mb-3">
+                            <div>
+                                <div class="fw-bold text-danger">10% OFF + Rs. 200 OFF</div>
+                                <div class="small text-muted">Use codes <code>WELCOME10</code> or <code>SAVE200</code></div>
+                            </div>
+                            <span class="badge text-bg-warning">ACTIVE</span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/register}" class="btn btn-danger fw-semibold">Join Free — New Customer</a>
+                            <a th:href="@{/login}" class="btn btn-outline-dark btn-sm">Sign In (Existing Customer / Admin)</a>
+                        </div>
+                    </div>
+
+                    <!-- Logged-in Customer -->
+                    <div th:if="${session.role == 'CUSTOMER'}">
+                        <span class="badge text-bg-success mb-2">✓ VERIFIED MEMBER</span>
+                        <h2 class="h4 fw-bold mb-1">Hi, <span th:text="${session.userName}">Customer</span>!</h2>
+                        <p class="text-muted small mb-3">Your member coupons are ready to apply at checkout.</p>
+                        <div class="shop-coupon-ticket mb-2">
+                            <div>
+                                <div class="fw-bold text-danger">CODE: WELCOME10</div>
+                                <div class="small text-muted">10% off any order</div>
+                            </div>
+                            <span class="badge text-bg-success">READY</span>
+                        </div>
+                        <div class="shop-coupon-ticket mb-3">
+                            <div>
+                                <div class="fw-bold text-danger">CODE: SAVE200</div>
+                                <div class="small text-muted">Rs. 200 off orders Rs. 1,000+</div>
+                            </div>
+                            <span class="badge text-bg-success">READY</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/cart}" class="btn btn-success btn-sm flex-fill fw-semibold">🛒 My Cart</a>
+                            <a th:href="@{/orders}" class="btn btn-outline-success btn-sm flex-fill">📦 My Orders</a>
+                            <a th:href="@{/users/profile}" class="btn btn-outline-secondary btn-sm">👤 Profile</a>
+                        </div>
+                    </div>
+
+                    <!-- Logged-in Admin -->
+                    <div th:if="${session.role == 'ADMIN'}">
+                        <span class="badge text-bg-warning mb-2">⚡ STORE ADMINISTRATOR</span>
+                        <h2 class="h4 fw-bold mb-1">Admin Store Preview</h2>
+                        <p class="text-muted small mb-3">You are viewing the live customer storefront. Manage products, users, promotions and orders from the dashboard.</p>
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/admin}" class="btn btn-dark fw-semibold">📊 Open Admin Dashboard</a>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/inventory}" class="btn btn-outline-success btn-sm flex-fill">📦 Inventory</a>
+                                <a th:href="@{/users}" class="btn btn-outline-primary btn-sm flex-fill">👥 Users</a>
+                                <a th:href="@{/promos}" class="btn btn-outline-warning btn-sm flex-fill">🏷️ Promos</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shop-trust-mini pt-3 mt-3 border-top d-flex justify-content-between small text-muted">
+                        <span>🚚 Free Shipping</span>
+                        <span>⚡ Fast Dispatch</span>
+                        <span>🔒 Secure Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="container my-4">
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+    <!-- Category Navigation Chips -->
+    <div class="shop-chips mb-4">
+        <a th:href="@{/shop}" class="shop-chip" th:classappend="${#strings.isEmpty(category)} ? 'active'">🛍️ All Categories</a>
+        <a th:each="c : ${categories}" th:href="@{/shop(category=${c.name})}" class="shop-chip"
+           th:classappend="${c.name == category} ? 'active'">
+            <span th:text="${c.emoji}">🥛</span> <span th:text="${c.name}">Dairy</span>
+            <small class="text-muted" th:text="'(' + ${c.count} + ')'">(3)</small>
+        </a>
+    </div>
+
+    <!-- Flash SuperDeals Strip -->
+    <section th:if="${deals != null and !#lists.isEmpty(deals)}" class="shop-deals-box p-3 p-md-4 mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="shop-flash-badge">⚡ SUPER DEALS</span>
+                <h2 class="h5 fw-bold mb-0">Limited-Time Flash Offers</h2>
+            </div>
+            <span class="small text-muted">Extra savings on fresh picks &amp; value items</span>
+        </div>
+        <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-2" th:each="p : ${deals}">
+                <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none">
+                    <div class="card shop-card h-100 border-0">
+                        <div class="shop-thumb shop-thumb-sm position-relative" th:classappend="'shop-grad-' + ${p.colorIndex}">
+                            <span th:text="${p.emoji}">🥛</span>
+                            <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20%</span>
+                            <span class="badge text-bg-warning shop-badge" th:unless="${p.onSale}">HOT</span>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="text-dark fw-semibold small text-truncate" th:text="${p.name}">Name</div>
+                            <div class="text-danger fw-bold"
+                                 th:text="'Rs. ' + ${#numbers.formatDecimal(p.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0</div>
+                            <div class="text-muted text-decoration-line-through" style="font-size: 0.72rem;" th:if="${p.onSale}"
+                                 th:text="'Rs. ' + ${#numbers.formatDecimal(p.price, 1, 'COMMA', 2, 'POINT')}">Rs. 0</div>
+                            <div class="small text-muted" style="font-size: 0.72rem;">
+                                ⭐ <span th:text="${p.rating}">4.8</span> &middot; <span th:text="${p.soldCount} + ' sold'">100 sold</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter & Sort Bar -->
+    <form th:action="@{/shop}" method="get" class="card card-body p-3 mb-3">
+        <div class="row g-2 align-items-center">
+            <input type="hidden" name="category" th:value="${category}" th:if="${!#strings.isEmpty(category)}">
+            <div class="col-12 col-md">
+                <h2 class="h5 mb-0 fw-bold">
+                    <span th:if="${#strings.isEmpty(category)}">🔥 More to Love</span>
+                    <span th:if="${!#strings.isEmpty(category)}" th:text="${category}">Category</span>
+                    <small class="text-muted fw-normal fs-6 ms-1" th:text="'(' + ${#lists.size(products)} + ' products)'">(0 products)</small>
+                </h2>
+            </div>
+            <div class="col-7 col-md-4">
+                <input type="text" name="q" th:value="${q}" class="form-control form-control-sm" placeholder="Filter by keyword...">
+            </div>
+            <div class="col-5 col-md-3">
+                <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="" th:selected="${#strings.isEmpty(sort)}">Sort: Best Match</option>
+                    <option value="popular" th:selected="${sort == 'popular'}">Sort: Most Popular (Orders)</option>
+                    <option value="price-asc" th:selected="${sort == 'price-asc'}">Price: Low to High</option>
+                    <option value="price-desc" th:selected="${sort == 'price-desc'}">Price: High to Low</option>
+                    <option value="name" th:selected="${sort == 'name'}">Name: A to Z</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <!-- Marketplace Product Grid -->
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-3" th:each="p : ${products}">
+            <div class="card shop-card h-100">
+                <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none position-relative">
+                    <div class="shop-thumb" th:classappend="'shop-grad-' + ${p.colorIndex}" th:text="${p.emoji}">🥛</div>
+                    <span class="badge shop-choice-badge">Choice</span>
+                    <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20% OFF</span>
+                    <span class="badge text-bg-secondary shop-badge" th:if="${!p.inStock}">Sold out</span>
+                </a>
+                <div class="card-body d-flex flex-column p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="small text-muted" th:text="${p.category}">Category</span>
+                        <span class="small text-warning-emphasis fw-semibold">
+                            ⭐ <span th:text="${p.rating}">4.8</span>
+                            <span class="text-muted fw-normal" th:text="'(' + ${p.soldCount} + ' sold)'">(120 sold)</span>
+                        </span>
+                    </div>
+
+                    <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none text-dark fw-semibold mb-1 shop-title"
+                       th:text="${p.name}">Product name</a>
+
+                    <div class="mb-1">
+                        <span class="fs-5 fw-bold text-danger"
+                              th:text="'Rs. ' + ${#numbers.formatDecimal(p.sellingPrice, 1, 'COMMA', 2, 'POINT')}">Rs. 0.00</span>
+                        <span class="text-muted text-decoration-line-through small ms-1" th:if="${p.onSale}"
+                              th:text="'Rs. ' + ${#numbers.formatDecimal(p.price, 1, 'COMMA', 2, 'POINT')}">old</span>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-1 mb-2">
+                        <span class="shop-tag-free">Free Shipping</span>
+                        <span class="shop-tag-low" th:if="${p.lowStock}" th:text="'Only ' + ${p.quantity} + ' left!'">Only 3 left!</span>
+                    </div>
+
+                    <div class="mt-auto pt-1">
+                        <form th:action="@{/cart/add}" method="post" th:if="${session.role != null}">
+                            <input type="hidden" name="itemId" th:value="${p.id}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-sm shop-btn-buy w-100 fw-semibold" th:disabled="${!p.inStock}"
+                                    th:text="${p.inStock} ? '🛒 Add to Cart' : 'Sold Out'">Add to Cart</button>
+                        </form>
+                        <div th:if="${session.role == null}" class="d-flex gap-1">
+                            <a th:href="@{/login(next='/shop')}" class="btn btn-sm shop-btn-buy flex-grow-1 fw-semibold">🛒 Buy Now</a>
+                            <a th:href="@{/register}" class="btn btn-sm btn-outline-secondary" title="New customer? Register">Join</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-muted py-5" th:if="${#lists.isEmpty(products)}">
+        <div style="font-size:3rem;">🔍</div>
+        <p class="mb-1">No matching products found.</p>
+        <a th:href="@{/shop}" class="btn btn-sm btn-outline-success mt-2">Reset filters</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

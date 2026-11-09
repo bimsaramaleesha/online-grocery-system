@@ -1,1 +1,437 @@
-/* order module styles. Only the owner of the order module edits this file. Prefix your classes, e.g. .ord-card */
+/* ========================================================
+   FRESH FARM MARKET DESIGN SYSTEM
+   Theme: Warm, organic, artisanal grocery & farmers market
+   Palette:
+     - Leaf Green: #14532d
+     - Fresh Lime: #84cc16
+     - Warm Orange: #fb923c
+     - Cream Background: #fffbeb
+     - Text: #1f2937
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+    --farm-leaf: #14532d;
+    --farm-leaf-hover: #0f3d21;
+    --farm-leaf-soft: #f0fdf4;
+    --farm-leaf-border: #bbf7d0;
+
+    --farm-lime: #84cc16;
+    --farm-lime-dark: #65a30d;
+    --farm-lime-soft: #ecfccb;
+
+    --farm-orange: #fb923c;
+    --farm-orange-hover: #f97316;
+    --farm-orange-soft: #fff7ed;
+    --farm-orange-border: #fed7aa;
+
+    --farm-cream: #fffbeb;
+    --farm-cream-card: #fefce8;
+    --farm-border: #fef08a;
+    --farm-border-subtle: #fef3c7;
+
+    --farm-text: #1f2937;
+    --farm-text-muted: #6b7280;
+    --farm-text-light: #9ca3af;
+    --farm-white: #ffffff;
+
+    --farm-radius-sm: 10px;
+    --farm-radius-md: 16px;
+    --farm-radius-lg: 22px;
+    --farm-radius-xl: 28px;
+
+    --farm-shadow-sm: 0 2px 8px rgba(20, 83, 45, 0.04);
+    --farm-shadow: 0 10px 25px -4px rgba(20, 83, 45, 0.06), 0 4px 10px -2px rgba(20, 83, 45, 0.04);
+    --farm-shadow-hover: 0 18px 30px -5px rgba(20, 83, 45, 0.12), 0 8px 12px -3px rgba(20, 83, 45, 0.06);
+}
+
+/* Global Atmosphere for Order & Cart Pages */
+body {
+    background-color: var(--farm-cream) !important;
+    color: var(--farm-text);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+}
+
+/* Typography Enhancements */
+.farm-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--farm-leaf);
+    font-weight: 700;
+}
+
+.farm-subheading {
+    color: var(--farm-text-muted);
+    font-size: 0.95rem;
+}
+
+/* Market Pill & Tags */
+.farm-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    background-color: var(--farm-orange-soft);
+    color: var(--farm-orange-hover);
+    border: 1px solid var(--farm-orange-border);
+}
+
+.farm-tag-leaf {
+    background-color: var(--farm-leaf-soft);
+    color: var(--farm-leaf);
+    border: 1px solid var(--farm-leaf-border);
+}
+
+.farm-tag-lime {
+    background-color: var(--farm-lime-soft);
+    color: var(--farm-lime-dark);
+    border: 1px solid #d9f99d;
+}
+
+/* Farm Cards */
+.farm-card {
+    background: var(--farm-white);
+    border: 1px solid var(--farm-border-subtle);
+    border-radius: var(--farm-radius-lg);
+    box-shadow: var(--farm-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.farm-card-header {
+    background: var(--farm-white);
+    border-bottom: 1px solid #fef3c7;
+    padding: 1.25rem 1.5rem;
+}
+
+.farm-card-body {
+    padding: 1.5rem;
+}
+
+/* Step Progress Indicator */
+.farm-steps {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.farm-step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--farm-white);
+    border: 1px solid var(--farm-border-subtle);
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--farm-text-muted);
+    box-shadow: var(--farm-shadow-sm);
+}
+
+.farm-step-item.active {
+    background: var(--farm-leaf);
+    color: var(--farm-white);
+    border-color: var(--farm-leaf);
+    box-shadow: 0 4px 12px rgba(20, 83, 45, 0.2);
+}
+
+/* Table Stylings */
+.farm-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.farm-table thead th {
+    background-color: #fafaf9;
+    color: var(--farm-leaf);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 1.25rem;
+    border-bottom: 2px solid #fef3c7;
+}
+
+.farm-table tbody td {
+    padding: 1.25rem;
+    border-bottom: 1px solid #fef3c7;
+    background-color: var(--farm-white);
+    vertical-align: middle;
+}
+
+.farm-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.farm-table tbody tr:hover td {
+    background-color: #fffdf5;
+}
+
+/* Quantity Stepper Control */
+.farm-qty-group {
+    display: inline-flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 2px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.farm-qty-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: var(--farm-white);
+    color: var(--farm-leaf);
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.15s ease;
+}
+
+.farm-qty-btn:hover {
+    background: var(--farm-leaf);
+    color: var(--farm-white);
+    transform: scale(1.05);
+}
+
+.farm-qty-input {
+    width: 44px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--farm-text);
+}
+
+.farm-qty-input:focus {
+    outline: none;
+}
+
+.farm-qty-input::-webkit-outer-spin-button,
+.farm-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom Fresh Farm Buttons */
+.btn-farm-primary {
+    background-color: var(--farm-leaf);
+    color: var(--farm-white);
+    border: none;
+    border-radius: var(--farm-radius-md);
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 14px rgba(20, 83, 45, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-farm-primary:hover {
+    background-color: var(--farm-leaf-hover);
+    color: var(--farm-white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(20, 83, 45, 0.35);
+}
+
+.btn-farm-orange {
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    color: var(--farm-white);
+    border: none;
+    border-radius: var(--farm-radius-md);
+    padding: 0.85rem 1.75rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+    transition: all 0.2s ease;
+}
+
+.btn-farm-orange:hover {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: var(--farm-white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(249, 115, 22, 0.45);
+}
+
+.btn-farm-outline {
+    background: transparent;
+    color: var(--farm-leaf);
+    border: 1.5px solid var(--farm-leaf);
+    border-radius: var(--farm-radius-md);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-farm-outline:hover {
+    background-color: var(--farm-leaf-soft);
+    color: var(--farm-leaf);
+    border-color: var(--farm-leaf);
+}
+
+/* Market Catalog Product Cards */
+.farm-product-card {
+    background: var(--farm-white);
+    border: 1px solid var(--farm-border-subtle);
+    border-radius: var(--farm-radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--farm-shadow-sm);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.farm-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--farm-shadow-hover);
+    border-color: #fde68a;
+}
+
+.farm-product-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.farm-product-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--farm-leaf);
+}
+
+/* Order Summary Box */
+.farm-summary-card {
+    background: var(--farm-white);
+    border: 1px solid #fde68a;
+    border-radius: var(--farm-radius-xl);
+    padding: 1.75rem;
+    box-shadow: var(--farm-shadow);
+}
+
+.farm-receipt-divider {
+    border-top: 2px dashed #fcd34d;
+    margin: 1.25rem 0;
+}
+
+/* Status Badges */
+.badge-farm-pending {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.badge-farm-confirmed {
+    background-color: #ecfccb;
+    color: #4d7c0f;
+    border: 1px solid #d9f99d;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.badge-farm-shipped {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.badge-farm-delivered {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.badge-farm-cancelled {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+/* Form Controls with warm aesthetic */
+.farm-input {
+    background-color: #ffffff;
+    border: 1.5px solid #e5e7eb;
+    border-radius: var(--farm-radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.farm-input:focus {
+    border-color: var(--farm-leaf);
+    box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.12);
+    outline: none;
+}
+
+.farm-label {
+    font-weight: 600;
+    color: var(--farm-text);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+
+/* Artisanal Alert Boxes */
+.farm-alert-success {
+    background: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    color: #065f46;
+    border-radius: var(--farm-radius-md);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+}
+
+.farm-alert-danger {
+    background: #fef2f2;
+    border: 1.5px solid #fecaca;
+    color: #991b1b;
+    border-radius: var(--farm-radius-md);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+}
+
+/* Receipt Stamped Badge */
+.farm-stamp {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    border: 2px dashed #15803d;
+    color: #15803d;
+    border-radius: var(--farm-radius-sm);
+    transform: rotate(-3deg);
+}

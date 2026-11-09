@@ -7,11 +7,11 @@ How our 6-person team works together on this repo. Follow these steps every time
 | # | Module | Java package | Templates folder | CSS / JS | Data file(s) | ID prefix | URL prefix | Owner (GitHub) |
 |---|--------|--------------|------------------|----------|--------------|-----------|------------|----------------|
 | 1 | User & Authentication | `user` | `templates/user` | `user.css` / `user.js` | `users.txt` | `U` | `/users` | @MrHasit |
-| 2 | Grocery Inventory & Items | `inventory` | `templates/inventory` | `inventory.css` / `inventory.js` | `items.txt` | `ITM` | `/items` | @bimsaramaleesha |
+| 2 | Grocery Inventory & Items | `inventory` | `templates/inventory` | `inventory.css` / `inventory.js` | `items.txt` | `ITM` | `/inventory` | @bimsaramaleesha |
 | 3 | Supplier & Vendor Logistics | `supplier` | `templates/supplier` | `supplier.css` / `supplier.js` | `suppliers.txt`, `deliveries.txt` | `SUP` | `/suppliers` | @Thilanjana01 |
 | 4 | Cart & Order Processing | `order` | `templates/order` | `order.css` / `order.js` | `carts.txt`, `orders.txt` | `CRT`, `ORD` | `/cart`, `/orders` | @Piumanjali K. K. |
 | 5 | Discounts & Promo Codes | `promo` | `templates/promo` | `promo.css` / `promo.js` | `promos.txt` | `PRM` | `/promos` | @Yashindi J.P.M |
-| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @Pahan K. H. S. |
+| 6 | Reviews & Customer Complaints | `feedback` | `templates/feedback` | `feedback.css` / `feedback.js` | `reviews.txt`, `complaints.txt` | `REV`, `CMP` | `/reviews`, `/complaints` | @bimsaramaleesha |
 
 **Review buddies** (you review each other's pull requests): 1 and 2, 3 and 4, 5 and 6.
 

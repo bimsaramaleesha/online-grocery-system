@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('User form', '/css/user.css')}">
+
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4 usr-narrow">
+    <h1 class="h3 mb-3" th:text="${editMode} ? 'Edit User' : 'Add User'">Add User</h1>
+
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+
+    <form th:object="${form}"
+          th:action="${editMode} ? @{/users/{id}/edit(id=${form.id})} : @{/users/new}"
+          method="post" class="card card-body" data-match-form>
+
+        <div class="mb-3" th:unless="${editMode}">
+            <label for="type" class="form-label">Account type</label>
+            <select id="type" class="form-select" th:field="*{type}" required>
+                <option value="">-- choose --</option>
+                <option value="CUSTOMER">Customer</option>
+                <option value="ADMIN">Administrator</option>
+            </select>
+        </div>
+        <div class="mb-3" th:if="${editMode}">
+            <label class="form-label">User ID</label>
+            <input type="text" class="form-control" th:value="${form.id}" disabled>
+            <input type="hidden" id="type" th:field="*{type}">
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}" maxlength="100" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" id="email" class="form-control" th:field="*{email}" maxlength="254" required>
+        </div>
+
+        <div id="customerFields" class="usr-type-fields">
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" id="phone" class="form-control" th:field="*{phone}" maxlength="20"
+                       placeholder="0771234567">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Delivery address</label>
+                <input type="text" id="address" class="form-control" th:field="*{address}" maxlength="200">
+            </div>
+        </div>
+
+        <div id="adminFields" class="usr-type-fields">
+            <div class="mb-3">
+                <label for="department" class="form-label">Department</label>
+                <input type="text" id="department" class="form-control" th:field="*{department}" maxlength="60"
+                       placeholder="Operations">
+            </div>
+        </div>
+
+        <hr>
+        <p class="small text-muted mb-2" th:if="${editMode}">
+            Leave both password boxes empty to keep the current password.
+        </p>
+        <div class="row">
+            <div class="col-sm-6 mb-3">
+                <label for="password" class="form-label" th:text="${editMode} ? 'New password' : 'Password'">Password</label>
+                <input type="password" id="password" class="form-control" th:field="*{password}"
+                       maxlength="128" autocomplete="new-password" th:required="${!editMode}">
+            </div>
+            <div class="col-sm-6 mb-3">
+                <label for="confirmPassword" class="form-label">Confirm password</label>
+                <input type="password" id="confirmPassword" class="form-control" th:field="*{confirmPassword}"
+                       maxlength="128" autocomplete="new-password" th:required="${!editMode}">
+            </div>
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" id="showPassword" class="form-check-input"
+                   data-toggle-password="password,confirmPassword">
+            <label for="showPassword" class="form-check-label small">Show passwords</label>
+        </div>
+
+        <div class="d-flex gap-2 mt-2">
+            <button type="submit" class="btn btn-success" th:text="${editMode} ? 'Save Changes' : 'Add User'">Save</button>
+            <a th:href="@{/users}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/user.js}"></script>
+</body>
+</html>

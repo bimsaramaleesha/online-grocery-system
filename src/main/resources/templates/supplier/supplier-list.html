@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Supplier Logistics')}">
-    <link rel="stylesheet" th:href="@{/css/supplier.css}">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: headWithCss('Supplier Logistics', '/css/supplier.css')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
@@ -10,7 +8,7 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <h1 class="h3 fw-bold mb-1">Supplier & Vendor Logistics</h1>
+            <h1 class="h3 fw-bold mb-1">Supplier &amp; Vendor Logistics</h1>
             <p class="text-secondary mb-0">Agricultural farm contracts, wholesale partners, and restock lead times.</p>
         </div>
         <div>
@@ -19,6 +17,9 @@
             </button>
         </div>
     </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
 
     <!-- Metrics Cards -->
     <div class="row g-3 mb-4">
@@ -59,9 +60,9 @@
                 <select name="category" class="form-select" onchange="this.form.submit()">
                     <option value="ALL" th:selected="${categoryFilter == 'ALL'}">All Categories</option>
                     <option value="Fresh Vegetables" th:selected="${categoryFilter == 'Fresh Vegetables'}">Fresh Vegetables</option>
-                    <option value="Dairy & Eggs" th:selected="${categoryFilter == 'Dairy & Eggs'}">Dairy & Eggs</option>
+                    <option value="Dairy & Eggs" th:selected="${categoryFilter == 'Dairy & Eggs'}">Dairy &amp; Eggs</option>
                     <option value="Fresh Fruits" th:selected="${categoryFilter == 'Fresh Fruits'}">Fresh Fruits</option>
-                    <option value="Grains & Flours" th:selected="${categoryFilter == 'Grains & Flours'}">Grains & Flours</option>
+                    <option value="Grains & Flours" th:selected="${categoryFilter == 'Grains & Flours'}">Grains &amp; Flours</option>
                     <option value="Beverages" th:selected="${categoryFilter == 'Beverages'}">Beverages</option>
                 </select>
             </div>
@@ -118,12 +119,23 @@
                             <span class="badge bg-secondary" th:text="${s.calculateLeadTimeDays()} + ' Day(s)'">1 Day(s)</span>
                         </td>
                         <td class="text-end pe-4">
-                            <button type="button" class="btn btn-sm btn-outline-info me-1" 
-                                    th:attr="onclick='openCalcModal(\'' + ${s.supplierId} + '\', \'' + ${s.companyName} + '\', \'' + ${s.supplierType} + '\', ' + ${s.calculateLeadTimeDays()} + ')'">
+                            <button type="button" class="btn btn-sm btn-outline-info me-1"
+                                    th:attr="data-id=${s.supplierId},
+                                             data-name=${s.companyName},
+                                             data-type=${s.supplierType},
+                                             data-lead=${s.calculateLeadTimeDays()},
+                                             data-fee=${s.supplierType == 'Local Farmer' ? s.freshHandlingFee : 0},
+                                             data-moq=${s.supplierType == 'Wholesale Distributor' ? s.minOrderQuantity : 0},
+                                             data-discount=${s.supplierType == 'Wholesale Distributor' ? s.bulkDiscountRate : 0}"
+                                    onclick="openCalcModal(this)">
                                 Calc
                             </button>
                             <button type="button" class="btn btn-sm btn-outline-warning me-1"
-                                    th:attr="onclick='openEditModal(\'' + ${s.supplierId} + '\', \'' + ${s.companyName} + '\', \'' + ${s.contactNumber} + '\', \'' + ${s.email} + '\')'">
+                                    th:attr="data-id=${s.supplierId},
+                                             data-name=${s.companyName},
+                                             data-phone=${s.contactNumber},
+                                             data-email=${s.email}"
+                                    onclick="openEditModal(this)">
                                 Edit
                             </button>
                             <form th:action="@{/suppliers/delete/{id}(id=${s.supplierId})}" method="POST" class="d-inline"
@@ -177,8 +189,8 @@
                             <select class="form-select" name="supplyCategory" required>
                                 <option value="Fresh Vegetables">Fresh Vegetables</option>
                                 <option value="Fresh Fruits">Fresh Fruits</option>
-                                <option value="Dairy & Eggs">Dairy & Eggs</option>
-                                <option value="Grains & Flours">Grains & Flours</option>
+                                <option value="Dairy & Eggs">Dairy &amp; Eggs</option>
+                                <option value="Grains & Flours">Grains &amp; Flours</option>
                                 <option value="Beverages">Beverages</option>
                             </select>
                         </div>
@@ -268,7 +280,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title">Procurement Lead Time & Cost Calculator</h5>
+                <h5 class="modal-title">Procurement Lead Time &amp; Cost Calculator</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
@@ -299,6 +311,7 @@
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script th:src="@{/js/supplier.js}"></script>
 
 <script>
     function toggleSupplierFields() {
@@ -307,20 +320,28 @@
         document.getElementById("wholesaleFields").style.display = (type === "WHOLESALE") ? "flex" : "none";
     }
 
-    function openEditModal(id, name, phone, email) {
-        document.getElementById("editSupplierId").value = id;
-        document.getElementById("editCompanyName").value = name;
-        document.getElementById("editContactNumber").value = phone;
-        document.getElementById("editEmail").value = email;
+    function openEditModal(btn) {
+        document.getElementById("editSupplierId").value = btn.getAttribute("data-id");
+        document.getElementById("editCompanyName").value = btn.getAttribute("data-name");
+        document.getElementById("editContactNumber").value = btn.getAttribute("data-phone");
+        document.getElementById("editEmail").value = btn.getAttribute("data-email");
         new bootstrap.Modal(document.getElementById('editSupplierModal')).show();
     }
 
     var curCalc = {};
-    function openCalcModal(id, name, type, lead) {
-        curCalc = { id, name, type, lead };
-        document.getElementById("calcName").innerText = name;
-        document.getElementById("calcType").innerText = type;
-        document.getElementById("calcLead").innerText = lead + " Day(s)";
+    function openCalcModal(btn) {
+        curCalc = {
+            id: btn.getAttribute("data-id"),
+            name: btn.getAttribute("data-name"),
+            type: btn.getAttribute("data-type"),
+            lead: btn.getAttribute("data-lead"),
+            fee: parseFloat(btn.getAttribute("data-fee")) || 0,
+            moq: parseInt(btn.getAttribute("data-moq"), 10) || 0,
+            discount: parseFloat(btn.getAttribute("data-discount")) || 0
+        };
+        document.getElementById("calcName").innerText = curCalc.name;
+        document.getElementById("calcType").innerText = curCalc.type;
+        document.getElementById("calcLead").innerText = curCalc.lead + " Day(s)";
         doCalc();
         new bootstrap.Modal(document.getElementById('calcModal')).show();
     }
@@ -329,8 +350,14 @@
         var u = parseFloat(document.getElementById("unitsInput").value) || 0;
         var p = parseFloat(document.getElementById("priceInput").value) || 0;
         var base = u * p;
+        var finalCost = base;
+        if (curCalc.type === "Local Farmer" && base > 0) {
+            finalCost = base + curCalc.fee;
+        } else if (curCalc.type === "Wholesale Distributor" && u >= curCalc.moq) {
+            finalCost = base * (1.0 - curCalc.discount);
+        }
         document.getElementById("baseCost").innerText = "Rs. " + base.toFixed(2);
-        document.getElementById("finalCost").innerText = "Rs. " + base.toFixed(2);
+        document.getElementById("finalCost").innerText = "Rs. " + finalCost.toFixed(2);
     }
 </script>
 </body>

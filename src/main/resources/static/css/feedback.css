@@ -1,1 +1,56 @@
-/* feedback module styles. Only the owner of the feedback module edits this file. Prefix your classes, e.g. .fee-card */
+/* Feedback module styles (Reviews & Complaints).
+   Every class starts with "fb-" so it never clashes with other modules. */
+
+.fb-narrow { max-width: 720px; }
+
+/* Summary cards */
+.fb-stat {
+    border: 1px solid #dee2e6;
+    border-left: 5px solid #198754;
+    color: #212529;
+    transition: box-shadow .15s, transform .15s;
+}
+.fb-stat:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    transform: translateY(-2px);
+    color: #212529;
+}
+.fb-stat-gold     { border-left-color: #ffc107; }
+.fb-stat-positive { border-left-color: #20c997; }
+.fb-stat-open     { border-left-color: #dc3545; }
+.fb-stat-resolved { border-left-color: #0d6efd; }
+.fb-stat-active   { box-shadow: 0 0 0 2px #198754 inset; }
+
+.fb-stat-label  { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #6c757d; }
+.fb-stat-number { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.fb-stat-note   { font-size: .8rem; }
+
+/* Navigation tabs between Reviews and Complaints */
+.fb-tabs .nav-link {
+    font-weight: 600;
+    color: #495057;
+    border-radius: 8px;
+    padding: .5rem 1.1rem;
+}
+.fb-tabs .nav-link.active {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* Badges */
+.fb-stars {
+    color: #f59f00;
+    letter-spacing: 1px;
+    font-size: .95rem;
+}
+
+.fb-severity-low    { background: #e8f5e9; color: #1b5e20; }
+.fb-severity-medium { background: #fff3cd; color: #664d03; }
+.fb-severity-high   { background: #f8d7da; color: #842029; }
+
+.fb-status-open        { background: #f8d7da; color: #842029; }
+.fb-status-in_progress { background: #cff4fc; color: #055160; }
+.fb-status-resolved    { background: #d1e7dd; color: #0f5132; }
+
+/* Type-specific form blocks start hidden; feedback.js toggles them */
+.fb-type-fields { display: none; }
