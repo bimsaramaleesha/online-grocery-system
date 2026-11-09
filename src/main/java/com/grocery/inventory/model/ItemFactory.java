@@ -26,10 +26,8 @@ public final class ItemFactory {
             return new PerishableItem(id, name, category, price, quantity, expiryDate);
         }
         if (NonPerishableItem.TYPE.equals(type)) {
-            if (shelfLifeMonths == null) {
-                throw new IllegalArgumentException("Shelf life is required for non-perishable items.");
-            }
-            return new NonPerishableItem(id, name, category, price, quantity, brand, shelfLifeMonths);
+            int months = (shelfLifeMonths == null) ? 0 : shelfLifeMonths;
+            return new NonPerishableItem(id, name, category, price, quantity, brand, months);
         }
         throw new IllegalArgumentException("Please choose an item type.");
     }
@@ -52,7 +50,8 @@ public final class ItemFactory {
             return item;
         }
         if (NonPerishableItem.TYPE.equals(type)) {
-            Item item = new NonPerishableItem(id, name, category, price, quantity, p[6], Integer.parseInt(p[7]));
+            int months = (p.length > 7 && !p[7].isBlank()) ? Integer.parseInt(p[7]) : 0;
+            Item item = new NonPerishableItem(id, name, category, price, quantity, p[6], months);
             if (p.length > 8) {
                 item.setImageUrl(p[8]);
             }

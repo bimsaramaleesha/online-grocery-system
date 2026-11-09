@@ -19,7 +19,15 @@
             <h1 class="h3 mb-0">Grocery Inventory</h1>
             <small class="text-muted">Manage items, stock levels and expiry dates</small>
         </div>
-        <a th:href="@{/inventory/new}" class="btn btn-success">+ Add Item</a>
+        <div class="d-flex gap-2">
+            <form th:if="${summary.expired > 0}" th:action="@{/inventory/delete-expired}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger"
+                        onclick="return confirm('Remove all expired perishable items from inventory?');">
+                    Remove Expired (<span th:text="${summary.expired}">0</span>)
+                </button>
+            </form>
+            <a th:href="@{/inventory/new}" class="btn btn-success">+ Add Item</a>
+        </div>
     </div>
 
     <!-- messages sent by the controller after add / edit / delete -->
@@ -123,6 +131,10 @@
                     </td>
                     <td class="small" th:text="${item.details}">details</td>
                     <td class="text-end text-nowrap">
+                        <form th:action="@{/inventory/{id}/restock(id=${item.id})}" method="post" class="d-inline">
+                            <input type="hidden" name="amount" value="10">
+                            <button type="submit" class="btn btn-sm btn-outline-success" title="Add 10 units to stock">+10 Stock</button>
+                        </form>
                         <a th:href="@{/inventory/{id}/edit(id=${item.id})}"
                            class="btn btn-sm btn-outline-primary">Edit</a>
                         <form th:action="@{/inventory/{id}/delete(id=${item.id})}" method="post"

@@ -6,9 +6,11 @@ import com.grocery.inventory.dto.ItemForm.CategoryView;
 import com.grocery.inventory.dto.ItemForm.ProductView;
 import com.grocery.inventory.model.Item;
 import com.grocery.inventory.model.ItemFactory;
+import com.grocery.inventory.model.PerishableItem;
 import com.grocery.inventory.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +85,39 @@ public class InventoryService {
         form.setType(existing.getItemType());
         Item updated = buildItem(id, form);
         return repository.save(updated);
+    }
+
+    /**
+     * Quickly adds stock to an item. If the item is perishable and currently expired,
+     * extends its expiry date by 14 days so the new batch is fresh.
+     */
+    public Item restockItem(String id, int addedQuantity) {
+        if (addedQuantity < 1) {
+            throw new IllegalArgumentException("Restock quantity must be at least 1.");
+        }
+        Item item = getById(id);
+        item.setQuantity(item.getQuantity() + addedQuantity);
+        if (item instanceof PerishableItem p && p.isExpired()) {
+            p.setExpiryDate(LocalDate.now().plusDays(14));
+        }
+        return repository.save(item);
+    }
+
+    /**
+     * Removes all expired perishable items from inventory.
+     * Non-perishable items (such as electronics) never expire and are never removed.
+     */
+    public int deleteExpiredItems() {
+        List<Item> expired = repository.findAll().stream()
+                .filter(Item::isExpired)
+                .toList();
+        int count = 0;
+        for (Item i : expired) {
+            if (repository.deleteById(i.getId())) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void deleteItem(String id) {

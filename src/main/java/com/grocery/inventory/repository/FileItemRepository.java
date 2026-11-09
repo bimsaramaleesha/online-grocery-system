@@ -42,7 +42,7 @@ public class FileItemRepository implements ItemRepository {
                 "PERISHABLE|ITM005|Fresh Chicken Meat 500g|Meat|950.0|12|" + today.plusDays(6) + "|https://cdn.dummyjson.com/products/images/groceries/Chicken%20Meat/thumbnail.png",
                 "NON_PERISHABLE|ITM006|Basmati Rice 5kg|Grains|1850.0|40|Araliya|24|https://cdn.dummyjson.com/products/images/groceries/Rice/thumbnail.png",
                 "PERISHABLE|ITM007|Fresh Fish Steak 500g|Seafood|1250.0|6|" + today.plusDays(5) + "|https://cdn.dummyjson.com/products/images/groceries/Fish%20Steak/thumbnail.png",
-                "NON_PERISHABLE|ITM008|Facial Tissue Paper Box|Household|350.0|18|SoftCare|36|https://cdn.dummyjson.com/products/images/groceries/Tissue%20Paper%20Box/thumbnail.png",
+                "NON_PERISHABLE|ITM008|Facial Tissue Paper Box|Household|350.0|18|SoftCare|0|https://cdn.dummyjson.com/products/images/groceries/Tissue%20Paper%20Box/thumbnail.png",
                 "PERISHABLE|ITM009|Fresh Strawberries 250g|Fruits|550.0|20|" + today.plusDays(2) + "|https://cdn.dummyjson.com/products/images/groceries/Strawberry/thumbnail.png",
                 "PERISHABLE|ITM010|Red Apples 1kg|Fruits|680.0|45|" + today.plusDays(8) + "|https://cdn.dummyjson.com/products/images/groceries/Apple/thumbnail.png",
                 "PERISHABLE|ITM011|Farm Fresh Eggs (12 Pack)|Dairy|540.0|35|" + today.plusDays(9) + "|https://cdn.dummyjson.com/products/images/groceries/Eggs/thumbnail.png",
@@ -61,7 +61,10 @@ public class FileItemRepository implements ItemRepository {
                 "NON_PERISHABLE|ITM024|Mineral Drinking Water 1.5L|Beverages|150.0|100|AquaPure|24|https://cdn.dummyjson.com/products/images/groceries/Water/thumbnail.png",
                 "NON_PERISHABLE|ITM025|Whey Protein Powder 1kg|Health & Nutrition|6800.0|7|ProFit|24|https://cdn.dummyjson.com/products/images/groceries/Protein%20Powder/thumbnail.png",
                 "NON_PERISHABLE|ITM026|Adult Cat Food 1.2kg|Pet Supplies|1950.0|22|WhiskerCare|18|https://cdn.dummyjson.com/products/images/groceries/Cat%20Food/thumbnail.png",
-                "NON_PERISHABLE|ITM027|Premium Dog Food 2kg|Pet Supplies|2650.0|16|PawNutri|18|https://cdn.dummyjson.com/products/images/groceries/Dog%20Food/thumbnail.png"
+                "NON_PERISHABLE|ITM027|Premium Dog Food 2kg|Pet Supplies|2650.0|16|PawNutri|18|https://cdn.dummyjson.com/products/images/groceries/Dog%20Food/thumbnail.png",
+                "NON_PERISHABLE|ITM028|Apple AirPods Wireless Earbuds|Electronics|28500.0|15|Apple|0|https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/thumbnail.webp",
+                "NON_PERISHABLE|ITM029|Apple MagSafe Battery Pack|Electronics|19900.0|9|Apple|0|https://cdn.dummyjson.com/product-images/mobile-accessories/apple-magsafe-battery-pack/thumbnail.webp",
+                "NON_PERISHABLE|ITM030|Beats Flex Wireless Earphones|Electronics|14500.0|20|Beats|0|https://cdn.dummyjson.com/product-images/mobile-accessories/beats-flex-wireless-earphones/thumbnail.webp"
         );
         FileHandler.writeLines(fileName, defaults);
     }

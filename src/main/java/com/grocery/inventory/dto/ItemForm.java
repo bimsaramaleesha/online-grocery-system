@@ -5,7 +5,6 @@ import com.grocery.inventory.model.NonPerishableItem;
 import com.grocery.inventory.model.PerishableItem;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -63,7 +62,7 @@ public class ItemForm {
 
     private String brand;
 
-    @Positive(message = "Shelf life must be at least 1 month.")
+    @PositiveOrZero(message = "Shelf life cannot be negative.")
     private Integer shelfLifeMonths;
 
     public static ItemForm from(Item item) {
@@ -79,7 +78,9 @@ public class ItemForm {
             f.setExpiryDate(p.getExpiryDate());
         } else if (item instanceof NonPerishableItem n) {
             f.setBrand(n.getBrand());
-            f.setShelfLifeMonths(n.getShelfLifeMonths());
+            if (n.getShelfLifeMonths() > 0) {
+                f.setShelfLifeMonths(n.getShelfLifeMonths());
+            }
         }
         return f;
     }

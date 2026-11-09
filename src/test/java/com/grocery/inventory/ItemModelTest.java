@@ -43,6 +43,12 @@ class ItemModelTest {
         assertFalse(rice.isExpired());
         assertFalse(rice.isExpiringSoon());
         assertEquals(500.0, rice.getSellingPrice(), 0.001);
+
+        // Electronics / non-expiring item with no shelf life (0 months)
+        Item earbuds = ItemFactory.create("NON_PERISHABLE", "ITM028", "Wireless Earbuds", "Electronics",
+                28500.0, 15, null, "Apple", null);
+        assertFalse(earbuds.isExpired());
+        assertTrue(earbuds.getDetails().contains("No expiry"));
     }
 
     @Test

@@ -25,8 +25,8 @@
             <label for="type" class="form-label">Item type</label>
             <select id="type" class="form-select" th:field="*{type}" required>
                 <option value="">-- choose --</option>
-                <option value="PERISHABLE">Perishable (milk, vegetables...)</option>
-                <option value="NON_PERISHABLE">Non-Perishable (rice, canned food...)</option>
+                <option value="PERISHABLE">Perishable (has expiry date: milk, vegetables, meat...)</option>
+                <option value="NON_PERISHABLE">Non-Perishable (no expiry date: electronics, household, rice...)</option>
             </select>
         </div>
         <div class="mb-3" th:if="${editMode}">
@@ -42,12 +42,12 @@
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <input type="text" id="category" class="form-control" th:field="*{category}"
-                   list="categoryList" placeholder="Dairy, Vegetables, Fruits, Beverages..." required>
+                   list="categoryList" placeholder="Dairy, Vegetables, Fruits, Electronics..." required>
             <!-- suggestions only: you can still type any new category -->
             <datalist id="categoryList">
                 <option>Dairy</option><option>Vegetables</option><option>Fruits</option><option>Bakery</option>
                 <option>Meat</option><option>Seafood</option><option>Grains</option><option>Pantry</option>
-                <option>Beverages</option><option>Snacks</option><option>Household</option>
+                <option>Beverages</option><option>Snacks</option><option>Household</option><option>Electronics</option>
                 <option>Health &amp; Nutrition</option><option>Pet Supplies</option>
             </datalist>
         </div>
@@ -83,12 +83,13 @@
             <div class="row">
                 <div class="col-sm-6 mb-3">
                     <label for="brand" class="form-label">Brand</label>
-                    <input type="text" id="brand" class="form-control" th:field="*{brand}">
+                    <input type="text" id="brand" class="form-control" th:field="*{brand}"
+                           placeholder="e.g. Apple, Araliya, Nescafe">
                 </div>
                 <div class="col-sm-6 mb-3">
-                    <label for="shelfLifeMonths" class="form-label">Shelf life (months)</label>
-                    <input type="number" id="shelfLifeMonths" class="form-control" step="1" min="1"
-                           th:field="*{shelfLifeMonths}">
+                    <label for="shelfLifeMonths" class="form-label">Shelf life in months (optional)</label>
+                    <input type="number" id="shelfLifeMonths" class="form-control" step="1" min="0"
+                           th:field="*{shelfLifeMonths}" placeholder="Leave blank if no expiry (e.g. electronics)">
                 </div>
             </div>
         </div>
