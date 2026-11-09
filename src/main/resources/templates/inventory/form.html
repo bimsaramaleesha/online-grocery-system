@@ -64,6 +64,12 @@
             </div>
         </div>
 
+        <div class="mb-3">
+            <label for="imageUrl" class="form-label">Image URL</label>
+            <input type="url" id="imageUrl" class="form-control" th:field="*{imageUrl}"
+                   placeholder="https://example.com/image.jpg">
+        </div>
+
         <!-- shown only for PERISHABLE (inventory.js hides/shows these blocks) -->
         <div id="perishableFields" class="inv-type-fields">
             <div class="mb-3">

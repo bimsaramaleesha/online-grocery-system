@@ -29,14 +29,13 @@ public class ItemForm {
             boolean inStock,
             boolean lowStock,
             String details,
-            String emoji,
-            int colorIndex,
+            String imageUrl,
             double rating,
             int soldCount) {
     }
 
     /** Category chip on the storefront. */
-    public record CategoryView(String name, String emoji, int count) { }
+    public record CategoryView(String name, int count) { }
 
     @NotBlank(message = "Please choose an item type.")
     private String type;
@@ -57,6 +56,8 @@ public class ItemForm {
     @PositiveOrZero(message = "Quantity cannot be negative.")
     private Integer quantity;
 
+    private String imageUrl;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate expiryDate;
 
@@ -73,6 +74,7 @@ public class ItemForm {
         f.setCategory(item.getCategory());
         f.setPrice(item.getPrice());
         f.setQuantity(item.getQuantity());
+        f.setImageUrl(item.getImageUrl());
         if (item instanceof PerishableItem p) {
             f.setExpiryDate(p.getExpiryDate());
         } else if (item instanceof NonPerishableItem n) {
@@ -94,6 +96,8 @@ public class ItemForm {
     public void setPrice(Double price) { this.price = price; }
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public LocalDate getExpiryDate() { return expiryDate; }
     public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
     public String getBrand() { return brand; }

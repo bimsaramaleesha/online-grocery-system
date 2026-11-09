@@ -92,7 +92,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-success">
                 <tr>
-                    <th>ID</th><th>Name</th><th>Category</th><th>Type</th>
+                    <th>ID</th><th>Image</th><th>Name</th><th>Category</th><th>Type</th>
                     <th class="text-end">Price (Rs.)</th><th class="text-end">Selling (Rs.)</th>
                     <th class="text-end">Qty</th><th>Details</th><th class="text-end">Actions</th>
                 </tr>
@@ -101,6 +101,11 @@
                 <tr th:each="item : ${items}"
                     th:classappend="${item.expired} ? 'table-danger' : (${item.expiringSoon} ? 'table-warning' : '')">
                     <td class="text-muted" th:text="${item.id}">ITM001</td>
+                    <td>
+                        <img th:if="${!#strings.isEmpty(item.imageUrl)}" th:src="${item.imageUrl}" th:alt="${item.name}"
+                             class="inv-list-thumb">
+                        <span th:if="${#strings.isEmpty(item.imageUrl)}" class="text-muted small">—</span>
+                    </td>
                     <td class="fw-semibold" th:text="${item.name}">Name</td>
                     <td th:text="${item.category}">Category</td>
                     <td>
@@ -126,7 +131,7 @@
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(items)}">
-                    <td colspan="9" class="text-center text-muted py-4">No items found.</td>
+                    <td colspan="10" class="text-center text-muted py-4">No items found.</td>
                 </tr>
                 </tbody>
             </table>

@@ -22,13 +22,6 @@ import java.util.TreeMap;
 @Service
 public class InventoryService {
 
-    private static final Map<String, String> ICONS = Map.ofEntries(
-            Map.entry("dairy", "🥛"), Map.entry("vegetables", "🥕"), Map.entry("fruits", "🍓"),
-            Map.entry("bakery", "🍞"), Map.entry("meat", "🍗"), Map.entry("grains", "🌾"),
-            Map.entry("canned food", "🥫"), Map.entry("household", "🧴"), Map.entry("beverages", "☕"),
-            Map.entry("snacks", "🍪"), Map.entry("toys", "🧸"), Map.entry("books", "📚"),
-            Map.entry("stationery", "✏️"), Map.entry("electronics", "🎧"));
-
     private final ItemRepository repository;
 
     public InventoryService(ItemRepository repository) {
@@ -99,9 +92,11 @@ public class InventoryService {
     }
 
     private Item buildItem(String id, ItemForm f) {
-        return ItemFactory.create(f.getType(), id, f.getName(), f.getCategory(),
+        Item item = ItemFactory.create(f.getType(), id, f.getName(), f.getCategory(),
                 f.getPrice(), f.getQuantity(),
                 f.getExpiryDate(), f.getBrand(), f.getShelfLifeMonths());
+        item.setImageUrl(f.getImageUrl());
+        return item;
     }
 
     // ---------- 2. Customer Storefront Views (/shop) ----------
@@ -155,7 +150,7 @@ public class InventoryService {
             }
         }
         return counts.entrySet().stream()
-                .map(e -> new CategoryView(e.getKey(), iconFor(e.getKey()), e.getValue()))
+                .map(e -> new CategoryView(e.getKey(), e.getValue()))
                 .toList();
     }
 
@@ -167,12 +162,7 @@ public class InventoryService {
         return new ProductView(i.getId(), i.getName(), i.getCategory(), i.getTypeLabel(),
                 i.getPrice(), selling, selling < i.getPrice(),
                 i.getQuantity(), i.getQuantity() > 0, i.isLowStock() && i.getQuantity() > 0,
-                i.getDetails(), iconFor(i.getCategory()),
-                Math.abs(i.getCategory().toLowerCase().hashCode()) % 6,
+                i.getDetails(), i.getImageUrl(),
                 Math.round(rating * 10.0) / 10.0, soldCount);
-    }
-
-    private static String iconFor(String category) {
-        return ICONS.getOrDefault(category.toLowerCase(), "🛍️");
     }
 }

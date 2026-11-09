@@ -35,18 +35,18 @@ public class FileItemRepository implements ItemRepository {
     private void seedDefaultItems() {
         LocalDate today = LocalDate.now();
         List<String> defaults = List.of(
-                "PERISHABLE|ITM001|Fresh Milk 1L|Dairy|420.0|25|" + today.plusDays(14),
-                "PERISHABLE|ITM002|Yoghurt Cup|Dairy|90.0|8|" + today.plusDays(2),
-                "PERISHABLE|ITM003|Carrots 1kg|Vegetables|350.0|40|" + today.plusDays(10),
-                "PERISHABLE|ITM004|Sandwich Bread|Bakery|180.0|30|" + today.plusDays(3),
-                "PERISHABLE|ITM005|Chicken Breast 500g|Meat|950.0|12|" + today.plusDays(7),
-                "NON_PERISHABLE|ITM006|Basmati Rice 5kg|Grains|1850.0|40|Araliya|24",
-                "NON_PERISHABLE|ITM007|Canned Tuna 185g|Canned Food|620.0|6|Seafresh|36",
-                "NON_PERISHABLE|ITM008|Dishwash Liquid 500ml|Household|480.0|18|Sunlight|30",
-                "PERISHABLE|ITM009|Fresh Strawberries 250g|Fruits|550.0|20|" + today.plusDays(2),
-                "PERISHABLE|ITM010|Bananas 1kg|Fruits|320.0|45|" + today.plusDays(5),
-                "PERISHABLE|ITM011|Free-Range Eggs (10 pack)|Dairy|480.0|35|" + today.plusDays(12),
-                "NON_PERISHABLE|ITM012|Ceylon Black Tea 200g|Beverages|350.0|60|Ceylon Pure|24"
+                "PERISHABLE|ITM001|Fresh Milk 1L|Dairy|420.0|25|" + today.plusDays(14) + "|https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM002|Yoghurt Cup|Dairy|90.0|8|" + today.plusDays(2) + "|https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM003|Carrots 1kg|Vegetables|350.0|40|" + today.plusDays(10) + "|https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM004|Sandwich Bread|Bakery|180.0|30|" + today.plusDays(3) + "|https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM005|Chicken Breast 500g|Meat|950.0|12|" + today.plusDays(7) + "|https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&auto=format&fit=crop",
+                "NON_PERISHABLE|ITM006|Basmati Rice 5kg|Grains|1850.0|40|Araliya|24|https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&auto=format&fit=crop",
+                "NON_PERISHABLE|ITM007|Canned Tuna 185g|Canned Food|620.0|6|Seafresh|36|https://images.unsplash.com/photo-1534483509719-3feaee7c30da?w=400&auto=format&fit=crop",
+                "NON_PERISHABLE|ITM008|Dishwash Liquid 500ml|Household|480.0|18|Sunlight|30|https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM009|Fresh Strawberries 250g|Fruits|550.0|20|" + today.plusDays(2) + "|https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM010|Bananas 1kg|Fruits|320.0|45|" + today.plusDays(5) + "|https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&auto=format&fit=crop",
+                "PERISHABLE|ITM011|Free-Range Eggs (10 pack)|Dairy|480.0|35|" + today.plusDays(12) + "|https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&auto=format&fit=crop",
+                "NON_PERISHABLE|ITM012|Ceylon Black Tea 200g|Beverages|350.0|60|Ceylon Pure|24|https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&auto=format&fit=crop"
         );
         FileHandler.writeLines(fileName, defaults);
     }

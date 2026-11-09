@@ -110,10 +110,10 @@
 
     <!-- Category Navigation Chips -->
     <div class="shop-chips mb-4">
-        <a th:href="@{/shop}" class="shop-chip" th:classappend="${#strings.isEmpty(category)} ? 'active'">🛍️ All Categories</a>
+        <a th:href="@{/shop}" class="shop-chip" th:classappend="${#strings.isEmpty(category)} ? 'active'">All Categories</a>
         <a th:each="c : ${categories}" th:href="@{/shop(category=${c.name})}" class="shop-chip"
            th:classappend="${c.name == category} ? 'active'">
-            <span th:text="${c.emoji}">🥛</span> <span th:text="${c.name}">Dairy</span>
+            <span th:text="${c.name}">Dairy</span>
             <small class="text-muted" th:text="'(' + ${c.count} + ')'">(3)</small>
         </a>
     </div>
@@ -131,8 +131,9 @@
             <div class="col-6 col-md-4 col-lg-2" th:each="p : ${deals}">
                 <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none">
                     <div class="card shop-card h-100 border-0">
-                        <div class="shop-thumb shop-thumb-sm position-relative" th:classappend="'shop-grad-' + ${p.colorIndex}">
-                            <span th:text="${p.emoji}">🥛</span>
+                        <div class="shop-thumb shop-thumb-sm position-relative">
+                            <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}" class="shop-thumb-img">
+                            <span th:if="${#strings.isEmpty(p.imageUrl)}" class="shop-no-image">No Image</span>
                             <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20%</span>
                             <span class="badge text-bg-warning shop-badge" th:unless="${p.onSale}">HOT</span>
                         </div>
@@ -183,7 +184,10 @@
         <div class="col-6 col-md-4 col-lg-3" th:each="p : ${products}">
             <div class="card shop-card h-100">
                 <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none position-relative">
-                    <div class="shop-thumb" th:classappend="'shop-grad-' + ${p.colorIndex}" th:text="${p.emoji}">🥛</div>
+                    <div class="shop-thumb">
+                        <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}" class="shop-thumb-img">
+                        <span th:if="${#strings.isEmpty(p.imageUrl)}" class="shop-no-image">No Image</span>
+                    </div>
                     <span class="badge shop-choice-badge">Choice</span>
                     <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20% OFF</span>
                     <span class="badge text-bg-secondary shop-badge" th:if="${!p.inStock}">Sold out</span>
@@ -230,7 +234,6 @@
     </div>
 
     <div class="text-center text-muted py-5" th:if="${#lists.isEmpty(products)}">
-        <div style="font-size:3rem;">🔍</div>
         <p class="mb-1">No matching products found.</p>
         <a th:href="@{/shop}" class="btn btn-sm btn-outline-success mt-2">Reset filters</a>
     </div>

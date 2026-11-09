@@ -68,13 +68,17 @@ class ItemModelTest {
     @Test
     void itemSurvivesAWriteAndReadThroughTheFileFormat() {
         Item original = new PerishableItem("ITM001", "Fresh Milk 1L", "Dairy", 420.0, 25, LocalDate.of(2030, 1, 5));
+        original.setImageUrl("https://example.com/milk.jpg");
         Item copy = ItemFactory.fromFileLine(original.toFileLine());
         assertTrue(copy instanceof PerishableItem);
+        assertEquals("https://example.com/milk.jpg", copy.getImageUrl());
         assertEquals(original.toFileLine(), copy.toFileLine());
 
         Item rice = new NonPerishableItem("ITM002", "Rice 5kg", "Grains", 1850.0, 40, "Araliya", 24);
+        rice.setImageUrl("https://example.com/rice.jpg");
         Item riceCopy = ItemFactory.fromFileLine(rice.toFileLine());
         assertTrue(riceCopy instanceof NonPerishableItem);
+        assertEquals("https://example.com/rice.jpg", riceCopy.getImageUrl());
         assertEquals(rice.toFileLine(), riceCopy.toFileLine());
     }
 
