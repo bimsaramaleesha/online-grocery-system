@@ -22,11 +22,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Member 1 — User & Authentication Controller.
- * Handles guest login/registration, customer profile management, and admin user/dashboard views.
- * Reads store statistics fault-tolerantly from data files so the user module stays 100% independent.
- */
+
 @Controller
 public class UserController {
 
@@ -43,8 +39,6 @@ public class UserController {
         this.service = service;
         this.auth = auth;
     }
-
-    // ---------- 1. Guest & Customer Authentication (/register, /login, /logout) ----------
 
     @GetMapping({"/register", "/users/register"})
     public String showRegister(HttpSession session, Model model) {
@@ -115,8 +109,6 @@ public class UserController {
         return "error";
     }
 
-    // ---------- 2. Customer & Admin Self-Service Profile (/users/profile) ----------
-
     @GetMapping("/users/profile")
     public String showProfile(HttpSession session, Model model, RedirectAttributes redirect) {
         User user = auth.currentUser(session);
@@ -182,8 +174,6 @@ public class UserController {
         return "redirect:/login?deleted";
     }
 
-    // ---------- 3. Admin Dashboard & Store Overview (/admin) ----------
-
     @GetMapping("/admin")
     public String dashboard(Model model) {
         List<OrderRow> allOrders = readOrderRows();
@@ -217,7 +207,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // ---------- 4. Admin User Management (/users) ----------
 
     @GetMapping("/users")
     public String list(@RequestParam(required = false) String q,
@@ -329,7 +318,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // ---------- Fault-Tolerant Helper Methods ----------
 
     private List<OrderRow> readOrderRows() {
         List<OrderRow> rows = new ArrayList<>();
@@ -347,7 +335,6 @@ public class UserController {
                 }
             }
         } catch (Exception ignored) {
-            // Fault isolation: if orders.txt is missing or malformed, return empty list
         }
         rows.sort(Comparator.comparing(OrderRow::orderId).reversed());
         return rows;
