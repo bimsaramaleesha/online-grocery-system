@@ -1,0 +1,10 @@
+# Sample Supplier Data for Viva Demonstration (SE1020 - Member 3: Supplier & Vendor Logistics)
+# Format for Local Farmer: LOCAL|supplierId|companyName|contactNumber|email|category|location|organicCertified|handlingFee
+# Format for Wholesale:    WHOLESALE|supplierId|companyName|contactNumber|email|category|warehouseCode|minOrderQty|bulkDiscountRate
+LOCAL|SUP001|GreenValley Organic Farm|0771234567|info@greenvalley.lk|Fresh Vegetables|Nuwara Eliya|true|250.00
+WHOLESALE|SUP002|Ceylon Grains & Bulk Ltd|0112345678|sales@ceylongrains.lk|Grains & Flours|WH-COLOMBO-01|100|0.0800
+LOCAL|SUP003|Highland Dairy Co-operative|0812233445|supply@highlanddairy.lk|Dairy & Eggs|Kandy|false|180.00
+WHOLESALE|SUP004|Metro Beverages & Snacks Ltd|0118899001|orders@metrobev.lk|Beverages|WH-GAMPAHA-02|50|0.0500
+LOCAL|SUP005|Ruhuna Fruit Orchards|0414455667|contact@ruhunaorchards.lk|Fresh Fruits|Matara|true|200.00
+WHOLESALE|SUP006|Lanka Agro Distribution Hub|0113344556|logistics@lankaagro.lk|Fresh Vegetables|WH-DAMBULLA-01|80|0.0700
+LOCAL|SUP007|Hillside Spice & Tea Gardens|0522233889|gardens@hillside.lk|Beverages|Ella|true|150.00
