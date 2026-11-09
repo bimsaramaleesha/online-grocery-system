@@ -18,12 +18,12 @@
                             <span>SAME-DAY DISPATCH</span>
                         </div>
                         <h1 class="display-5 fw-bold mb-2">SuperDeals on Groceries &amp; Daily Essentials</h1>
-                        <p class="lead mb-4 opacity-90">Fresh farm produce, snacks, electronics, toys and books — delivered straight to your door.</p>
+                        <p class="lead mb-4 opacity-90">Fresh farm produce, dairy, meat, pantry staples and beverages — delivered straight to your door.</p>
                     </div>
                     <form th:action="@{/shop}" method="get" class="shop-hero-search">
                         <div class="input-group input-group-lg shadow-sm">
                             <input type="text" name="q" class="form-control border-0"
-                                   placeholder="Search for milk, rice, wireless earbuds, toys, books...">
+                                   placeholder="Search for milk, rice, apples, chicken, coffee, honey...">
                             <button class="btn btn-warning fw-bold px-4" type="submit">🔍 Search</button>
                         </div>
                     </form>
@@ -132,8 +132,10 @@
                 <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none">
                     <div class="card shop-card h-100 border-0">
                         <div class="shop-thumb shop-thumb-sm position-relative">
-                            <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}" class="shop-thumb-img">
-                            <span th:if="${#strings.isEmpty(p.imageUrl)}" class="shop-no-image">No Image</span>
+                            <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}"
+                                 class="shop-thumb-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span class="shop-no-image" th:style="${#strings.isEmpty(p.imageUrl)} ? '' : 'display:none'">No Image</span>
                             <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20%</span>
                             <span class="badge text-bg-warning shop-badge" th:unless="${p.onSale}">HOT</span>
                         </div>
@@ -185,8 +187,10 @@
             <div class="card shop-card h-100">
                 <a th:href="@{/shop/{id}(id=${p.id})}" class="text-decoration-none position-relative">
                     <div class="shop-thumb">
-                        <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}" class="shop-thumb-img">
-                        <span th:if="${#strings.isEmpty(p.imageUrl)}" class="shop-no-image">No Image</span>
+                        <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}"
+                             class="shop-thumb-img"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="shop-no-image" th:style="${#strings.isEmpty(p.imageUrl)} ? '' : 'display:none'">No Image</span>
                     </div>
                     <span class="badge shop-choice-badge">Choice</span>
                     <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20% OFF</span>

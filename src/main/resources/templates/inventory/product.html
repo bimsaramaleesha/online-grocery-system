@@ -17,8 +17,10 @@
         <div class="row g-0">
             <div class="col-md-5 position-relative">
                 <div class="shop-thumb shop-thumb-lg">
-                    <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}" class="shop-thumb-img">
-                    <span th:if="${#strings.isEmpty(p.imageUrl)}" class="shop-no-image">No Image</span>
+                    <img th:if="${!#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" th:alt="${p.name}"
+                         class="shop-thumb-img"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                    <span class="shop-no-image" th:style="${#strings.isEmpty(p.imageUrl)} ? '' : 'display:none'">No Image</span>
                 </div>
                 <span class="badge shop-choice-badge">Choice</span>
                 <span class="badge text-bg-danger shop-badge" th:if="${p.onSale}">-20% OFF</span>
@@ -131,8 +133,10 @@
                 <a th:href="@{/shop/{id}(id=${r.id})}" class="text-decoration-none">
                     <div class="card shop-card h-100">
                         <div class="shop-thumb">
-                            <img th:if="${!#strings.isEmpty(r.imageUrl)}" th:src="${r.imageUrl}" th:alt="${r.name}" class="shop-thumb-img">
-                            <span th:if="${#strings.isEmpty(r.imageUrl)}" class="shop-no-image">No Image</span>
+                            <img th:if="${!#strings.isEmpty(r.imageUrl)}" th:src="${r.imageUrl}" th:alt="${r.name}"
+                                 class="shop-thumb-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span class="shop-no-image" th:style="${#strings.isEmpty(r.imageUrl)} ? '' : 'display:none'">No Image</span>
                         </div>
                         <div class="card-body p-3">
                             <div class="small fw-semibold text-dark text-truncate" th:text="${r.name}">Name</div>
