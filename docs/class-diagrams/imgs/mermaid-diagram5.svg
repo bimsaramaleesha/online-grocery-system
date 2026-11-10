@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1269.7733333333333 2048" width="1269.7733333333333" height="2048" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Order" data-to="CashOrder" data-type="inheritance" data-marker-at="from" points="1059.5133333333333,1724 1059.5133333333333,1754 839.0733333333333,1754 839.0733333333333,1784" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Order" data-to="CardOrder" data-type="inheritance" data-marker-at="from" points="1112.8733333333332,1724 1112.8733333333332,1784" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Builder" data-to="Order" data-type="dependency" data-marker-at="to" data-label="builds" points="1077.3,1052 1077.3,1276" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="Order" data-to="OrderItem" data-type="composition" data-marker-at="from" data-from-cardinality="1" data-to-cardinality="many" points="952.7933333333333,1724 952.7933333333333,1734 228.7733333333333,1734 228.7733333333333,1784" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-composition)" />
+<polyline class="class-relationship" data-from="Order" data-to="OrderStatus" data-type="association" data-marker-at="to" points="1006.1533333333333,1724 1006.1533333333333,1744 542.1733333333333,1744 542.1733333333333,1784" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OrderRepository" data-to="FileOrderRepository" data-type="realization" data-marker-at="from" points="509.9,1052 509.9,1112" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="FileOrderRepository" data-to="Order" data-type="dependency" data-marker-at="to" points="534.5666666666666,1216 534.5666666666666,1226 988.3666666666666,1226 988.3666666666666,1276" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="FileOrderRepository" data-to="CartItem" data-type="dependency" data-marker-at="to" points="485.2333333333333,1216 485.23333333333323,1276" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OrderService" data-to="OrderRepository" data-type="association" data-marker-at="to" points="753.3,708 753.3,728 509.9,728 509.9,768" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OrderService" data-to="CheckoutForm" data-type="dependency" data-marker-at="to" points="647,708 647,718 130.5,718 130.5,768" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OrderService" data-to="CatalogItem" data-type="dependency" data-marker-at="to" points="859.5999999999999,708 859.5999999999999,768" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OrderController" data-to="OrderService" data-type="association" data-marker-at="to" points="753.3,304 753.3,364" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<g class="class-node" data-id="Order" data-label="Order">
+  <rect x="899.4333333333333" y="1276" width="266.79999999999995" height="448" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="899.4333333333333" y="1276" width="266.79999999999995" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1032.8333333333333" y="1292" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Order</text>
+  <line x1="899.4333333333333" y1="1308" x2="1166.2333333333331" y2="1308" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="907.4333333333333" y="1322" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">orderId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1342" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">userId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1362" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">items</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~OrderItem~</tspan></text>
+  <text x="907.4333333333333" y="1382" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">subtotal</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="907.4333333333333" y="1402" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">discountAmount</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="907.4333333333333" y="1422" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">netAmount</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="907.4333333333333" y="1442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">status</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">OrderStatus</tspan></text>
+  <text x="907.4333333333333" y="1462" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">orderDate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1482" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">shippingAddress</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1502" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">contactPhone</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1522" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">paymentMethod</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1542" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">promoCode</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="899.4333333333333" y1="1556" x2="1166.2333333333331" y2="1556" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="907.4333333333333" y="1570" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">requiresCardTerminal()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="907.4333333333333" y="1590" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getPaymentInstruction()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1610" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getTotalQuantity()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="907.4333333333333" y="1630" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">canBeCancelled()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="907.4333333333333" y="1650" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toRecordLine()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="907.4333333333333" y="1670" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">fromRecordLine(String line)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ Order</tspan></text>
+  <text x="907.4333333333333" y="1690" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">createTypedOrder(...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ Order</tspan></text>
+  <text x="907.4333333333333" y="1710" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">builder()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ Builder</tspan></text>
+</g>
+<g class="class-node" data-id="CashOrder" data-label="CashOrder">
+  <rect x="722.1733333333333" y="1784" width="233.79999999999998" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="722.1733333333333" y="1784" width="233.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="839.0733333333333" y="1800" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CashOrder</text>
+  <line x1="722.1733333333333" y1="1816" x2="955.9733333333332" y2="1816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="722.1733333333333" y1="1824" x2="955.9733333333332" y2="1824" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="730.1733333333333" y="1838" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">requiresCardTerminal()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="730.1733333333333" y="1858" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getPaymentInstruction()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="CardOrder" data-label="CardOrder">
+  <rect x="995.9733333333332" y="1784" width="233.79999999999998" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="995.9733333333332" y="1784" width="233.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1112.8733333333332" y="1800" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CardOrder</text>
+  <line x1="995.9733333333332" y1="1816" x2="1229.7733333333333" y2="1816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="995.9733333333332" y1="1824" x2="1229.7733333333333" y2="1824" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1003.9733333333332" y="1838" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">requiresCardTerminal()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="1003.9733333333332" y="1858" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getPaymentInstruction()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="Builder" data-label="Builder" data-annotation="builder">
+  <rect x="960.4" y="788" width="233.79999999999998" height="264" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="960.4" y="788" width="233.79999999999998" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1077.3" y="800" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;builder&gt;&gt;</text>
+  <text x="1077.3" y="818" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Builder</text>
+  <line x1="960.4" y1="836" x2="1194.2" y2="836" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="960.4" y1="844" x2="1194.2" y2="844" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="968.4" y="858" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">orderId(String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="878" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">userId(String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="898" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">addItem(OrderItem)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="918" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">subtotal(double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="938" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">discountAmount(double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="958" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">netAmount(double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="978" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">status(OrderStatus)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="998" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">paymentMethod(String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="1018" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">promoCode(String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Builder</tspan></text>
+  <text x="968.4" y="1038" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">build()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Order</tspan></text>
+</g>
+<g class="class-node" data-id="OrderItem" data-label="OrderItem">
+  <rect x="95.37333333333333" y="1784" width="266.79999999999995" height="188" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="95.37333333333333" y="1784" width="266.79999999999995" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="228.7733333333333" y="1800" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OrderItem</text>
+  <line x1="95.37333333333333" y1="1816" x2="362.1733333333333" y2="1816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="103.37333333333333" y="1830" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">itemId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="103.37333333333333" y="1850" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">itemName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="103.37333333333333" y="1870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">quantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="103.37333333333333" y="1890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">unitPrice</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="95.37333333333333" y1="1904" x2="362.1733333333333" y2="1904" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="103.37333333333333" y="1918" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getLineTotal()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="103.37333333333333" y="1938" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toToken()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="103.37333333333333" y="1958" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">fromToken(String token)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ OrderItem</tspan></text>
+</g>
+<g class="class-node" data-id="OrderStatus" data-label="OrderStatus" data-annotation="enumeration">
+  <rect x="402.1733333333333" y="1784" width="280" height="224" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="402.1733333333333" y="1784" width="280" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="542.1733333333333" y="1796" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;enumeration&gt;&gt;</text>
+  <text x="542.1733333333333" y="1814" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OrderStatus</text>
+  <line x1="402.1733333333333" y1="1832" x2="682.1733333333333" y2="1832" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="410.1733333333333" y="1846" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">PENDING</tspan></text>
+  <text x="410.1733333333333" y="1866" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">CONFIRMED</tspan></text>
+  <text x="410.1733333333333" y="1886" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">SHIPPED</tspan></text>
+  <text x="410.1733333333333" y="1906" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">DELIVERED</tspan></text>
+  <text x="410.1733333333333" y="1926" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">CANCELLED</tspan></text>
+  <text x="410.1733333333333" y="1946" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">displayName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="410.1733333333333" y="1966" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">badgeClass</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="402.1733333333333" y1="1980" x2="682.1733333333333" y2="1980" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="410.1733333333333" y="1994" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">fromString(String text)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ OrderStatus</tspan></text>
+</g>
+<g class="class-node" data-id="CartItem" data-label="CartItem">
+  <rect x="341.9333333333333" y="1276" width="286.59999999999997" height="268" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="341.9333333333333" y="1276" width="286.59999999999997" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="485.23333333333323" y="1292" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CartItem</text>
+  <line x1="341.9333333333333" y1="1308" x2="628.5333333333333" y2="1308" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="349.9333333333333" y="1322" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">cartId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1342" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">userId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1362" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">itemId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1382" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">quantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="349.9333333333333" y="1402" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">addedDate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1422" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">itemName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">unitPrice</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="349.9333333333333" y="1462" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">unit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="341.9333333333333" y1="1476" x2="628.5333333333333" y2="1476" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="349.9333333333333" y="1490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getLineTotal()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="349.9333333333333" y="1510" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toRecordLine()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="349.9333333333333" y="1530" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">fromRecordLine(String line)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ CartItem</tspan></text>
+</g>
+<g class="class-node" data-id="CheckoutForm" data-label="CheckoutForm" data-annotation="dto">
+  <rect x="40" y="768" width="181" height="184" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="768" width="181" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="130.5" y="780" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;dto&gt;&gt;</text>
+  <text x="130.5" y="798" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CheckoutForm</text>
+  <line x1="40" y1="816" x2="221" y2="816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="830" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">fullName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="850" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">contactPhone</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">shippingAddress</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">deliveryNotes</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="910" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">paymentMethod</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="930" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">promoCode</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="40" y1="944" x2="221" y2="944" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="OrderRepository" data-label="OrderRepository" data-annotation="interface">
+  <rect x="261" y="768" width="497.79999999999995" height="284" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="261" y="768" width="497.79999999999995" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="509.9" y="780" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;interface&gt;&gt;</text>
+  <text x="509.9" y="798" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OrderRepository</text>
+  <line x1="261" y1="816" x2="758.8" y2="816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="261" y1="824" x2="758.8" y2="824" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269" y="838" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findAll()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Order~</tspan></text>
+  <text x="269" y="858" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~Order~</tspan></text>
+  <text x="269" y="878" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findByUserId(String userId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Order~</tspan></text>
+  <text x="269" y="898" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">save(Order order)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Order</tspan></text>
+  <text x="269" y="918" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateStatus(String id, OrderStatus s)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="269" y="938" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteById(String id)</tspan></text>
+  <text x="269" y="958" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findCartByUserId(String userId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~CartItem~</tspan></text>
+  <text x="269" y="978" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findCartByUserAndItem(String userId, String itemId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~CartItem~</tspan></text>
+  <text x="269" y="998" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">saveCartItem(CartItem item)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">CartItem</tspan></text>
+  <text x="269" y="1018" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteCartById(String cartId)</tspan></text>
+  <text x="269" y="1038" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteCartByUserId(String userId)</tspan></text>
+</g>
+<g class="class-node" data-id="FileOrderRepository" data-label="FileOrderRepository" data-annotation="Repository">
+  <rect x="435.9" y="1112" width="148" height="104" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="435.9" y="1112" width="148" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="509.9" y="1124" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Repository&gt;&gt;</text>
+  <text x="509.9" y="1142" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">FileOrderRepository</text>
+  <line x1="435.9" y1="1160" x2="583.9" y2="1160" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="443.9" y="1174" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">ordersFile</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="443.9" y="1194" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">cartsFile</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="435.9" y1="1208" x2="583.9" y2="1208" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="OrderService" data-label="OrderService" data-annotation="Service">
+  <rect x="540.7" y="364" width="425.2" height="344" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="540.7" y="364" width="425.2" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="753.3000000000001" y="376" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Service&gt;&gt;</text>
+  <text x="753.3000000000001" y="394" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OrderService</text>
+  <line x1="540.7" y1="412" x2="965.9000000000001" y2="412" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="548.7" y="426" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">orderRepository</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">OrderRepository</tspan></text>
+  <line x1="540.7" y1="440" x2="965.9000000000001" y2="440" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="548.7" y="454" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getCartForUser(String userId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~CartItem~</tspan></text>
+  <text x="548.7" y="474" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">addToCart(String userId, String itemId, int qty)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">CartItem</tspan></text>
+  <text x="548.7" y="494" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateQuantity(String cartId, int qty)</tspan></text>
+  <text x="548.7" y="514" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">removeFromCart(String cartId)</tspan></text>
+  <text x="548.7" y="534" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">clearCart(String userId)</tspan></text>
+  <text x="548.7" y="554" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateSubtotal(List~CartItem~ items)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="548.7" y="574" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">placeOrder(String userId, CheckoutForm form)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Order</tspan></text>
+  <text x="548.7" y="594" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getOrdersForUser(String userId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Order~</tspan></text>
+  <text x="548.7" y="614" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getAllOrders()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Order~</tspan></text>
+  <text x="548.7" y="634" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">cancelOrder(String orderId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="548.7" y="654" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateOrderStatus(String id, OrderStatus s)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="548.7" y="674" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculatePromoDiscount(String code, double subtotal)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="548.7" y="694" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">loadCatalogMap()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Map~String, CatalogItem~</tspan></text>
+</g>
+<g class="class-node" data-id="CatalogItem" data-label="CatalogItem" data-annotation="record">
+  <rect x="798.8" y="768" width="121.6" height="164" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="798.8" y="768" width="121.6" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="859.5999999999999" y="780" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;record&gt;&gt;</text>
+  <text x="859.5999999999999" y="798" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CatalogItem</text>
+  <line x1="798.8" y1="816" x2="920.4" y2="816" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="806.8" y="830" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">id</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="806.8" y="850" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">name</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="806.8" y="870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">category</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="806.8" y="890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">price</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="806.8" y="910" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">unit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="798.8" y1="924" x2="920.4" y2="924" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="OrderController" data-label="OrderController" data-annotation="Controller">
+  <rect x="583.6" y="40" width="339.4" height="264" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="583.6" y="40" width="339.4" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="753.3" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Controller&gt;&gt;</text>
+  <text x="753.3" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OrderController</text>
+  <line x1="583.6" y1="88" x2="923" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="591.6" y="102" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">orderService</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">OrderService</tspan></text>
+  <line x1="583.6" y1="116" x2="923" y2="116" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="591.6" y="130" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">viewCart(...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">addToCart(String itemId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="170" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">checkoutPage(...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="190" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">processCheckout(CheckoutForm form, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="210" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">listOrders(...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="230" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">orderDetails(String orderId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="250" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">cancelOrder(String orderId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="270" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateStatus(String orderId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="591.6" y="290" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteOrder(String orderId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+
+
+<text x="1099.3809999999999" y="1156" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">builds</text>
+<text x="938.7933333333333" y="1738" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="214.7733333333333" y="1770" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">many</text>
+
+
+
+
+
+
+
+
+</svg>

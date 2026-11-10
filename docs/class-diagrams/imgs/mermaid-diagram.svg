@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680.6779999999999 808.85" width="1680.6779999999999" height="808.85" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="COMMON" data-label="common">
+  <rect x="1326.9739999999997" y="201.06363636363633" width="313.70399999999995" height="241.63636363636365" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="1326.9739999999997" y="201.06363636363633" width="313.70399999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1338.9739999999997" y="215.06363636363633" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">common</text>
+</g>
+<g class="subgraph" data-id="USER" data-label="user (Member 1)">
+  <rect x="264.3939999999999" y="40" width="817.46" height="111.625" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="264.3939999999999" y="40" width="817.46" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="276.3939999999999" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">user (Member 1)</text>
+</g>
+<g class="subgraph" data-id="INV" data-label="inventory (Member 2)">
+  <rect x="555.4419999999999" y="179.625" width="560.624" height="111.625" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="555.4419999999999" y="179.625" width="560.624" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="567.4419999999999" y="193.625" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">inventory (Member 2)</text>
+</g>
+<g class="subgraph" data-id="SUP" data-label="supplier (Member 3)">
+  <rect x="702.0479999999999" y="547.0500000000001" width="576.9259999999999" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="702.0479999999999" y="547.0500000000001" width="576.9259999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="714.0479999999999" y="561.0500000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">supplier (Member 3)</text>
+</g>
+<g class="subgraph" data-id="ORD" data-label="order (Member 4)">
+  <rect x="597.7359999999999" y="319.25" width="532.466" height="111.625" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="597.7359999999999" y="319.25" width="532.466" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="609.7359999999999" y="333.25" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">order (Member 4)</text>
+</g>
+<g class="subgraph" data-id="PRM" data-label="promo (Member 5)">
+  <rect x="687.3719999999998" y="671.95" width="603.602" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="687.3719999999998" y="671.95" width="603.602" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="699.3719999999998" y="685.95" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">promo (Member 5)</text>
+</g>
+<g class="subgraph" data-id="FB" data-label="feedback (Member 6)">
+  <rect x="40" y="458.875" width="608.0479999999999" height="111.625" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="458.875" width="608.0479999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="472.875" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">feedback (Member 6)</text>
+</g>
+<polyline class="edge" data-from="UR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="1057.2669999999998,117.17500000000001 1296.9739999999997,117.17500000000001 1296.9739999999997,346.7 1414.9739999999997,346.7 1414.9739999999997,381.57272727272726 1438.9739999999997,381.57272727272726" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="IR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="1100.0659999999998,256.8 1272.9739999999997,256.8 1272.9739999999997,366.7 1390.9739999999997,366.70000000000005 1390.9739999999997,388.2818181818182 1438.9739999999997,388.2818181818182" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="1264.5279999999998,609.5000000000001 1296.9739999999997,609.5000000000001 1296.9739999999997,416.7 1378.9739999999997,416.70000000000005 1378.9739999999997,405.05454545454546 1438.9739999999997,405.05454545454546" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="OR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="1114.2019999999998,396.425 1308.9739999999997,396.42499999999995 1308.9739999999997,386.7 1366.9739999999997,386.70000000000005 1366.9739999999997,394.9909090909091 1438.9739999999997,394.9909090909091" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="1273.4199999999998,734.4000000000001 1308.9739999999997,734.4000000000001 1308.9739999999997,426.7 1390.9739999999997,426.70000000000005 1390.9739999999997,408.40909090909093 1438.9739999999997,408.40909090909093" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FR" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="632.0479999999999,536.0500000000001 1284.9739999999997,536.0500000000001 1284.9739999999997,406.7 1366.9739999999997,406.70000000000005 1366.9739999999997,401.70000000000005 1438.9739999999997,401.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="OS" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="reads items.txt" points="905.2299999999999,375.55 935.4759999999999,375.55 935.4759999999999,366.975 1172.2019999999998,366.975 1172.2019999999998,371.55 1308.9739999999997,371.55 1308.9739999999997,376.7 1378.9739999999997,376.70000000000005 1378.9739999999997,391.6363636363636 1438.9739999999997,391.6363636363636" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="UC" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="reads orders/items/suppliers.txt" points="708.1769999999999,96.3 726.0419999999999,96.3 726.0419999999999,87.725 1123.8539999999998,87.725 1123.8539999999998,92.30000000000001 1308.9739999999997,92.30000000000001 1308.9739999999997,336.7 1426.9739999999997,336.7 1426.9739999999997,378.21818181818185 1438.9739999999997,378.21818181818185" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="IC" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="reads feedbacks.txt" points="734.853,235.925 740.9879999999999,235.925 740.9879999999999,227.35000000000002 1158.0659999999998,227.35 1158.0659999999998,231.925 1284.9739999999997,231.925 1284.9739999999997,356.7 1402.9739999999997,356.70000000000005 1402.9739999999997,384.92727272727274 1438.9739999999997,384.92727272727274" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FC" data-to="FH" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="reads items/orders.txt" points="217.992,515.1750000000001 229.992,515.1750000000001 229.992,506.6 1135.9679999999998,506.6 1135.9679999999998,511.175 1272.9739999999997,511.175 1272.9739999999997,396.7 1354.9739999999997,396.70000000000005 1354.9739999999997,398.3454545454546 1438.9739999999997,398.3454545454546" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="UC" data-to="US" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="708.1769999999999,108.6 726.0419999999999,108.6 726.0419999999999,117.17500000000001 780.2879999999999,117.17500000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="US" data-to="UR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="899.3019999999999,117.17500000000001 920.4689999999998,117.17500000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SA" data-to="UC" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="guards all routes" points="390.72499999999997,102.45 577.3069999999999,102.45" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="IC" data-to="IS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="734.853,248.225 740.9879999999999,248.225 740.9879999999999,256.8 780.2879999999999,256.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="IS" data-to="IR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="925.9779999999998,256.8 970.6779999999999,256.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SC" data-to="SS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="862.3279999999999,609.5000000000001 920.4689999999998,609.5000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SS" data-to="SR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1060.2309999999998,609.5000000000001 1106.982,609.5000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="OC" data-to="OS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="750.5339999999999,381.7 780.2879999999999,381.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="OS" data-to="OR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="905.2299999999999,387.85 935.4759999999999,387.85 935.4759999999999,396.425 971.4759999999999,396.425" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PC" data-to="PS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="871.2199999999998,734.4000000000001 920.4689999999998,734.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PS" data-to="PR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1069.1229999999998,734.4000000000001 1106.982,734.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FC" data-to="FS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.992,527.475 229.992,527.475 229.992,536.05 273.1929999999999,536.05" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FS" data-to="FR" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="423.3289999999999,536.05 464.12799999999993,536.05" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="OS" data-to="FH" data-label="reads items.txt">
+  <rect x="1180.2019999999998" y="355.55" width="84.77200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1222.5879999999997" y="370.7" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">reads items.txt</text>
+</g>
+<g class="edge-label" data-from="UC" data-to="FH" data-label="reads orders/items/suppliers.txt">
+  <rect x="1131.8539999999998" y="76.30000000000001" width="169.11999999999998" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1216.4139999999998" y="91.45000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">reads orders/items/suppliers.txt</text>
+</g>
+<g class="edge-label" data-from="IC" data-to="FH" data-label="reads feedbacks.txt">
+  <rect x="1166.0659999999998" y="215.925" width="110.90800000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1221.5199999999998" y="231.07500000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">reads feedbacks.txt</text>
+</g>
+<g class="edge-label" data-from="FC" data-to="FH" data-label="reads items/orders.txt">
+  <rect x="1143.9679999999998" y="495.175" width="121.006" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1204.4709999999998" y="510.325" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">reads items/orders.txt</text>
+</g>
+<g class="edge-label" data-from="SA" data-to="UC" data-label="guards all routes">
+  <rect x="441.92599999999993" y="86.44999999999999" width="97.24600000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="490.5489999999999" y="101.6" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">guards all routes</text>
+</g>
+<g class="node" data-id="FH" data-label="FileHandler" data-shape="rectangle">
+  <rect x="1438.9739999999997" y="374.8636363636364" width="111.60400000000001" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1494.7759999999996" y="393.31363636363636" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">FileHandler</text>
+</g>
+<g class="node" data-id="IG" data-label="IdGenerator" data-shape="rectangle">
+  <rect x="1475.2829999999997" y="309.96363636363634" width="113.086" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1531.8259999999996" y="328.41363636363633" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">IdGenerator</text>
+</g>
+<g class="node" data-id="GEH" data-label="GlobalExceptionHandler" data-shape="rectangle">
+  <rect x="1438.9739999999997" y="245.06363636363633" width="185.70399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1531.8259999999998" y="263.51363636363635" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">GlobalExceptionHandler</text>
+</g>
+<g class="node" data-id="UC" data-label="UserController" data-shape="rectangle">
+  <rect x="577.3069999999999" y="84" width="130.87" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="642.742" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">UserController</text>
+</g>
+<g class="node" data-id="US" data-label="UserService" data-shape="rectangle">
+  <rect x="780.2879999999999" y="98.725" width="119.01400000000001" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="839.7949999999998" y="117.175" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">UserService</text>
+</g>
+<g class="node" data-id="UR" data-label="UserRepository" data-shape="rectangle">
+  <rect x="920.4689999999998" y="98.725" width="136.798" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="988.8679999999998" y="117.175" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">UserRepository</text>
+</g>
+<g class="node" data-id="SA" data-label="SessionAuth" data-shape="rectangle">
+  <rect x="273.1929999999999" y="84" width="117.53200000000001" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="331.95899999999995" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">SessionAuth</text>
+</g>
+<g class="node" data-id="IC" data-label="InventoryController" data-shape="rectangle">
+  <rect x="577.3069999999999" y="223.625" width="157.54600000000002" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="656.0799999999999" y="242.075" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">InventoryController</text>
+</g>
+<g class="node" data-id="IS" data-label="InventoryService" data-shape="rectangle">
+  <rect x="780.2879999999999" y="238.35" width="145.69" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="853.1329999999999" y="256.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">InventoryService</text>
+</g>
+<g class="node" data-id="IR" data-label="ItemRepository" data-shape="rectangle">
+  <rect x="970.6779999999999" y="238.35" width="129.388" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1035.3719999999998" y="256.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ItemRepository</text>
+</g>
+<g class="node" data-id="SC" data-label="SupplierController" data-shape="rectangle">
+  <rect x="710.7099999999998" y="591.0500000000001" width="151.618" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="786.5189999999998" y="609.5000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">SupplierController</text>
+</g>
+<g class="node" data-id="SS" data-label="SupplierService" data-shape="rectangle">
+  <rect x="920.4689999999998" y="591.0500000000001" width="139.762" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="990.3499999999998" y="609.5000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">SupplierService</text>
+</g>
+<g class="node" data-id="SR" data-label="SupplierRepository" data-shape="rectangle">
+  <rect x="1106.982" y="591.0500000000001" width="157.546" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1185.7549999999999" y="609.5000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">SupplierRepository</text>
+</g>
+<g class="node" data-id="OC" data-label="OrderController" data-shape="rectangle">
+  <rect x="613.7359999999999" y="363.25" width="136.798" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="682.1349999999999" y="381.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OrderController</text>
+</g>
+<g class="node" data-id="OS" data-label="OrderService" data-shape="rectangle">
+  <rect x="780.2879999999999" y="363.25" width="124.94200000000001" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="842.7589999999999" y="381.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OrderService</text>
+</g>
+<g class="node" data-id="OR" data-label="OrderRepository" data-shape="rectangle">
+  <rect x="971.4759999999999" y="377.975" width="142.726" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1042.839" y="396.425" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OrderRepository</text>
+</g>
+<g class="node" data-id="PC" data-label="PromotionController" data-shape="rectangle">
+  <rect x="710.7099999999998" y="715.95" width="160.51" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="790.9649999999998" y="734.4000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">PromotionController</text>
+</g>
+<g class="node" data-id="PS" data-label="PromotionService" data-shape="rectangle">
+  <rect x="920.4689999999998" y="715.95" width="148.654" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="994.7959999999998" y="734.4000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">PromotionService</text>
+</g>
+<g class="node" data-id="PR" data-label="PromotionRepository" data-shape="rectangle">
+  <rect x="1106.982" y="715.95" width="166.438" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1190.201" y="734.4000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">PromotionRepository</text>
+</g>
+<g class="node" data-id="FC" data-label="FeedbackController" data-shape="rectangle">
+  <rect x="56" y="502.875" width="161.992" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="136.99599999999998" y="521.325" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">FeedbackController</text>
+</g>
+<g class="node" data-id="FS" data-label="FeedbackService" data-shape="rectangle">
+  <rect x="273.1929999999999" y="517.6" width="150.13599999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="348.2609999999999" y="536.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">FeedbackService</text>
+</g>
+<g class="node" data-id="FR" data-label="FeedbackRepository" data-shape="rectangle">
+  <rect x="464.12799999999993" y="517.6" width="167.92" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="548.088" y="536.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">FeedbackRepository</text>
+</g>
+</svg>

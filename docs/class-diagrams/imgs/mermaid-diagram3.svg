@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 876.1600000000001 2392.6" width="876.1600000000001" height="2392.6" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Item" data-to="PerishableItem" data-type="inheritance" data-marker-at="from" points="444.09999999999997,2084.6 444.1,2144.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Item" data-to="NonPerishableItem" data-type="inheritance" data-marker-at="from" points="372.76666666666665,2084.6 372.76666666666665,2094.6 209.9,2094.6 209.9,2144.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="ItemFactory" data-to="Item" data-type="dependency" data-marker-at="to" data-label="creates" points="408.4333333333333,1540.3 408.4333333333333,1680.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="ItemForm" data-to="ProductView" data-type="composition" data-marker-at="from" data-label="nested" points="249.33333333333334,324 249.33333333333334,808" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-composition)" />
+<polyline class="class-relationship" data-from="ItemForm" data-to="CategoryView" data-type="composition" data-marker-at="from" data-label="nested" points="180.20000000000002,324 180.20000000000002,334 100,334 100,808" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-composition)" />
+<polyline class="class-relationship" data-from="ItemRepository" data-to="FileItemRepository" data-type="realization" data-marker-at="from" points="499.1,1022 499.09999999999997,1152" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="FileItemRepository" data-to="ItemFactory" data-type="dependency" data-marker-at="to" data-label="parses lines" points="499.09999999999997,1296 499.1,1436.3" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="InventoryService" data-to="ItemRepository" data-type="association" data-marker-at="to" points="637.04,748 637.04,778 499.1,778 499.1,878" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="InventoryService" data-to="ItemFactory" data-type="dependency" data-marker-at="to" points="537.48,748 537.48,768 358,768 358,1386.3 317.76666666666665,1386.3 317.76666666666665,1436.3" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="InventoryService" data-to="InventorySummary" data-type="dependency" data-marker-at="to" points="736.6,748 736.6,808" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="InventoryService" data-to="ProductView" data-type="dependency" data-marker-at="to" points="437.9200000000001,748 437.9200000000001,758 298.6666666666667,758 298.6666666666667,808" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="InventoryController" data-to="InventoryService" data-type="association" data-marker-at="to" points="587.26,324 587.26,384" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<g class="class-node" data-id="Item" data-label="Item" data-annotation="abstract">
+  <rect x="301.4333333333333" y="1680.6" width="214" height="404" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="301.4333333333333" y="1680.6" width="214" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="408.4333333333333" y="1692.6" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="408.4333333333333" y="1710.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Item</text>
+  <line x1="301.4333333333333" y1="1728.6" x2="515.4333333333333" y2="1728.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="309.4333333333333" y="1742.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">LOW_STOCK_LIMIT</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="309.4333333333333" y="1762.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">id</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="309.4333333333333" y="1782.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">name</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="309.4333333333333" y="1802.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">category</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="309.4333333333333" y="1822.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">price</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="309.4333333333333" y="1842.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">quantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="309.4333333333333" y="1862.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">imageUrl</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="301.4333333333333" y1="1876.6" x2="515.4333333333333" y2="1876.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="309.4333333333333" y="1890.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">isLowStock()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="309.4333333333333" y="1910.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">isExpired()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="309.4333333333333" y="1930.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">isExpiringSoon()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="309.4333333333333" y="1950.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toFileLine()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="309.4333333333333" y="1970.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">clean(String text)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ String</tspan></text>
+  <text x="309.4333333333333" y="1990.6" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getItemType()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+  <text x="309.4333333333333" y="2010.6" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getTypeLabel()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+  <text x="309.4333333333333" y="2030.6" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSellingPrice()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* double</tspan></text>
+  <text x="309.4333333333333" y="2050.6" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getDetails()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+  <text x="309.4333333333333" y="2070.6" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">getExtraFields()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+</g>
+<g class="class-node" data-id="PerishableItem" data-label="PerishableItem">
+  <rect x="347" y="2144.6" width="194.2" height="208" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="347" y="2144.6" width="194.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="444.1" y="2160.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">PerishableItem</text>
+  <line x1="347" y1="2176.6" x2="541.2" y2="2176.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="355" y="2190.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">TYPE</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="355" y="2210.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">SOON_DAYS</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="355" y="2230.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">SOON_DISCOUNT</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="355" y="2250.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">expiryDate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDate</tspan></text>
+  <line x1="347" y1="2264.6" x2="541.2" y2="2264.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="355" y="2278.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">isExpired()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="355" y="2298.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">isExpiringSoon()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="355" y="2318.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSellingPrice()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="355" y="2338.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getDetails()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="NonPerishableItem" data-label="NonPerishableItem">
+  <rect x="112.80000000000001" y="2144.6" width="194.2" height="148" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="112.80000000000001" y="2144.6" width="194.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="209.9" y="2160.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">NonPerishableItem</text>
+  <line x1="112.80000000000001" y1="2176.6" x2="307" y2="2176.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="120.80000000000001" y="2190.6" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">TYPE</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="120.80000000000001" y="2210.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">brand</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="120.80000000000001" y="2230.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">shelfLifeMonths</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <line x1="112.80000000000001" y1="2244.6" x2="307" y2="2244.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="120.80000000000001" y="2258.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSellingPrice()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="120.80000000000001" y="2278.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getDetails()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="ItemFactory" data-label="ItemFactory" data-annotation="factory">
+  <rect x="136.4333333333333" y="1436.3" width="544" height="104" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="136.4333333333333" y="1436.3" width="544" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="408.4333333333333" y="1448.3" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;factory&gt;&gt;</text>
+  <text x="408.4333333333333" y="1466.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">ItemFactory</text>
+  <line x1="136.4333333333333" y1="1484.3" x2="680.4333333333333" y2="1484.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="136.4333333333333" y1="1492.3" x2="680.4333333333333" y2="1492.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="144.4333333333333" y="1506.3" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">create(type, id, name, category, price, qty, expiry, brand, shelfLife)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ Item</tspan></text>
+  <text x="144.4333333333333" y="1526.3" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">fromFileLine(String line)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ Item</tspan></text>
+</g>
+<g class="class-node" data-id="ItemForm" data-label="ItemForm" data-annotation="dto">
+  <rect x="111.06666666666669" y="40" width="207.4" height="284" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="111.06666666666669" y="40" width="207.4" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="214.7666666666667" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;dto&gt;&gt;</text>
+  <text x="214.7666666666667" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">ItemForm</text>
+  <line x1="111.06666666666669" y1="88" x2="318.4666666666667" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="119.06666666666669" y="102" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">type</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="122" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">id</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="142" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">name</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="162" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">category</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="182" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">price</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Double</tspan></text>
+  <text x="119.06666666666669" y="202" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">quantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Integer</tspan></text>
+  <text x="119.06666666666669" y="222" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">imageUrl</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="242" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">expiryDate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDate</tspan></text>
+  <text x="119.06666666666669" y="262" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">brand</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="119.06666666666669" y="282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">shelfLifeMonths</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Integer</tspan></text>
+  <line x1="111.06666666666669" y1="296" x2="318.4666666666667" y2="296" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="119.06666666666669" y="310" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">from(Item item)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">$ ItemForm</tspan></text>
+</g>
+<g class="class-node" data-id="ProductView" data-label="ProductView" data-annotation="record">
+  <rect x="200" y="808" width="148" height="284" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="200" y="808" width="148" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="274" y="820" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;record&gt;&gt;</text>
+  <text x="274" y="838" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">ProductView</text>
+  <line x1="200" y1="856" x2="348" y2="856" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="208" y="870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">id</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="208" y="890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">name</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="208" y="910" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">category</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="208" y="930" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">price</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="208" y="950" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">sellingPrice</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="208" y="970" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">onSale</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="208" y="990" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">quantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="208" y="1010" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">inStock</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="208" y="1030" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">imageUrl</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="208" y="1050" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">rating</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="208" y="1070" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">soldCount</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <line x1="200" y1="1084" x2="348" y2="1084" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="CategoryView" data-label="CategoryView" data-annotation="record">
+  <rect x="40" y="808" width="120" height="104" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="808" width="120" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="100" y="820" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;record&gt;&gt;</text>
+  <text x="100" y="838" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">CategoryView</text>
+  <line x1="40" y1="856" x2="160" y2="856" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">name</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">count</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <line x1="40" y1="904" x2="160" y2="904" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="InventorySummary" data-label="InventorySummary" data-annotation="record">
+  <rect x="669.2" y="808" width="134.8" height="164" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="669.2" y="808" width="134.8" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="736.6" y="820" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;record&gt;&gt;</text>
+  <text x="736.6" y="838" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">InventorySummary</text>
+  <line x1="669.2" y1="856" x2="804" y2="856" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="677.2" y="870" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">total</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="677.2" y="890" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">lowStock</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="677.2" y="910" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">expiringSoon</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="677.2" y="930" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">expired</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="677.2" y="950" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">stockValue</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="669.2" y1="964" x2="804" y2="964" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="ItemRepository" data-label="ItemRepository" data-annotation="interface">
+  <rect x="369" y="878" width="260.2" height="144" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="369" y="878" width="260.2" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="499.1" y="890" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;interface&gt;&gt;</text>
+  <text x="499.1" y="908" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">ItemRepository</text>
+  <line x1="369" y1="926" x2="629.2" y2="926" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="369" y1="934" x2="629.2" y2="934" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="377" y="948" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findAll()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Item~</tspan></text>
+  <text x="377" y="968" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~Item~</tspan></text>
+  <text x="377" y="988" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">save(Item item)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Item</tspan></text>
+  <text x="377" y="1008" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+</g>
+<g class="class-node" data-id="FileItemRepository" data-label="FileItemRepository" data-annotation="Repository">
+  <rect x="378.9" y="1152" width="240.4" height="144" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="378.9" y="1152" width="240.4" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="499.09999999999997" y="1164" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Repository&gt;&gt;</text>
+  <text x="499.09999999999997" y="1182" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">FileItemRepository</text>
+  <line x1="378.9" y1="1200" x2="619.3" y2="1200" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="386.9" y="1214" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">fileName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="378.9" y1="1228" x2="619.3" y2="1228" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="386.9" y="1242" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">seedDefaultItems()</tspan></text>
+  <text x="386.9" y="1262" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">writeAll(List~Item~ items)</tspan></text>
+  <text x="386.9" y="1282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nextId(List~Item~ items)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="InventoryService" data-label="InventoryService" data-annotation="Service">
+  <rect x="338.36000000000007" y="384" width="497.79999999999995" height="364" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="338.36000000000007" y="384" width="497.79999999999995" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="587.26" y="396" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Service&gt;&gt;</text>
+  <text x="587.26" y="414" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">InventoryService</text>
+  <line x1="338.36000000000007" y1="432" x2="836.1600000000001" y2="432" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="346.36000000000007" y="446" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">repository</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">ItemRepository</tspan></text>
+  <line x1="338.36000000000007" y1="460" x2="836.1600000000001" y2="460" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="346.36000000000007" y="474" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">search(String keyword, String filter)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Item~</tspan></text>
+  <text x="346.36000000000007" y="494" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">summary()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">InventorySummary</tspan></text>
+  <text x="346.36000000000007" y="514" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Item</tspan></text>
+  <text x="346.36000000000007" y="534" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">addItem(ItemForm form)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Item</tspan></text>
+  <text x="346.36000000000007" y="554" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateItem(String id, ItemForm form)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Item</tspan></text>
+  <text x="346.36000000000007" y="574" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">restockItem(String id, int addedQuantity)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Item</tspan></text>
+  <text x="346.36000000000007" y="594" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteExpiredItems()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="346.36000000000007" y="614" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteItem(String id)</tspan></text>
+  <text x="346.36000000000007" y="634" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">shopProducts(String q, String category, String sort)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~ProductView~</tspan></text>
+  <text x="346.36000000000007" y="654" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">shopDeals()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~ProductView~</tspan></text>
+  <text x="346.36000000000007" y="674" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findShopProduct(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~ProductView~</tspan></text>
+  <text x="346.36000000000007" y="694" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">relatedProducts(ProductView p)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~ProductView~</tspan></text>
+  <text x="346.36000000000007" y="714" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">shopCategories()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~CategoryView~</tspan></text>
+  <text x="346.36000000000007" y="734" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">toView(Item i)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">ProductView</tspan></text>
+</g>
+<g class="class-node" data-id="InventoryController" data-label="InventoryController" data-annotation="Controller">
+  <rect x="420.86" y="60" width="332.8" height="264" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="420.86" y="60" width="332.8" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="587.26" y="72" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Controller&gt;&gt;</text>
+  <text x="587.26" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">InventoryController</text>
+  <line x1="420.86" y1="108" x2="753.6600000000001" y2="108" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="428.86" y="122" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">service</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">InventoryService</tspan></text>
+  <line x1="420.86" y1="136" x2="753.6600000000001" y2="136" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="428.86" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">shop(q, category, sort, model)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="170" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">product(String id, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="190" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">list(String q, String filter, Model m)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="210" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">add(ItemForm form, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="230" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">update(String id, ItemForm form, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="250" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">restock(String id, int amount, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="270" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteExpired(...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="290" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">delete(String id, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="428.86" y="310" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">readReviewsForProduct(String itemId)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List</tspan></text>
+</g>
+
+
+<text x="383.1943333333333" y="1602.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">creates</text>
+<text x="273.19633333333337" y="558" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">nested</text>
+<text x="77.137" y="558" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">nested</text>
+
+<text x="536.328" y="1358.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">parses lines</text>
+
+
+
+
+
+</svg>

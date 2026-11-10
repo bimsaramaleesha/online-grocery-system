@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930.8 1688.3" width="930.8" height="1688.3" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Supplier" data-to="LocalFarmerSupplier" data-type="inheritance" data-marker-at="from" points="242.7,1400.3 242.7,1460.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Supplier" data-to="WholesaleDistributor" data-type="inheritance" data-marker-at="from" points="382.23333333333335,1400.3 382.23333333333335,1410.3 688.0999999999999,1410.3 688.0999999999999,1460.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="SupplierRepository" data-to="SupplierFileRepository" data-type="realization" data-marker-at="from" points="312.46666666666664,812 312.46666666666664,872" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="SupplierFileRepository" data-to="Supplier" data-type="dependency" data-marker-at="to" data-label="parses" points="312.46666666666664,996 312.46666666666664,1136.3" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="SupplierService" data-to="SupplierRepository" data-type="association" data-marker-at="to" points="312.46666666666664,548 312.46666666666664,608" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="SupplierController" data-to="SupplierService" data-type="association" data-marker-at="to" points="312.46666666666664,204 312.46666666666664,264" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<g class="class-node" data-id="Supplier" data-label="Supplier" data-annotation="abstract">
+  <rect x="103.16666666666666" y="1136.3" width="418.59999999999997" height="264" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="103.16666666666666" y="1136.3" width="418.59999999999997" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="312.46666666666664" y="1148.3" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="312.46666666666664" y="1166.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Supplier</text>
+  <line x1="103.16666666666666" y1="1184.3" x2="521.7666666666667" y2="1184.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="111.16666666666666" y="1198.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">supplierId</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="111.16666666666666" y="1218.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">companyName</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="111.16666666666666" y="1238.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">contactNumber</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="111.16666666666666" y="1258.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">email</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="111.16666666666666" y="1278.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">supplyCategory</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="103.16666666666666" y1="1292.3" x2="521.7666666666667" y2="1292.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="111.16666666666666" y="1306.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSupplierSummary()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="111.16666666666666" y="1326.3" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSupplierType()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+  <text x="111.16666666666666" y="1346.3" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateLeadTimeDays()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* int</tspan></text>
+  <text x="111.16666666666666" y="1366.3" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateRestockCost(int units, double unitPrice)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* double</tspan></text>
+  <text x="111.16666666666666" y="1386.3" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toFileString()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* String</tspan></text>
+</g>
+<g class="class-node" data-id="LocalFarmerSupplier" data-label="LocalFarmerSupplier">
+  <rect x="40" y="1460.3" width="405.4" height="188" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="1460.3" width="405.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="242.7" y="1476.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">LocalFarmerSupplier</text>
+  <line x1="40" y1="1492.3" x2="445.4" y2="1492.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="1506.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">farmLocation</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="1526.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">organicCertified</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="48" y="1546.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">freshHandlingFee</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="40" y1="1560.3" x2="445.4" y2="1560.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="1574.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSupplierType()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="1594.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateLeadTimeDays()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="48" y="1614.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateRestockCost(int units, double unitPrice)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="48" y="1634.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toFileString()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="WholesaleDistributor" data-label="WholesaleDistributor">
+  <rect x="485.4" y="1460.3" width="405.4" height="188" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="485.4" y="1460.3" width="405.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="688.0999999999999" y="1476.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">WholesaleDistributor</text>
+  <line x1="485.4" y1="1492.3" x2="890.8" y2="1492.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="493.4" y="1506.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">warehouseCode</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="493.4" y="1526.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">minOrderQuantity</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="493.4" y="1546.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">bulkDiscountRate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="485.4" y1="1560.3" x2="890.8" y2="1560.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="493.4" y="1574.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSupplierType()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="493.4" y="1594.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateLeadTimeDays()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="493.4" y="1614.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateRestockCost(int units, double unitPrice)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="493.4" y="1634.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">toFileString()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="SupplierRepository" data-label="SupplierRepository" data-annotation="interface">
+  <rect x="113.06666666666662" y="608" width="398.8" height="204" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="113.06666666666662" y="608" width="398.8" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="312.46666666666664" y="620" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;interface&gt;&gt;</text>
+  <text x="312.46666666666664" y="638" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">SupplierRepository</text>
+  <line x1="113.06666666666662" y1="656" x2="511.8666666666666" y2="656" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="113.06666666666662" y1="664" x2="511.8666666666666" y2="664" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="121.06666666666662" y="678" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findAll()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+  <text x="121.06666666666662" y="698" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">findById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~Supplier~</tspan></text>
+  <text x="121.06666666666662" y="718" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">save(Supplier s)</tspan></text>
+  <text x="121.06666666666662" y="738" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">update(Supplier s)</tspan></text>
+  <text x="121.06666666666662" y="758" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="121.06666666666662" y="778" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">search(String keyword)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+  <text x="121.06666666666662" y="798" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">search(String category, String location)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+</g>
+<g class="class-node" data-id="SupplierFileRepository" data-label="SupplierFileRepository" data-annotation="Repository">
+  <rect x="192.26666666666662" y="872" width="240.4" height="124" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="192.26666666666662" y="872" width="240.4" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="312.46666666666664" y="884" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Repository&gt;&gt;</text>
+  <text x="312.46666666666664" y="902" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">SupplierFileRepository</text>
+  <line x1="192.26666666666662" y1="920" x2="432.66666666666663" y2="920" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="200.26666666666662" y="934" class="mono" dy="0.35em" font-size="11" font-weight="400" text-decoration="underline"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">FILE_NAME</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="192.26666666666662" y1="948" x2="432.66666666666663" y2="948" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="200.26666666666662" y="962" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">seedDefaults()</tspan></text>
+  <text x="200.26666666666662" y="982" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">parseLine(String line)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Supplier</tspan></text>
+</g>
+<g class="class-node" data-id="SupplierService" data-label="SupplierService" data-annotation="Service">
+  <rect x="73.46666666666663" y="264" width="478" height="284" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="73.46666666666663" y="264" width="478" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="312.46666666666664" y="276" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Service&gt;&gt;</text>
+  <text x="312.46666666666664" y="294" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">SupplierService</text>
+  <line x1="73.46666666666663" y1="312" x2="551.4666666666666" y2="312" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81.46666666666663" y="326" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">repository</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">SupplierRepository</tspan></text>
+  <line x1="73.46666666666663" y1="340" x2="551.4666666666666" y2="340" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81.46666666666663" y="354" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getAllSuppliers()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+  <text x="81.46666666666663" y="374" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getSupplierById(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Optional~Supplier~</tspan></text>
+  <text x="81.46666666666663" y="394" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">searchSuppliers(String keyword)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+  <text x="81.46666666666663" y="414" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">filterSuppliers(String category, String location)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Supplier~</tspan></text>
+  <text x="81.46666666666663" y="434" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">generateNextId()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="81.46666666666663" y="454" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">registerFarmer(...)</tspan></text>
+  <text x="81.46666666666663" y="474" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">registerDistributor(...)</tspan></text>
+  <text x="81.46666666666663" y="494" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateSupplier(id, companyName, contact, email)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="81.46666666666663" y="514" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteSupplier(String id)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <text x="81.46666666666663" y="534" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">calculateProcurement(String id, int units, double unitPrice)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+</g>
+<g class="class-node" data-id="SupplierController" data-label="SupplierController" data-annotation="Controller">
+  <rect x="146.0666666666666" y="40" width="332.8" height="164" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="146.0666666666666" y="40" width="332.8" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="312.4666666666666" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;Controller&gt;&gt;</text>
+  <text x="312.4666666666666" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">SupplierController</text>
+  <line x1="146.0666666666666" y1="88" x2="478.8666666666666" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="154.0666666666666" y="102" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">supplierService</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">SupplierService</tspan></text>
+  <line x1="146.0666666666666" y1="116" x2="478.8666666666666" y2="116" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="154.0666666666666" y="130" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">listSuppliers(String search, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="154.0666666666666" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">addSupplier(String supplierType, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="154.0666666666666" y="170" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">updateSupplier(String supplierId, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="154.0666666666666" y="190" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">deleteSupplier(String id, ...)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+
+
+
+<text x="288.4156666666666" y="1058.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">parses</text>
+
+
+</svg>
